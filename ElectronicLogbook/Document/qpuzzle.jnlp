@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<jnlp spec="1.0+" codebase="http://122.0.20.154/qpuzzle" href="qpuzzle.jnlp">
+  <information>
+    <title>Quintiq ComBUStion</title>
+    <vendor>Quintiq Applications B.V.</vendor>
+    <homepage href="http://www.quintiq.com" />
+    <description>Client application for the Quintiq Server</description>
+    <description kind="tooltip">Starts the Quintiq Thin Client</description>
+    <icon href="quintiqlogo.gif"/>
+  </information>
+  <security>
+    <all-permissions/>
+  </security>
+  <resources>
+    <property name="jnlp.packEnabled" value="true"/>
+    <property name="sun.java2d.d3d" value="false"/>
+    <property name="sun.java2d.noddraw" value="true"/>
+    <property name="sun.awt.nopixfmt" value="true"/>
+
+    <j2se version="1.7+" href="http://java.sun.com/products/autodl/j2se" />
+    
+    <jar href="lib/com.quintiq.thin.client-50.3.0.jar" main="true"/>
+    
+    <jar href="lib/com.quintiq.birt.share-50.3.0.jar"/>
+    <jar href="lib/com.quintiq.chart.lib-50.3.0.jar"/>
+    <jar href="lib/com.quintiq.commons.lang-50.3.0.jar"/>
+    <jar href="lib/com.quintiq.commons.logging-50.3.0.jar"/>
+    <jar href="lib/com.quintiq.config.api-50.3.0.jar"/>
+    <jar href="lib/com.quintiq.edi-50.3.0.jar"/>
+    <jar href="lib/com.quintiq.gateway.client-50.3.0.jar"/>
+    <jar href="lib/com.quintiq.gateway.common-50.3.0.jar"/>
+    <jar href="lib/com.quintiq.gauge.lib-50.3.0.jar"/>
+    <jar href="lib/com.quintiq.runtime-50.3.0.jar"/>
+    <jar href="lib/com.quintiq.share-50.3.0.jar"/>
+    
+    <jar href="lib/com.quintiq.persistent.keys-1.0.0-SNAPSHOT.jar"/>
+    
+    <jar href="lib/autocomplete-1.4.2.jar"/>
+    <jar href="lib/balloontip-1.2.1.jar"/>
+    <jar href="lib/bcpkix-jdk15on-1.47.jar"/>
+    <jar href="lib/bcprov-jdk15on-1.47.jar"/>
+    <jar href="lib/commons-io-2.0.1.jar"/>
+    <jar href="lib/commons-lang-2.6.jar"/>
+    <jar href="lib/docking-frames-common-1.1.1-preview7e.jar"/>
+    <jar href="lib/docking-frames-core-1.1.1-preview7e.jar"/>
+    <jar href="lib/foxtrot-core-4.0.jar"/>
+    <jar href="lib/icu4j-3.8.1.jar"/>
+    <jar href="lib/icu4j-charsets-3.8.1.jar"/>
+    <jar href="lib/iText-2.1.7.jar"/>
+    <jar href="lib/jna-3.3.0.jar"/>
+    <jar href="lib/jna-contrib-platform-3.3.0.jar"/>
+    <jar href="lib/log4j-1.2.17.jar"/>
+    <jar href="lib/PDFRenderer-0.9.0.jar"/>
+    <jar href="lib/protobuf-java-2.4.1.jar"/>
+    <jar href="lib/rsyntaxtextarea-1.4.2-qp.jar"/>
+    <jar href="lib/SteelSeries-3.9.32.jar"/>
+    <jar href="lib/trident-7.2.1.jar"/>
+    <jar href="lib/jcommon-1.0.17.jar"/>
+    <jar href="lib/jfreechart-1.0.15.jar"/>
+  </resources>
+
+  <application-desc name="Quintiq Thin Client" main-class="com.quintiq.client.base.application.QQuintiqWebStart">
+    <argument>/startup.autostart</argument>
+    <argument>/startup.project=PuzzleChallenge</argument>
+    <argument>/startup.user=edwin</argument>
+    <argument>/startup.locale=en_US</argument>
+    <argument>/startup.license=readwrite</argument>
+    <argument>/startup.service=Quintiq</argument>
+    <argument>/startup.view=ShiftPlanning</argument>
+  </application-desc>
+</jnlp>

@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="ElectronicLogbook.VAISParticipantControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d">
+    <DockPanel >
+        <ListView ItemsSource="{Binding}" BorderBrush="Transparent">
+            <ListView.View>
+                <GridView >
+                    <GridViewColumn Header="Participant Name" DisplayMemberBinding="{Binding mParticipantName}"  Width="150" />
+                    <GridViewColumn Header="Participant Part Number"  DisplayMemberBinding="{Binding mParticipantPartNumber}" Width="200" />
+                    <GridViewColumn Header="Participant Version Number"  DisplayMemberBinding="{Binding mParticipantVersionNumber}" Width="200" />
+                    <GridViewColumn Header="Participant Description"  DisplayMemberBinding="{Binding mParticipantDescription}" Width="200" />
+                    <GridViewColumn Header="Participant Location"  DisplayMemberBinding="{Binding mParticipantLocation}" Width="Auto" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </DockPanel>
+</UserControl>

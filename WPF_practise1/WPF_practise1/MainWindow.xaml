@@ -1,0 +1,95 @@
+﻿<Window x:Class="WPF_practise1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:WPF_practise1"
+        xmlns:tab1="clr-namespace:WPF_practise1.AircraftEquipment"
+        Title="ELB" Height="500" Width="1000" Topmost="True" WindowStartupLocation="CenterScreen" WindowStyle="ThreeDBorderWindow">
+    <DockPanel>
+        <Menu Background="White" Height="23" HorizontalAlignment="Stretch" Name="menu1" VerticalAlignment="Top" Margin="0" DockPanel.Dock="Top">
+            <MenuItem Header="Expect" >
+            </MenuItem>
+            <MenuItem Header="Current">
+                <MenuItem Header="Show Configuration" />
+                <MenuItem Header="Get Configuration" />
+            </MenuItem>
+            <MenuItem Header="Compare" >
+            </MenuItem>
+            <MenuItem Header="Remark" >
+            </MenuItem>
+        </Menu>
+        <TabControl  SelectedIndex="0" TabStripPlacement="Left">
+            <TabItem Height="30" Background="White" BorderBrush="Transparent">
+                <TabItem.Header>
+                    <DockPanel>
+                        <TextBlock Text="Aircraft equipment" FontFamily="Arial" TextAlignment="Center" Width="150" Height="22" />
+                    </DockPanel>
+                </TabItem.Header>
+                <tab1:AircraftEquipmentControl />
+            </TabItem>
+            <TabItem Height="30" Background="White" BorderBrush="Transparent">
+                <TabItem.Header>
+                    <DockPanel>
+                        <TextBlock Text="VAIS participant" FontFamily="Arial" Width="150" Height="22" TextAlignment="Center" />
+
+                        <Separator /> 
+                    </DockPanel>
+                </TabItem.Header>
+                <DockPanel>
+                    <ListView >
+                        <ListView.View>
+                            <GridView >
+                                <GridViewColumn Header="Participant Name" Width="100" />
+                                <GridViewColumn Header="Participant Part Number"  Width="150" />
+                                <GridViewColumn Header="Participant Version Number"  Width="200" />
+                                <GridViewColumn Header="Participant Description"  Width="200" />
+                                <GridViewColumn Header="Participant Location"  Width="200" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </DockPanel>
+            </TabItem>
+            <TabItem Height="30" Background="White" BorderBrush="Transparent">
+                <TabItem.Header>
+                    <DockPanel>
+                        <TextBlock Text="Device drivers" FontFamily="Arial" Width="150" Height="22" TextAlignment="Center" />
+
+                        <Separator />
+                    </DockPanel>
+                </TabItem.Header>
+                <DockPanel>
+                    <ListView >
+                        <ListView.View>
+                            <GridView >
+                                <GridViewColumn Header="Device Name" Width="100" />
+                                <GridViewColumn Header="Driver Name"  Width="100" />
+                                <GridViewColumn Header="Driver Version Number"  Width="150" />
+                                <GridViewColumn Header="Driver Location"  Width="150" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </DockPanel>
+            </TabItem>
+            <TabItem Height="30" Background="White" BorderBrush="DarkGray">
+                <TabItem.Header>
+                    <DockPanel>
+                        <TextBlock Text="Third party softeware" FontFamily="Arial" Width="150" Height="22" TextAlignment="Center" />
+
+                        <Separator />
+                    </DockPanel>
+                </TabItem.Header>
+                <DockPanel>
+                    <ListView >
+                        <ListView.View>
+                            <GridView >
+                                <GridViewColumn Header="Software Name" Width="150" />
+                                <GridViewColumn Header="Software Version Number"  Width="150" />
+                                <GridViewColumn Header="Software Location"  Width="150" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </DockPanel>
+            </TabItem>
+        
+        </TabControl>
+    </DockPanel>
+</Window>

@@ -1,0 +1,95 @@
+﻿<UserControl x:Class="WPF_practise1.AircraftEquipment.AircraftEquipmentControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" >
+    <DockPanel>
+        <TreeView Width="109" >
+            <TreeViewItem Header="Configuration" ItemsSource="{Binding}">
+                <TreeViewItem Header="GPM_R2"></TreeViewItem>
+            </TreeViewItem>
+        </TreeView>
+
+        <StackPanel Background="White">
+            <DockPanel>
+                <Label IsEnabled="True">Equipment_ID:</Label>
+                <Label Content="{Binding EquipmentID, Mode=TwoWay}"/>
+            </DockPanel>
+            <GroupBox Header="HW Part" >
+                <Grid>
+                    <!-- Define four rows: -->
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <!-- Define two columns: -->
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="350" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0">HW Part Number:</Label>
+                    <Label Grid.Row="0" Grid.Column="1" Content="{Binding HWPartNumber, Mode=TwoWay}"/>
+                    <Label Grid.Row="1" Grid.Column="0">HW Part Description:</Label>
+                    <Label Grid.Row="1" Content="{Binding HWPartDescription, Mode=TwoWay}" />
+                    <Label Grid.Row="2" Grid.Column="0">HW Part Status:</Label>
+                    <Label Grid.Row="2" Content="{Binding HWPartStatus, Mode=TwoWay}" />
+                    <Label Grid.Row="3" Grid.Column="0">HW Part Serial Number:</Label>
+                    <Label Grid.Row="3" Grid.Column="1" Content="{Binding HWPartSerialNumber, Mode=TwoWay}"/>
+                </Grid>
+            </GroupBox>
+            <Expander Header="SW_Config">
+                <Grid>
+                    <!-- Define four rows: -->
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <!-- Define two columns: -->
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="350" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0">SW Location ID:</Label>
+                    <Label Grid.Row="0" Grid.Column="1" Content="{Binding SWLocationID, Mode=TwoWay}"/>
+                    <Label Grid.Row="1" Grid.Column="0">SW Location Description:</Label>
+                    <Label Grid.Row="1" Grid.Column="1" Content="{Binding SWLocationDescription, Mode=TwoWay}"/>
+                    <ListView Grid.Row="2" Grid.ColumnSpan="2">
+                        <ListView.View>
+                            <GridView >
+                                <GridViewColumn Header="SW Part Index" Width="100" />
+                                <GridViewColumn Header="LSAP Part Number"  Width="150" />
+                                <GridViewColumn Header="LSAP Description"  Width="250" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </Expander>
+            <Expander Header="Config info">
+                <Grid>
+                    <!-- Define four rows: -->
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <!-- Define two columns: -->
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="500" />
+                    </Grid.ColumnDefinitions>
+                    <ListView Grid.Row="0" Grid.Column="0">
+                        <ListView.View>
+                            <GridView >
+                                <GridViewColumn Header="Config Info Index" Width="100" />
+                                <GridViewColumn Header="Config info"  Width="400" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </Expander>
+        </StackPanel>
+
+    </DockPanel>
+</UserControl>
