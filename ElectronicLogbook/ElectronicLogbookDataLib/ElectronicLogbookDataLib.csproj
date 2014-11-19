@@ -33,10 +33,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommonSimDotNet">
-      <HintPath>..\Source\bin\Release\CommonSimDotNet.dll</HintPath>
+      <HintPath>..\CommonSimDotNet.dll</HintPath>
     </Reference>
     <Reference Include="CSharpWrapper_ASN1Decoder">
-      <HintPath>..\Source\bin\Release\CSharpWrapper_ASN1Decoder.dll</HintPath>
+      <HintPath>..\CSharpWrapper_ASN1Decoder.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />

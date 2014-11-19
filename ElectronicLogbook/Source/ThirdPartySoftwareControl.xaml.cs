@@ -11,7 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using ElectronicLogbook.ViewModel;
 namespace ElectronicLogbook
 {
     /// <summary>
@@ -22,6 +22,8 @@ namespace ElectronicLogbook
         public ThirdPartySoftwareControl()
         {
             InitializeComponent();
+
+            base.DataContext = ELBViewModel.getInstance().mDeviceDriverListViewModel;
         }
     }
 }

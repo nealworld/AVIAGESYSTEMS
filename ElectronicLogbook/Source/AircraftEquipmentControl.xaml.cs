@@ -28,8 +28,9 @@ namespace ElectronicLogbook
 
 
             mAirCraftEquipmentConfigViewModel = new AirCraftEquipmentConfigViewModel(GetList());
-            base.DataContext = mAirCraftEquipmentConfigViewModel;
+            //base.DataContext = mAirCraftEquipmentConfigViewModel;
 
+            base.DataContext = ELBViewModel.getInstance().mAirCraftEquipmentConfigViewModel;
         }
 
         private List<AirCraftEquipmentConfig> GetList()

@@ -12,13 +12,16 @@ namespace ElectronicLogbookDataLib.DataProcessor
     {
 
         public UtilityParticipant mUtilityParticipant{get; private set;}
-        private static ELBParticipant mELBParticipant;
+        private static ELBParticipant mSingleton = null;
 
         private ELBParticipant() 
         {
             mUtilityParticipant = GetParticipant();
             if (mUtilityParticipant == null)
+            {
+                System.Diagnostics.Debug.WriteLine("ELBParticipant mUtilityParticipant == null");
                 return;
+            }
 
             mUtilityParticipant.EnterManualMode();
             mUtilityParticipant.SetState(CommonSimTypes.Status.Running);
@@ -26,14 +29,14 @@ namespace ElectronicLogbookDataLib.DataProcessor
 
         public static ELBParticipant getInstance() 
         {
-            if (mELBParticipant == null)
+            if (mSingleton == null)
             {
-                mELBParticipant =  new ELBParticipant();
+                mSingleton = new ELBParticipant();
             }
-            return mELBParticipant;
+            return mSingleton;
         }
 
-        private static UtilityParticipant GetParticipant()
+        private UtilityParticipant GetParticipant()
         {
             string lSimulationName = "Electronic_Logbook";
             string lSimulationDescription = "Electronic_Logbook";
@@ -44,7 +47,7 @@ namespace ElectronicLogbookDataLib.DataProcessor
                                         lSimulationPartNumber, lSimulationVersionInformation);
         }
 
-        private static UtilityParticipant RegisterParticipant(string aParticipantName, string aDescription,
+        private UtilityParticipant RegisterParticipant(string aParticipantName, string aDescription,
                                     string aPartNumber, string aVersion)
         {
             var lParticipantInfo = new ParticipantInformation()
@@ -97,6 +100,7 @@ namespace ElectronicLogbookDataLib.DataProcessor
                 }
                 MessageBox.Show("Cannot connect to CSI mesh. Error message: " + e.Message,
                                 "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Environment.Exit(0);
             }
             return lParticipant;
 

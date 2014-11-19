@@ -24,7 +24,7 @@ namespace ElectronicLogbook
         {
             InitializeComponent();
 
-            //base.DataContext = ConfigurationProcessor.GetInstance().GetVAISParticipantList();
+            base.DataContext = ElectronicLogbook.ViewModel.ELBViewModel.getInstance().mVAISParticipantListViewModel;
             List<VAISParticipant> ss = new List<VAISParticipant>();
             ss.Add(
                 new VAISParticipant {
@@ -96,7 +96,7 @@ namespace ElectronicLogbook
                 }
             );
 
-            base.DataContext = ss;
+            //base.DataContext = ss;
         }
 
 

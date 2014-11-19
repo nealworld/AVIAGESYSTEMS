@@ -16,10 +16,10 @@ namespace ElectronicLogbookDataLib.DataProcessor
     {
         private string mELBConfig = AppDomain.CurrentDomain.SetupInformation.ApplicationBase + "ElectronicLogbook_Config.txt";
         private List<A664ACRMessagePeriodicInput> mAllEquipmentMsgList = new List<A664ACRMessagePeriodicInput>();
-        private static ConfigurationProcessor mConfigProcessor;
+        private static ConfigurationProcessor mSingleton = null;
         private ELBParticipant mELBParticipant;
         private List<string> m3rdPartySWCheckList = new List<string>();
-
+        
         private Error LoadELBConfig() {
             if (!System.IO.File.Exists(mELBConfig))
             {
@@ -97,11 +97,11 @@ namespace ElectronicLogbookDataLib.DataProcessor
 
         public static ConfigurationProcessor GetInstance() 
         {
-            if (mConfigProcessor == null)
+            if (mSingleton == null)
             {
-                mConfigProcessor = new ConfigurationProcessor();
+                mSingleton = new ConfigurationProcessor();
             }
-            return mConfigProcessor; 
+            return mSingleton; 
         }
 
         public List<AirCraftEquipmentConfig> GetAirCraftEquipmentConfigList() 

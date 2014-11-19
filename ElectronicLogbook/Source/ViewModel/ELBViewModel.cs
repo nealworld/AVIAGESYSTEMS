@@ -9,7 +9,7 @@ namespace ElectronicLogbook.ViewModel
 {
     public class ELBViewModel : INotifyPropertyChanged
     {
-        private static ELBViewModel mSingleton;
+        private static ELBViewModel mSingleton = null;
         public static ELBViewModel getInstance()
         {
             if (mSingleton == null) 
@@ -76,7 +76,7 @@ namespace ElectronicLogbook.ViewModel
         }
 
 
-        public ELBViewModel() 
+        private ELBViewModel() 
         {
             ConfigurationProcessor lConfigurationProcessor = ConfigurationProcessor.GetInstance();
             mAirCraftEquipmentConfigViewModel = new AirCraftEquipmentConfigViewModel(
@@ -90,11 +90,11 @@ namespace ElectronicLogbook.ViewModel
             string lDriverConfig = "";
             string l3rdPartySW = "";
             aConfigurationProcessor.GetDriverAnd3rdPartyConfig(out lDriverConfig, out l3rdPartySW);
-            ConvertStrToDriver(lDriverConfig);
-            ConverStrToThirdPartySoftware(l3rdPartySW);
+            mDeviceDriverListViewModel = ConvertStrToDriver(lDriverConfig);
+            mThirdPartySoftwareListViewModel = ConverStrToThirdPartySoftware(l3rdPartySW);
         }
 
-        private void ConverStrToThirdPartySoftware(string a3rdPartySW)
+        private List<ThirdPartySoftware> ConverStrToThirdPartySoftware(string a3rdPartySW)
         {
             List<ThirdPartySoftware> lThirdPartySoftwareList = new List<ThirdPartySoftware>();
             String[] lThirdPartySoftwares = a3rdPartySW.Split('\n');
@@ -109,10 +109,10 @@ namespace ElectronicLogbook.ViewModel
                         mSoftwareLocation = lThirdPartySoftwareRecord[2]
                     });
             }
-            mThirdPartySoftwareListViewModel = lThirdPartySoftwareList;
+            return lThirdPartySoftwareList;
         }
 
-        private void ConvertStrToDriver(string aDriverConfig)
+        private List<DeviceDriver> ConvertStrToDriver(string aDriverConfig)
         {
             List<DeviceDriver> lDeviceDriverList = new List<DeviceDriver>();
             String[] lDeviceDrivers = aDriverConfig.Split('\n');
@@ -128,7 +128,7 @@ namespace ElectronicLogbook.ViewModel
                         mDriverLocation = lOneDeviceDriverRecord[3]
                     });
             }
-            mDeviceDriverListViewModel = lDeviceDriverList;
+            return lDeviceDriverList;
         }
         #region INotifyPropertyChanged Members
 
