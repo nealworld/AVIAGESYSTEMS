@@ -19,7 +19,6 @@ namespace ElectronicLogbookDataLib.DataProcessor
             mUtilityParticipant = GetParticipant();
             if (mUtilityParticipant == null)
             {
-                System.Diagnostics.Debug.WriteLine("ELBParticipant mUtilityParticipant == null");
                 return;
             }
 

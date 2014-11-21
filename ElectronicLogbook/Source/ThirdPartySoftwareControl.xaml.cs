@@ -23,7 +23,7 @@ namespace ElectronicLogbook
         {
             InitializeComponent();
 
-            base.DataContext = ELBViewModel.getInstance().mDeviceDriverListViewModel;
+            base.DataContext = ELBViewModel.getInstance().mThirdPartySoftwareListViewModel;
         }
     }
 }

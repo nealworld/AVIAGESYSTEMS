@@ -21,14 +21,14 @@ namespace ElectronicLogbook
     /// </summary>
     public partial class AircraftEquipmentControl : UserControl
     {
-        AirCraftEquipmentConfigViewModel mAirCraftEquipmentConfigViewModel;
+        //AirCraftEquipmentConfigViewModel mAirCraftEquipmentConfigViewModel;
         public AircraftEquipmentControl()
         {
             InitializeComponent();
 
 
-            mAirCraftEquipmentConfigViewModel = new AirCraftEquipmentConfigViewModel(GetList());
-            //base.DataContext = mAirCraftEquipmentConfigViewModel;
+            //mAirCraftEquipmentConfigViewModel = new AirCraftEquipmentConfigViewModel(GetList());
+            //base.DataContext = new AirCraftEquipmentConfigViewModel(GetList());
 
             base.DataContext = ELBViewModel.getInstance().mAirCraftEquipmentConfigViewModel;
         }

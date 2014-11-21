@@ -90,8 +90,15 @@ namespace ElectronicLogbook.ViewModel
             string lDriverConfig = "";
             string l3rdPartySW = "";
             aConfigurationProcessor.GetDriverAnd3rdPartyConfig(out lDriverConfig, out l3rdPartySW);
+
+            System.Diagnostics.Debug.WriteLine("***" + lDriverConfig);
+            System.Diagnostics.Debug.WriteLine("+++" + l3rdPartySW);
+
             mDeviceDriverListViewModel = ConvertStrToDriver(lDriverConfig);
+
+            System.Diagnostics.Debug.WriteLine("ConvertStrToDriver(lDriverConfig); end");
             mThirdPartySoftwareListViewModel = ConverStrToThirdPartySoftware(l3rdPartySW);
+            System.Diagnostics.Debug.WriteLine("ConverStrToThirdPartySoftware(l3rdPartySW); end");
         }
 
         private List<ThirdPartySoftware> ConverStrToThirdPartySoftware(string a3rdPartySW)
@@ -100,14 +107,17 @@ namespace ElectronicLogbook.ViewModel
             String[] lThirdPartySoftwares = a3rdPartySW.Split('\n');
             foreach (String lStr in lThirdPartySoftwares)
             {
-                String[] lThirdPartySoftwareRecord = lStr.Split(',');
-                lThirdPartySoftwareList.Add(
-                    new ThirdPartySoftware
-                    {
-                        mSoftwareName = lThirdPartySoftwareRecord[0],
-                        mSoftwareVersionNumber = lThirdPartySoftwareRecord[1],
-                        mSoftwareLocation = lThirdPartySoftwareRecord[2]
-                    });
+                if (lStr != string.Empty)
+                {
+                    String[] lThirdPartySoftwareRecord = lStr.Split(',');
+                    lThirdPartySoftwareList.Add(
+                        new ThirdPartySoftware
+                        {
+                            mSoftwareName = lThirdPartySoftwareRecord[0],
+                            mSoftwareVersionNumber = lThirdPartySoftwareRecord[1],
+                            mSoftwareLocation = lThirdPartySoftwareRecord[2]
+                        });
+                }
             }
             return lThirdPartySoftwareList;
         }
@@ -118,15 +128,19 @@ namespace ElectronicLogbook.ViewModel
             String[] lDeviceDrivers = aDriverConfig.Split('\n');
             foreach (String lStr in lDeviceDrivers)
             {
-                String[] lOneDeviceDriverRecord = lStr.Split(',');
-                lDeviceDriverList.Add(
-                    new DeviceDriver
-                    {
-                        mDeviceName = lOneDeviceDriverRecord[0],
-                        mDriverName = lOneDeviceDriverRecord[1],
-                        mDriverVersionNumber = lOneDeviceDriverRecord[2],
-                        mDriverLocation = lOneDeviceDriverRecord[3]
-                    });
+                if (lStr != String.Empty)
+                {
+                    System.Diagnostics.Debug.WriteLine("((((" + lStr + ")))");
+                    String[] lOneDeviceDriverRecord = lStr.Split(',');
+                    lDeviceDriverList.Add(
+                        new DeviceDriver
+                        {
+                            mDeviceName = lOneDeviceDriverRecord[0],
+                            mDriverName = lOneDeviceDriverRecord[1],
+                            mDriverVersionNumber = lOneDeviceDriverRecord[2],
+                            mDriverLocation = lOneDeviceDriverRecord[3]
+                        });
+                }
             }
             return lDeviceDriverList;
         }

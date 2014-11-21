@@ -32,7 +32,7 @@
                         <TextBlock Text="VAIS participant" FontFamily="Arial" Width="150" Height="22" TextAlignment="Center" />
                     </DockPanel>
                 </TabItem.Header>
-               <!-- <local:VAISParticipantControl /> -->
+                <local:VAISParticipantControl />
             </TabItem>
             <TabItem Height="30" Background="White" BorderBrush="Transparent">
                 <TabItem.Header>
@@ -40,7 +40,7 @@
                         <TextBlock Text="Device drivers" FontFamily="Arial" Width="150" Height="22" TextAlignment="Center" />
                     </DockPanel>
                 </TabItem.Header>
-            <!--    <local:DeviceDriverControl/> -->
+                <local:DeviceDriverControl/>
             </TabItem>
             <TabItem Height="30" Background="White" BorderBrush="Transparent">
                 <TabItem.Header>
@@ -48,7 +48,7 @@
                         <TextBlock Text="Third party softeware" FontFamily="Arial" Width="150" Height="22" TextAlignment="Center" />
                     </DockPanel>
                 </TabItem.Header>
-             <!--   <local:ThirdPartySoftwareControl/> -->
+                <local:ThirdPartySoftwareControl/>
             </TabItem>
         </TabControl>
     </DockPanel>

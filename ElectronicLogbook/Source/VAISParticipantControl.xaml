@@ -5,13 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d">
     <DockPanel >
-        <ListView ItemsSource="{Binding}" BorderBrush="Transparent">
-            <ListView.View>
+        <ListView ItemsSource="{Binding}" BorderBrush="Transparent" >
+            <ListView.View >
                 <GridView >
-                    <GridViewColumn Header="Participant Name" DisplayMemberBinding="{Binding mParticipantName}"  Width="150" />
-                    <GridViewColumn Header="Participant Part Number"  DisplayMemberBinding="{Binding mParticipantPartNumber}" Width="200" />
-                    <GridViewColumn Header="Participant Version Number"  DisplayMemberBinding="{Binding mParticipantVersionNumber}" Width="200" />
-                    <GridViewColumn Header="Participant Description"  DisplayMemberBinding="{Binding mParticipantDescription}" Width="200" />
+                    <GridViewColumn Header="Participant Name" DisplayMemberBinding="{Binding mParticipantName}"  Width="Auto" />
+                    <GridViewColumn Header="Participant Part Number"  DisplayMemberBinding="{Binding mParticipantPartNumber}" Width="Auto" />
+                    <GridViewColumn Header="Participant Version Number"  DisplayMemberBinding="{Binding mParticipantVersionNumber}" Width="Auto" />
+                    <GridViewColumn Header="Participant Description"  DisplayMemberBinding="{Binding mParticipantDescription}" Width="Auto" />
                     <GridViewColumn Header="Participant Location"  DisplayMemberBinding="{Binding mParticipantLocation}" Width="Auto" />
                 </GridView>
             </ListView.View>

@@ -90,6 +90,7 @@ namespace ElectronicLogbookDataLib.DataProcessor
         private ConfigurationProcessor() {
             mELBParticipant = ELBParticipant.getInstance();
             LoadELBConfig();
+
             ASN1_Decoder_ConfigReport.cASN1Format.BuildValueTree();
         }
 

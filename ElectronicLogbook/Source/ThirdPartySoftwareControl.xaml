@@ -7,9 +7,9 @@
         <ListView ItemsSource="{Binding}" >
             <ListView.View>
                 <GridView >
-                    <GridViewColumn Header="Software Name" DisplayMemberBinding="{Binding mSoftwareName}" Width="150" />
-                    <GridViewColumn Header="Software Version Number" DisplayMemberBinding="{Binding mSoftwareVersionNumber}" Width="150" />
-                    <GridViewColumn Header="Software Location" DisplayMemberBinding="{Binding mSoftwareLocation}" Width="150" />
+                    <GridViewColumn Header="Software Name" DisplayMemberBinding="{Binding mSoftwareName}" Width="Auto" />
+                    <GridViewColumn Header="Software Version Number" DisplayMemberBinding="{Binding mSoftwareVersionNumber}" Width="Auto" />
+                    <GridViewColumn Header="Software Location" DisplayMemberBinding="{Binding mSoftwareLocation}" Width="Auto" />
                 </GridView>
             </ListView.View>
         </ListView>

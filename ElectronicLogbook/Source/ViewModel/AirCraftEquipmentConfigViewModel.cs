@@ -46,12 +46,14 @@ namespace ElectronicLogbook.ViewModel
 
         public AirCraftEquipmentConfigViewModel(List<AirCraftEquipmentConfig> aAirCraftEquipmentConfigList)
         {
+            System.Diagnostics.Debug.WriteLine("public AirCraftEquipmentConfigViewModel start");
             mAirCraftEquipmentConfigViewModelList = new List<AirCraftEquipmentConfigViewModel>();
+
             foreach (AirCraftEquipmentConfig lAirCraftEquipmentConfig in aAirCraftEquipmentConfigList)
             {
                 mAirCraftEquipmentConfigViewModelList.Add(new AirCraftEquipmentConfigViewModel(lAirCraftEquipmentConfig));
             }
-
+            System.Diagnostics.Debug.WriteLine("public AirCraftEquipmentConfigViewModel end");
         }
 
 
