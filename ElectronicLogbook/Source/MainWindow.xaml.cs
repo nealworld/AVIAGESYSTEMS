@@ -10,7 +10,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using ElectronicLogbook.ViewModel;
+using ElectronicLogbookDataLib;
 namespace ElectronicLogbook
 {
     /// <summary>
@@ -21,6 +22,10 @@ namespace ElectronicLogbook
         public MainWindow()
         {
             InitializeComponent();
+            base.DataContext = ELBViewModel.getInstance();
+
+            ShowCurrentConfigMenuItem.Click += new RoutedEventHandler(ELBViewModel.getInstance().GetCurrentConfiguration_MenuItemClick);
+            ShowExpectConfigMenuItem.Click += new RoutedEventHandler(ELBViewModel.getInstance().GetExpectConfiguration_MenuItemClick );
         }
     }
 }

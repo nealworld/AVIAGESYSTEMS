@@ -383,13 +383,16 @@ void Get3rdPartySWConfiguration(char* pConfiguration)
     HANDLE hProcessSnap = NULL;
     PROCESSENTRY32 pe32= {0};
     hProcessSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);//get all the processes
+	char text[100];
+
     if (hProcessSnap == (HANDLE)-1)
     {
-        printf("\nCreateToolhelp32Snapshot() failed:%d",GetLastError());
+		sprintf(text,"\nCreateToolhelp32Snapshot() failed:%d",GetLastError());
+        OutputDebugStringA(text);
         return ;
     }
     pe32.dwSize = sizeof(PROCESSENTRY32);
-    printf("\nProcessName      ProcessID");
+    OutputDebugStringA("\nProcessName      ProcessID");
     if (Process32First(hProcessSnap, &pe32))//get first process
     {
         do
@@ -403,8 +406,8 @@ void Get3rdPartySWConfiguration(char* pConfiguration)
                 i++;
             }
             *pConfiguration++ = ',';
-
-            //printf("\n%-20s%d",pe32.szExeFile,pe32.th32ProcessID);
+			//sprintf(text,"\n%-20s%d",pe32.szExeFile,pe32.th32ProcessID);
+            OutputDebugStringA(pFileName);
             DWORD lVersion = GetProcessVersion(pe32.th32ProcessID);
             char pVersion[100] = {'\0'};
             GetVersionFromLong(lVersion, pVersion);
@@ -418,7 +421,8 @@ void Get3rdPartySWConfiguration(char* pConfiguration)
     }
     else
     {
-        printf("\nProcess32Firstt() failed:%d",GetLastError());
+		sprintf(text,"\nProcess32Firstt() failed:%d",GetLastError());
+        OutputDebugStringA(text);
     }
     CloseHandle (hProcessSnap);
 }

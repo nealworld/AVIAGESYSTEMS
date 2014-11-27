@@ -22,8 +22,6 @@ namespace ElectronicLogbook
         public ThirdPartySoftwareControl()
         {
             InitializeComponent();
-
-            base.DataContext = ELBViewModel.getInstance().mThirdPartySoftwareListViewModel;
         }
     }
 }

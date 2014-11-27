@@ -3,8 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008">
-    <DockPanel>
-        <ListView ItemsSource="{Binding}" >
+    <DockPanel DataContext="{Binding mThirdPartySoftwareListViewModel}" >
+        <ListView ItemsSource="{Binding }" >
             <ListView.View>
                 <GridView >
                     <GridViewColumn Header="Software Name" DisplayMemberBinding="{Binding mSoftwareName}" Width="Auto" />

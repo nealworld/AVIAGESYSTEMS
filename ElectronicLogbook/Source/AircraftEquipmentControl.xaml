@@ -18,32 +18,41 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <TreeView BorderBrush="Transparent" Grid.Column="0" Name="AircraftEquipmentConfigTreeView" ItemsSource="{Binding mAirCraftEquipmentConfigViewModelList}" 
-                  Padding="-5,0,20,0">
-            <TreeView.ItemContainerStyle>
-                <Style TargetType="{x:Type TreeViewItem}">
-                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
-                    <Setter Property="FontWeight" Value="Normal" />
-                    <Style.Triggers>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="FontWeight" Value="Bold" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </TreeView.ItemContainerStyle>
-
-            <TreeView.ItemTemplate>
-
-                <HierarchicalDataTemplate ItemsSource="{Binding Path=mSubEquipmentViewModelList}">
-
-                    <TextBlock Text="{Binding Path=mNodeName}"/>
-
-                </HierarchicalDataTemplate>
-
-            </TreeView.ItemTemplate>
-
+        <TreeView BorderBrush="Transparent" Grid.Column="0" Name="AircraftEquipmentConfigTreeView" Padding="-5,0,20,0">
+            <TreeViewItem Header="Equipment List" BorderBrush="Transparent" 
+                          ItemsSource="{Binding Path=mAirCraftEquipmentConfigViewModel.mAirCraftEquipmentConfigViewModelList, Mode=TwoWay}">
+                <TreeViewItem.ContextMenu>
+                    <ContextMenu >
+                        <MenuItem Header="New Equipment..."/>
+                    </ContextMenu>
+                </TreeViewItem.ContextMenu>
+                <TreeViewItem.ItemContainerStyle>
+                    <Style TargetType="{x:Type TreeViewItem}">
+                        <Setter Property="IsSelected" Value="{Binding IsSelected}" />
+                        <Setter Property="FontWeight" Value="Normal" />
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="FontWeight" Value="Bold" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TreeViewItem.ItemContainerStyle>
+                <TreeViewItem.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding Path=mSubEquipmentViewModelList}">
+                        <TextBlock Text="{Binding Path=mNodeName, Mode=TwoWay}">
+                        <TextBlock.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="New"/>
+                                <MenuItem Header="Delete" />
+                                <MenuItem Header="Rename"/>
+                            </ContextMenu>
+                        </TextBlock.ContextMenu>
+                        </TextBlock>
+                    </HierarchicalDataTemplate>
+                </TreeViewItem.ItemTemplate>
+            </TreeViewItem>
         </TreeView>
-        <GridSplitter Width="2.5" Grid.Column="0" Grid.RowSpan="3" Style="{StaticResource GridSplitterStyle}"/>
+        <GridSplitter Width="2.5" Grid.Column="0" Style="{StaticResource GridSplitterStyle}"/>
         <Grid Grid.Column="1" Background="White" DataContext="{Binding ElementName=AircraftEquipmentConfigTreeView}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -96,10 +105,10 @@
                                 </Style>
                             </TreeViewItem.ItemContainerStyle>
                             <TreeViewItem.ItemTemplate>
-                            <HierarchicalDataTemplate >
-                                <TextBlock Text="{Binding mSWConfigIndex}"/>
-                            </HierarchicalDataTemplate>
-                        </TreeViewItem.ItemTemplate>
+                                <HierarchicalDataTemplate >
+                                    <TextBlock Text="{Binding mSWConfigIndex}"/>
+                                </HierarchicalDataTemplate>
+                            </TreeViewItem.ItemTemplate>
                         </TreeViewItem>
                     </TreeView>
 
@@ -137,7 +146,7 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <ListView Grid.Row="0" Grid.Column="0" BorderBrush="Transparent"
-                              ItemsSource="{Binding ElementName=AircraftEquipmentConfigTreeView, Path=SelectedItem.mSubEquipment.mConfigInfoList}">
+                              ItemsSource="{Binding ElementName=AircraftEquipmentConfigTreeView, Path=SelectedItem.mSubEquipment.mConfigInfoList, Mode=TwoWay}">
                         <ListView.View>
                             <GridView >
                                 <GridViewColumn Header="Config Info Index" DisplayMemberBinding="{Binding mItemIndex}" Width="150" />
@@ -148,6 +157,5 @@
                 </Grid>
             </Expander>
         </Grid>
-
     </Grid>
 </UserControl>

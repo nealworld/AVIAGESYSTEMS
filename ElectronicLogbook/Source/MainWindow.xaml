@@ -5,12 +5,10 @@
         FontSize="14"
         Title="ELB" Height="Auto" Width="Auto" Topmost="True" WindowStartupLocation="CenterScreen" WindowStyle="ThreeDBorderWindow">
     <DockPanel>
-        <Menu Background="White" Height="23" HorizontalAlignment="Stretch" Name="menu1" VerticalAlignment="Top" Margin="0" DockPanel.Dock="Top">
-            <MenuItem Header="Expect" >
-            </MenuItem>
-            <MenuItem Header="Current">
-                <MenuItem Header="Show Configuration" />
-                <MenuItem Header="Get Configuration" />
+        <Menu Background="White" Height="23"  FontSize="14" DockPanel.Dock="Top">
+            <MenuItem Header="Configuration">
+                <MenuItem Header="Show Current Configuration" Name="ShowCurrentConfigMenuItem"/>
+                <MenuItem Header="Show Expect Configuration" Name="ShowExpectConfigMenuItem"/>
             </MenuItem>
             <MenuItem Header="Compare" >
             </MenuItem>

@@ -23,8 +23,6 @@ namespace ElectronicLogbook
         public DeviceDriverControl()
         {
             InitializeComponent();
-
-            base.DataContext = ELBViewModel.getInstance().mDeviceDriverListViewModel;
         }
     }
 }
