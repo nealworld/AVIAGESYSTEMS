@@ -23,7 +23,7 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private struct SystemConfiguration{
-            public AirCraftEquipmentConfigViewModel mAirCraftEquipmentConfig;
+            public ObservableCollection<AirCraftEquipmentConfig> mAirCraftEquipmentConfigList;
             public ObservableCollection<VAISParticipant> mVAISParticipantList;
             public ObservableCollection<DeviceDriver> mDeviceDriverList;
             public ObservableCollection<ThirdPartySoftware> mThirdPartySoftware;
@@ -32,25 +32,24 @@ namespace ElectronicLogbook.ViewModel
         private SystemConfiguration mCurrentSystemConfiguration;
         private SystemConfiguration mExpectSystemConfiguration;
 
-       
-        private AirCraftEquipmentConfigViewModel _AirCraftEquipmentConfig;
-        public AirCraftEquipmentConfigViewModel mAirCraftEquipmentConfigViewModel 
+        private ObservableCollection<AirCraftEquipmentConfig> _AirCraftEquipmentConfigList;
+        public ObservableCollection<AirCraftEquipmentConfig> mAirCraftEquipmentConfigViewModel
         {
-            private set
+            set
             {
-                _AirCraftEquipmentConfig = value;
+                _AirCraftEquipmentConfigList = value;
                 this.OnPropertyChanged("mAirCraftEquipmentConfigViewModel");
             }
-            get 
+            get
             {
-                return _AirCraftEquipmentConfig;
+                return _AirCraftEquipmentConfigList;
             }
         }
 
         private ObservableCollection<VAISParticipant> _VAISParticipantList;
         public ObservableCollection<VAISParticipant> mVAISParticipantListViewModel 
         {
-            private set
+            set
             {
                 _VAISParticipantList = value;
                 this.OnPropertyChanged("mVAISParticipantListViewModel");
@@ -64,7 +63,7 @@ namespace ElectronicLogbook.ViewModel
         private ObservableCollection<DeviceDriver> _DeviceDriverList;
         public ObservableCollection<DeviceDriver> mDeviceDriverListViewModel 
         {
-            private set
+            set
             {
                 _DeviceDriverList = value;
                 this.OnPropertyChanged("mDeviceDriverListViewModel");
@@ -78,7 +77,7 @@ namespace ElectronicLogbook.ViewModel
         private ObservableCollection<ThirdPartySoftware> _ThirdPartySoftwareList;
         public ObservableCollection<ThirdPartySoftware> mThirdPartySoftwareListViewModel 
         {
-            private set
+            set
             {
                 _ThirdPartySoftwareList = value;
                 this.OnPropertyChanged("mThirdPartySoftwareListViewModel");
@@ -92,11 +91,23 @@ namespace ElectronicLogbook.ViewModel
 
         private ELBViewModel() 
         {
+            mAirCraftEquipmentConfigViewModel = new ObservableCollection<AirCraftEquipmentConfig>();
+            mVAISParticipantListViewModel = new ObservableCollection<VAISParticipant>();
+            mDeviceDriverListViewModel = new ObservableCollection<DeviceDriver>();
+            mThirdPartySoftwareListViewModel = new ObservableCollection<ThirdPartySoftware>();
+
+            mCurrentSystemConfiguration.mAirCraftEquipmentConfigList = new ObservableCollection<AirCraftEquipmentConfig>();
+            mCurrentSystemConfiguration.mDeviceDriverList = new ObservableCollection<DeviceDriver>();
+            mCurrentSystemConfiguration.mThirdPartySoftware = new ObservableCollection<ThirdPartySoftware>();
+            mCurrentSystemConfiguration.mVAISParticipantList = new ObservableCollection<VAISParticipant>();
+
+            mExpectSystemConfiguration.mAirCraftEquipmentConfigList = new ObservableCollection<AirCraftEquipmentConfig>();
+            mExpectSystemConfiguration.mDeviceDriverList = new ObservableCollection<DeviceDriver>();
+            mExpectSystemConfiguration.mThirdPartySoftware = new ObservableCollection<ThirdPartySoftware>();
+            mExpectSystemConfiguration.mVAISParticipantList = new ObservableCollection<VAISParticipant>();
+
             CollectCurrentConfigurationFromSystem();
             UpdateELBViewModel(mCurrentSystemConfiguration);
-            
-            CollectExpectConfigurationFromFile();
-            //UpdateELBViewModel(mExpectSystemConfiguration);
         }
 
         public void GetCurrentConfiguration_MenuItemClick(object sender, RoutedEventArgs e)
@@ -106,6 +117,7 @@ namespace ElectronicLogbook.ViewModel
         }
         public void GetExpectConfiguration_MenuItemClick(object sender, RoutedEventArgs e)
         {
+            CollectExpectConfigurationFromFile();
             UpdateELBViewModel(mExpectSystemConfiguration);
         }
 
@@ -114,7 +126,7 @@ namespace ElectronicLogbook.ViewModel
             ConfigurationProcessor lConfigurationProcessor = ConfigurationProcessor.GetInstance();
             //mAirCraftEquipmentConfigViewModel = new AirCraftEquipmentConfigViewModel(
               //  lConfigurationProcessor.GetAirCraftEquipmentConfigList());
-            mCurrentSystemConfiguration.mAirCraftEquipmentConfig = new AirCraftEquipmentConfigViewModel(
+            mCurrentSystemConfiguration.mAirCraftEquipmentConfigList = new ObservableCollection<AirCraftEquipmentConfig>(
                 GetList());
             mCurrentSystemConfiguration.mVAISParticipantList = new ObservableCollection<VAISParticipant>(
                 lConfigurationProcessor.GetVAISParticipantList());
@@ -132,7 +144,7 @@ namespace ElectronicLogbook.ViewModel
 
         private void UpdateELBViewModel(SystemConfiguration aSystemConfiguration)
         {
-            this.mAirCraftEquipmentConfigViewModel = aSystemConfiguration.mAirCraftEquipmentConfig;
+            this.mAirCraftEquipmentConfigViewModel = aSystemConfiguration.mAirCraftEquipmentConfigList;
             this.mVAISParticipantListViewModel = aSystemConfiguration.mVAISParticipantList;
             this.mDeviceDriverListViewModel = aSystemConfiguration.mDeviceDriverList;
             this.mThirdPartySoftwareListViewModel = aSystemConfiguration.mThirdPartySoftware;

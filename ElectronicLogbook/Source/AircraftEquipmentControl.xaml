@@ -2,7 +2,8 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008">
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:ElectronicLogbookDataLib.AirCraftEquipment;assembly=ElectronicLogbookDataLib">
     <Grid>
         <Grid.Resources>
             <Style x:Key="GridSplitterStyle">
@@ -20,15 +21,9 @@
         </Grid.ColumnDefinitions>
         <TreeView BorderBrush="Transparent" Grid.Column="0" Name="AircraftEquipmentConfigTreeView" Padding="-5,0,20,0">
             <TreeViewItem Header="Equipment List" BorderBrush="Transparent" 
-                          ItemsSource="{Binding Path=mAirCraftEquipmentConfigViewModel.mAirCraftEquipmentConfigViewModelList, Mode=TwoWay}">
-                <TreeViewItem.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="New Equipment..."/>
-                    </ContextMenu>
-                </TreeViewItem.ContextMenu>
+                          ItemsSource="{Binding Path=mAirCraftEquipmentConfigViewModel, Mode=TwoWay}">
                 <TreeViewItem.ItemContainerStyle>
                     <Style TargetType="{x:Type TreeViewItem}">
-                        <Setter Property="IsSelected" Value="{Binding IsSelected}" />
                         <Setter Property="FontWeight" Value="Normal" />
                         <Style.Triggers>
                             <Trigger Property="IsSelected" Value="True">
@@ -37,19 +32,39 @@
                         </Style.Triggers>
                     </Style>
                 </TreeViewItem.ItemContainerStyle>
-                <TreeViewItem.ItemTemplate>
-                    <HierarchicalDataTemplate ItemsSource="{Binding Path=mSubEquipmentViewModelList}">
-                        <TextBlock Text="{Binding Path=mNodeName, Mode=TwoWay}">
-                        <TextBlock.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Header="New"/>
-                                <MenuItem Header="Delete" />
-                                <MenuItem Header="Rename"/>
-                            </ContextMenu>
-                        </TextBlock.ContextMenu>
+                <TreeViewItem.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="New Equipment..." >
+                        </MenuItem>
+                    </ContextMenu>
+                </TreeViewItem.ContextMenu>
+                <TreeViewItem.Resources>
+                    <HierarchicalDataTemplate DataType="{x:Type local:AirCraftEquipmentConfig}" 
+                                              ItemsSource="{Binding mSubEquipmentList}">
+                        <TextBlock Text="{Binding mConfigName}" 
+                                   MouseRightButtonDown="TextBlock_MouseRightButtonDown_1">
+                            <TextBlock.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="New SubEquipment"/>
+                                    <MenuItem Header="Remove"/>
+                                    <MenuItem Header="Rename"/>
+                                </ContextMenu>
+                            </TextBlock.ContextMenu>
                         </TextBlock>
                     </HierarchicalDataTemplate>
-                </TreeViewItem.ItemTemplate>
+
+                    <DataTemplate DataType="{x:Type local:SubEquipment}">
+                        <TextBlock Text="{Binding mEquipmentID}" 
+                                   MouseRightButtonDown="TextBlock_MouseRightButtonDown_2">
+                            <TextBlock.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Remove"/>
+                                    <MenuItem Header="Rename"/>
+                                </ContextMenu>
+                            </TextBlock.ContextMenu>
+                        </TextBlock>
+                    </DataTemplate>
+                </TreeViewItem.Resources>
             </TreeViewItem>
         </TreeView>
         <GridSplitter Width="2.5" Grid.Column="0" Style="{StaticResource GridSplitterStyle}"/>
@@ -60,7 +75,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Expander Header="HW Part" MinHeight="50">
-                <ListView ItemsSource="{Binding SelectedItem.mSubEquipment.mHWPartList}" BorderBrush="Transparent">
+                <ListView ItemsSource="{Binding SelectedItem.mHWPartList}" BorderBrush="Transparent">
                     <ListView.View >
                         <GridView >
                             <GridViewColumn Header="HW Part Index" DisplayMemberBinding="{Binding mHWPartIndex}" Width="150" />
@@ -76,13 +91,11 @@
 
             <Expander Header="SW_Config" Grid.Row="1"  MinHeight="100">
                 <Grid DataContext="{Binding ElementName=AircraftEquipmentConfigTreeView}">
-                    <!-- Define four rows: -->
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <!-- Define two columns: -->
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
@@ -92,10 +105,9 @@
 
                     <TreeView Name="SWConfigListTreeView" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3"
                               Padding="-5,0,10,0" BorderBrush="Transparent">
-                        <TreeViewItem Header="SWConfigIndex" ItemsSource="{Binding SelectedItem.mSubEquipment.mSWConfigList}">
+                        <TreeViewItem Header="SWConfigIndex" ItemsSource="{Binding SelectedItem.mSWConfigList}">
                             <TreeViewItem.ItemContainerStyle>
                                 <Style TargetType="{x:Type TreeViewItem}">
-                                    <Setter Property="IsSelected" Value="False" />
                                     <Setter Property="FontWeight" Value="Normal" />
                                     <Style.Triggers>
                                         <Trigger Property="IsSelected" Value="True">
@@ -105,9 +117,9 @@
                                 </Style>
                             </TreeViewItem.ItemContainerStyle>
                             <TreeViewItem.ItemTemplate>
-                                <HierarchicalDataTemplate >
+                                <DataTemplate DataType="{x:Type local:SWConfig}">
                                     <TextBlock Text="{Binding mSWConfigIndex}"/>
-                                </HierarchicalDataTemplate>
+                                </DataTemplate>
                             </TreeViewItem.ItemTemplate>
                         </TreeViewItem>
                     </TreeView>
@@ -137,16 +149,14 @@
                           VerticalAlignment="Bottom" Style="{StaticResource GridSplitterStyle}"/>
             <Expander Header="Config info" Grid.Row="2"  MinHeight="50">
                 <Grid>
-                    <!-- Define four rows: -->
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <!-- Define two columns: -->
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <ListView Grid.Row="0" Grid.Column="0" BorderBrush="Transparent"
-                              ItemsSource="{Binding ElementName=AircraftEquipmentConfigTreeView, Path=SelectedItem.mSubEquipment.mConfigInfoList, Mode=TwoWay}">
+                              ItemsSource="{Binding ElementName=AircraftEquipmentConfigTreeView, Path=SelectedItem.mConfigInfoList, Mode=TwoWay}">
                         <ListView.View>
                             <GridView >
                                 <GridViewColumn Header="Config Info Index" DisplayMemberBinding="{Binding mItemIndex}" Width="150" />

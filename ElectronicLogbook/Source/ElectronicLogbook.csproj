@@ -97,7 +97,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModel\ELBViewModel.cs" />
-    <Compile Include="ViewModel\SubEquipmentViewModel.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>

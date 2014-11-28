@@ -33,5 +33,17 @@ namespace ElectronicLogbook
             tb.Text = "change";
         }
 
+        private void TextBlock_MouseRightButtonDown_1(object sender, MouseButtonEventArgs e)
+        {
+            TextBlock tb = sender as TextBlock;
+            tb.Text = "change111";
+        }
+
+        private void TextBlock_MouseRightButtonDown_2(object sender, MouseButtonEventArgs e)
+        {
+            TextBlock tb = sender as TextBlock;
+            tb.Text = "change222";
+        }
+
     }
 }
