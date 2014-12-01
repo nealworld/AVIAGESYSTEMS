@@ -23,7 +23,7 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private struct SystemConfiguration{
-            public ObservableCollection<AirCraftEquipmentConfig> mAirCraftEquipmentConfigList;
+            public ObservableCollection<AirCraftEquipmentConfigViewModel> mAirCraftEquipmentConfigViewModelList;
             public ObservableCollection<VAISParticipant> mVAISParticipantList;
             public ObservableCollection<DeviceDriver> mDeviceDriverList;
             public ObservableCollection<ThirdPartySoftware> mThirdPartySoftware;
@@ -32,13 +32,13 @@ namespace ElectronicLogbook.ViewModel
         private SystemConfiguration mCurrentSystemConfiguration;
         private SystemConfiguration mExpectSystemConfiguration;
 
-        private ObservableCollection<AirCraftEquipmentConfig> _AirCraftEquipmentConfigList;
-        public ObservableCollection<AirCraftEquipmentConfig> mAirCraftEquipmentConfigViewModel
+        private ObservableCollection<AirCraftEquipmentConfigViewModel> _AirCraftEquipmentConfigList;
+        public ObservableCollection<AirCraftEquipmentConfigViewModel> mAirCraftEquipmentConfigViewModelList
         {
             set
             {
                 _AirCraftEquipmentConfigList = value;
-                this.OnPropertyChanged("mAirCraftEquipmentConfigViewModel");
+                this.OnPropertyChanged("mAirCraftEquipmentConfigViewModelList");
             }
             get
             {
@@ -91,17 +91,17 @@ namespace ElectronicLogbook.ViewModel
 
         private ELBViewModel() 
         {
-            mAirCraftEquipmentConfigViewModel = new ObservableCollection<AirCraftEquipmentConfig>();
+            mAirCraftEquipmentConfigViewModelList = new ObservableCollection<AirCraftEquipmentConfigViewModel>();
             mVAISParticipantListViewModel = new ObservableCollection<VAISParticipant>();
             mDeviceDriverListViewModel = new ObservableCollection<DeviceDriver>();
             mThirdPartySoftwareListViewModel = new ObservableCollection<ThirdPartySoftware>();
 
-            mCurrentSystemConfiguration.mAirCraftEquipmentConfigList = new ObservableCollection<AirCraftEquipmentConfig>();
+            mCurrentSystemConfiguration.mAirCraftEquipmentConfigViewModelList = new ObservableCollection<AirCraftEquipmentConfigViewModel>();
             mCurrentSystemConfiguration.mDeviceDriverList = new ObservableCollection<DeviceDriver>();
             mCurrentSystemConfiguration.mThirdPartySoftware = new ObservableCollection<ThirdPartySoftware>();
             mCurrentSystemConfiguration.mVAISParticipantList = new ObservableCollection<VAISParticipant>();
 
-            mExpectSystemConfiguration.mAirCraftEquipmentConfigList = new ObservableCollection<AirCraftEquipmentConfig>();
+            mExpectSystemConfiguration.mAirCraftEquipmentConfigViewModelList = new ObservableCollection<AirCraftEquipmentConfigViewModel>();
             mExpectSystemConfiguration.mDeviceDriverList = new ObservableCollection<DeviceDriver>();
             mExpectSystemConfiguration.mThirdPartySoftware = new ObservableCollection<ThirdPartySoftware>();
             mExpectSystemConfiguration.mVAISParticipantList = new ObservableCollection<VAISParticipant>();
@@ -126,8 +126,11 @@ namespace ElectronicLogbook.ViewModel
             ConfigurationProcessor lConfigurationProcessor = ConfigurationProcessor.GetInstance();
             //mAirCraftEquipmentConfigViewModel = new AirCraftEquipmentConfigViewModel(
               //  lConfigurationProcessor.GetAirCraftEquipmentConfigList());
-            mCurrentSystemConfiguration.mAirCraftEquipmentConfigList = new ObservableCollection<AirCraftEquipmentConfig>(
-                GetList());
+            foreach (AirCraftEquipmentConfig lAirCraftEquipmentConfig in GetList()) 
+            {
+                mCurrentSystemConfiguration.mAirCraftEquipmentConfigViewModelList.Add
+                    (new AirCraftEquipmentConfigViewModel(lAirCraftEquipmentConfig));
+            }
             mCurrentSystemConfiguration.mVAISParticipantList = new ObservableCollection<VAISParticipant>(
                 lConfigurationProcessor.GetVAISParticipantList());
             string lDriverConfig = "";
@@ -144,7 +147,7 @@ namespace ElectronicLogbook.ViewModel
 
         private void UpdateELBViewModel(SystemConfiguration aSystemConfiguration)
         {
-            this.mAirCraftEquipmentConfigViewModel = aSystemConfiguration.mAirCraftEquipmentConfigList;
+            this.mAirCraftEquipmentConfigViewModelList = aSystemConfiguration.mAirCraftEquipmentConfigViewModelList;
             this.mVAISParticipantListViewModel = aSystemConfiguration.mVAISParticipantList;
             this.mDeviceDriverListViewModel = aSystemConfiguration.mDeviceDriverList;
             this.mThirdPartySoftwareListViewModel = aSystemConfiguration.mThirdPartySoftware;

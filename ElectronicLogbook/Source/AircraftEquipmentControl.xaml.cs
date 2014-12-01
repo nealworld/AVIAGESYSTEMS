@@ -27,23 +27,30 @@ namespace ElectronicLogbook
             InitializeComponent();
         }
 
-        private void TextBlock_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            TextBlock tb = sender as TextBlock;
-            tb.Text = "change";
-        }
+            TextBlock tb =   (TextBlock)((ContextMenu)(((MenuItem)sender).Parent)).PlacementTarget;
+            tb.Text = "neal is gooda!";
+           
+            foreach (AirCraftEquipmentConfigViewModel lAirCraftEquipmentConfigViewModel in 
+                ELBViewModel.getInstance().mAirCraftEquipmentConfigViewModelList) 
+            {
+                foreach (SubEquipmentViewModel lSubEquipment in lAirCraftEquipmentConfigViewModel.mChildren )
+                {
+                    System.Diagnostics.Debug.WriteLine(lSubEquipment.mSubEquipment.mEquipmentID);
+                }
+            }
 
-        private void TextBlock_MouseRightButtonDown_1(object sender, MouseButtonEventArgs e)
-        {
-            TextBlock tb = sender as TextBlock;
-            tb.Text = "change111";
-        }
+            foreach (AirCraftEquipmentConfigViewModel lAirCraftEquipmentConfigViewModel in
+                ELBViewModel.getInstance().mAirCraftEquipmentConfigViewModelList)
+            {
+                foreach (SubEquipmentViewModel lSubEquipment in lAirCraftEquipmentConfigViewModel.mChildren)
+                {
+                    lSubEquipment.mSubEquipment.mEquipmentID = "neal is bada!";
+                }
+            }
 
-        private void TextBlock_MouseRightButtonDown_2(object sender, MouseButtonEventArgs e)
-        {
-            TextBlock tb = sender as TextBlock;
-            tb.Text = "change222";
-        }
 
+        }
     }
 }

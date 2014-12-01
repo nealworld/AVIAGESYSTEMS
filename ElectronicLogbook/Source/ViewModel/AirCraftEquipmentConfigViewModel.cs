@@ -8,14 +8,30 @@ using System.ComponentModel;
 
 namespace ElectronicLogbook.ViewModel
 {
-    public class AirCraftEquipmentConfigViewModel
+    public class AirCraftEquipmentConfigViewModel : TreeViewItemViewModel
     {
-        public List<AirCraftEquipmentConfig> mAirCraftEquipmentConfigList { set; get; }
-        public String mName;
-        
-        public AirCraftEquipmentConfigViewModel()
+        private String _ConfigName;
+        public String mConfigName{
+            set
+            {
+                _ConfigName = value;
+                this.OnPropertyChanged("mConfigName");
+            }
+            get 
+            {
+                return _ConfigName;
+            }
+        }
+
+        public AirCraftEquipmentConfigViewModel(AirCraftEquipmentConfig aAirCraftEquipmentConfig)
+            :base(null)
         {
-            mName = "Equipment List";
+            mConfigName = aAirCraftEquipmentConfig.mConfigName;
+            foreach (SubEquipment lSubEquipment in aAirCraftEquipmentConfig.mSubEquipmentList) 
+            {
+                mChildren.Add(new SubEquipmentViewModel(lSubEquipment, this));
+            }
+            
         }
     }
 }

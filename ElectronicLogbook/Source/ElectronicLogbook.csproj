@@ -104,6 +104,9 @@
     <Compile Include="VAISParticipantControl.xaml.cs">
       <DependentUpon>VAISParticipantControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\HWPartViewModel.cs" />
+    <Compile Include="ViewModel\SubEquipmentViewModel.cs" />
+    <Compile Include="ViewModel\TreeViewItemViewModel.cs" />
     <Page Include="AircraftEquipmentControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
