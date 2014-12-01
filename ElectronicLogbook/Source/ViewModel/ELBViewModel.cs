@@ -10,7 +10,7 @@ using ElectronicLogbookDataLib.AirCraftEquipment;
 using System.Windows;
 namespace ElectronicLogbook.ViewModel
 {
-    public class ELBViewModel : INotifyPropertyChanged
+    public class ELBViewModel : ViewModel
     {
         private static ELBViewModel mSingleton = null;
         public static ELBViewModel getInstance()
@@ -123,7 +123,7 @@ namespace ElectronicLogbook.ViewModel
 
         private void CollectCurrentConfigurationFromSystem()
         {
-            ConfigurationProcessor lConfigurationProcessor = ConfigurationProcessor.GetInstance();
+            //ConfigurationProcessor lConfigurationProcessor = ConfigurationProcessor.GetInstance();
             //mAirCraftEquipmentConfigViewModel = new AirCraftEquipmentConfigViewModel(
               //  lConfigurationProcessor.GetAirCraftEquipmentConfigList());
             foreach (AirCraftEquipmentConfig lAirCraftEquipmentConfig in GetList()) 
@@ -131,13 +131,13 @@ namespace ElectronicLogbook.ViewModel
                 mCurrentSystemConfiguration.mAirCraftEquipmentConfigViewModelList.Add
                     (new AirCraftEquipmentConfigViewModel(lAirCraftEquipmentConfig));
             }
-            mCurrentSystemConfiguration.mVAISParticipantList = new ObservableCollection<VAISParticipant>(
+            /*mCurrentSystemConfiguration.mVAISParticipantList = new ObservableCollection<VAISParticipant>(
                 lConfigurationProcessor.GetVAISParticipantList());
             string lDriverConfig = "";
             string l3rdPartySW = "";
             lConfigurationProcessor.GetDriverAnd3rdPartyConfig(out lDriverConfig, out l3rdPartySW);
             mCurrentSystemConfiguration.mDeviceDriverList = ConvertStrToDriver(lDriverConfig);
-            mCurrentSystemConfiguration.mThirdPartySoftware = ConverStrToThirdPartySoftware(l3rdPartySW);
+            mCurrentSystemConfiguration.mThirdPartySoftware = ConverStrToThirdPartySoftware(l3rdPartySW);*/
         }
 
         public void CollectExpectConfigurationFromFile() 
@@ -545,17 +545,5 @@ namespace ElectronicLogbook.ViewModel
             }
             return lDeviceDriverList;
         }
-        #region INotifyPropertyChanged Members
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            if (this.PropertyChanged != null)
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        #endregion
-
     }
 }

@@ -37,7 +37,7 @@ namespace ElectronicLogbook
             {
                 foreach (SubEquipmentViewModel lSubEquipment in lAirCraftEquipmentConfigViewModel.mChildren )
                 {
-                    System.Diagnostics.Debug.WriteLine(lSubEquipment.mSubEquipment.mEquipmentID);
+                    System.Diagnostics.Debug.WriteLine(lSubEquipment.mEquipmentID);
                 }
             }
 
@@ -46,7 +46,7 @@ namespace ElectronicLogbook
             {
                 foreach (SubEquipmentViewModel lSubEquipment in lAirCraftEquipmentConfigViewModel.mChildren)
                 {
-                    lSubEquipment.mSubEquipment.mEquipmentID = "neal is bada!";
+                    lSubEquipment.mEquipmentID = "neal is bada!";
                 }
             }
 

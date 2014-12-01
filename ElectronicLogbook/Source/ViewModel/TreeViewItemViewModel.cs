@@ -6,13 +6,11 @@ using System.Linq;
 using System.Text;
 namespace ElectronicLogbook.ViewModel
 {
-    public class TreeViewItemViewModel : INotifyPropertyChanged
+    public class TreeViewItemViewModel : ViewModel
     {
         #region Data
         private ObservableCollection<TreeViewItemViewModel> _children;
         private TreeViewItemViewModel _parent;
-
-        private bool _isExpanded;
         private bool _isSelected;
 
         #endregion // Data
@@ -70,7 +68,6 @@ namespace ElectronicLogbook.ViewModel
 
         #endregion // IsSelected
 
-
         #region Parent
 
         public TreeViewItemViewModel mParent
@@ -81,17 +78,5 @@ namespace ElectronicLogbook.ViewModel
         #endregion // Parent
 
         #endregion // Presentation Members
-
-        #region INotifyPropertyChanged Members
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            if (this.PropertyChanged != null)
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        #endregion // INotifyPropertyChanged Members
     }
 }

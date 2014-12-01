@@ -26,13 +26,68 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private ObservableCollection<HWPartViewModel> _HWPartList;
-        public ObservableCollection<HWPartViewModel> mHWPartList { set; get; }
-        public List<SWConfig> mSWConfigList { set; get; }
-        public List<ConfigInfo> mConfigInfoList { set; get; }
+        public ObservableCollection<HWPartViewModel> mHWPartList 
+        {
+            set 
+            {
+                _HWPartList = value;
+                this.OnPropertyChanged("mHWPartList");
+            }
+            get 
+            {
+                return _HWPartList;
+            }
+        }
+
+        private ObservableCollection<SWConfigViewModel> _SWConfigList;
+        public ObservableCollection<SWConfigViewModel> mSWConfigList 
+        {
+            set 
+            {
+                _SWConfigList = value;
+                this.OnPropertyChanged("mSWConfigList");
+            }
+            get 
+            {
+                return _SWConfigList;
+            }
+        }
+
+        private ObservableCollection<ConfigInfoViewModel> _ConfigInfoList;
+        public ObservableCollection<ConfigInfoViewModel> mConfigInfoList 
+        {
+            set
+            {
+                _ConfigInfoList = value;
+                this.OnPropertyChanged("mConfigInfoList");
+            }
+            get 
+            {
+                return _ConfigInfoList;
+            }
+        }
         public SubEquipmentViewModel(SubEquipment aSubEquipment, TreeViewItemViewModel aParent)
         : base(aParent)
         {
-            mSubEquipment = aSubEquipment;
+            mEquipmentID = aSubEquipment.mEquipmentID;
+
+            mHWPartList = new ObservableCollection<HWPartViewModel>();
+            foreach (HWPart lHWPart in aSubEquipment.mHWPartList) 
+            {
+                mHWPartList.Add(new HWPartViewModel(lHWPart));
+            }
+
+            mSWConfigList = new ObservableCollection<SWConfigViewModel>();
+            foreach (SWConfig lSWConfig in aSubEquipment.mSWConfigList)
+            {
+                mSWConfigList.Add(new SWConfigViewModel(lSWConfig));
+            }
+
+            mConfigInfoList = new ObservableCollection<ConfigInfoViewModel>();
+            foreach (ConfigInfo lConfigInfo in aSubEquipment.mConfigInfoList)
+            {
+                mConfigInfoList.Add(new ConfigInfoViewModel(lConfigInfo));
+            }
         }
     }
 }
