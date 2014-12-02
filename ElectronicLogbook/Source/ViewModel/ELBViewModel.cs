@@ -91,6 +91,13 @@ namespace ElectronicLogbook.ViewModel
 
         private ELBViewModel() 
         {
+            Initialize();
+            CollectCurrentConfigurationFromSystem();
+            UpdateELBViewModel(mCurrentSystemConfiguration);
+        }
+
+        private void Initialize()
+        {
             mAirCraftEquipmentConfigViewModelList = new ObservableCollection<AirCraftEquipmentConfigViewModel>();
             mVAISParticipantListViewModel = new ObservableCollection<VAISParticipant>();
             mDeviceDriverListViewModel = new ObservableCollection<DeviceDriver>();
@@ -105,9 +112,6 @@ namespace ElectronicLogbook.ViewModel
             mExpectSystemConfiguration.mDeviceDriverList = new ObservableCollection<DeviceDriver>();
             mExpectSystemConfiguration.mThirdPartySoftware = new ObservableCollection<ThirdPartySoftware>();
             mExpectSystemConfiguration.mVAISParticipantList = new ObservableCollection<VAISParticipant>();
-
-            CollectCurrentConfigurationFromSystem();
-            UpdateELBViewModel(mCurrentSystemConfiguration);
         }
 
         public void GetCurrentConfiguration_MenuItemClick(object sender, RoutedEventArgs e)

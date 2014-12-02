@@ -52,5 +52,11 @@ namespace ElectronicLogbook
 
 
         }
+
+        private void CreateNewEquipment(object sender, RoutedEventArgs e) 
+        {
+            ELBViewModel.getInstance().mAirCraftEquipmentConfigViewModelList.Add(
+                new AirCraftEquipmentConfigViewModel(new AirCraftEquipmentConfig("neal1",new List<SubEquipment>())));
+        }
     }
 }

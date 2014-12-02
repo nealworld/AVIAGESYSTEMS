@@ -54,7 +54,8 @@
     <StartupObject />
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>ELB_bar.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommonSimDotNet">
@@ -90,6 +91,9 @@
     <Compile Include="DeviceDriverControl.xaml.cs">
       <DependentUpon>DeviceDriverControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EditableTextBlock.xaml.cs">
+      <DependentUpon>EditableTextBlock.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ThirdPartySoftwareControl.xaml.cs">
       <DependentUpon>ThirdPartySoftwareControl.xaml</DependentUpon>
     </Compile>
@@ -116,6 +120,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DeviceDriverControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditableTextBlock.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -193,6 +201,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="ELB_bar.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ModalDialog\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

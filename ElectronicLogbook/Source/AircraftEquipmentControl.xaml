@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:ElectronicLogbook.ViewModel">
+             xmlns:local="clr-namespace:ElectronicLogbook.ViewModel"
+             xmlns:usercontrol="clr-namespace:ElectronicLogbook">
     <Grid>
         <Grid.Resources>
             <Style x:Key="GridSplitterStyle">
@@ -35,33 +36,33 @@
                 </TreeViewItem.ItemContainerStyle>
                 <TreeViewItem.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="New Equipment..." >
+                        <MenuItem Header="New Equipment..." Click="CreateNewEquipment">
                         </MenuItem>
                     </ContextMenu>
                 </TreeViewItem.ContextMenu>
                 <TreeViewItem.Resources>
                     <HierarchicalDataTemplate DataType="{x:Type local:AirCraftEquipmentConfigViewModel}" 
                                               ItemsSource="{Binding mChildren, Mode=TwoWay}">
-                        <TextBlock Text="{Binding mConfigName}" >
-                            <TextBlock.ContextMenu>
+                        <usercontrol:EditableTextBlock Text="{Binding mConfigName, Mode=TwoWay}" IsEditable="True">
+                            <usercontrol:EditableTextBlock.ContextMenu>
                                 <ContextMenu>
                                     <MenuItem Header="New SubEquipment"/>
                                     <MenuItem Header="Remove"/>
                                     <MenuItem Header="Rename"/>
                                 </ContextMenu>
-                            </TextBlock.ContextMenu>
-                        </TextBlock>
+                            </usercontrol:EditableTextBlock.ContextMenu>
+                        </usercontrol:EditableTextBlock>
                     </HierarchicalDataTemplate>
 
                     <DataTemplate DataType="{x:Type local:SubEquipmentViewModel}">
-                        <TextBlock Text="{Binding mEquipmentID, Mode=TwoWay}" >
-                            <TextBlock.ContextMenu>
+                        <usercontrol:EditableTextBlock Text="{Binding mEquipmentID, Mode=TwoWay}" IsEditable="True">
+                            <usercontrol:EditableTextBlock.ContextMenu>
                                 <ContextMenu>
                                     <MenuItem Header="Remove"/>
                                     <MenuItem Header="Rename" Click="MenuItem_Click"/>
                                 </ContextMenu>
-                            </TextBlock.ContextMenu>
-                        </TextBlock>
+                            </usercontrol:EditableTextBlock.ContextMenu>
+                        </usercontrol:EditableTextBlock>
                     </DataTemplate>
                 </TreeViewItem.Resources>
             </TreeViewItem>
