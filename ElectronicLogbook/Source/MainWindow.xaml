@@ -3,7 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:ElectronicLogbook"
         FontSize="14"
-        Title="ELB" Height="Auto" Width="Auto" Topmost="True" WindowStartupLocation="CenterScreen" WindowStyle="ThreeDBorderWindow">
+        Title="ELB" Height="Auto" Width="Auto"
+        WindowStartupLocation="CenterScreen" 
+        >
     <DockPanel>
         <Menu Background="White" Height="23"  FontSize="14" DockPanel.Dock="Top">
             <MenuItem Header="Configuration">

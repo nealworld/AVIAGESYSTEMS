@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -19,7 +18,7 @@ namespace ElectronicLogbook
     /// <summary>
     /// Interaction logic for EditableTextBlock.xaml
     /// </summary>
-    public partial class EditableTextBlock : UserControl, INotifyPropertyChanged
+    public partial class EditableTextBlock : UserControl
     {
         public EditableTextBlock()
         {
@@ -47,7 +46,6 @@ namespace ElectronicLogbook
             set {
                 System.Diagnostics.Debug.WriteLine("set EditableTextBlock.Text:" + value); 
                 SetValue(TextProperty, value);
-                //this.OnPropertyChanged("Text");
             }
         }
 
@@ -80,29 +78,8 @@ namespace ElectronicLogbook
                 {
                     if (value) oldText = Text;
                     SetValue(IsInEditModeProperty, value);
-                    //this.OnPropertyChanged("IsInEditMode");
                 }
             }
-        }
-
-        public string TextFormat
-        {
-            get {
-                System.Diagnostics.Debug.WriteLine("get EditableTextBlock.TextFormat:" + (string)GetValue(TextFormatProperty)); 
-                return (string)GetValue(TextFormatProperty); }
-            set
-            {
-                System.Diagnostics.Debug.WriteLine("set EditableTextBlock.TextFormat:" + value); 
-                if (value == "") value = "{0}";
-                SetValue(TextFormatProperty, value);
-            }
-        }
-
-        public string FormattedText
-        {
-            get {
-                System.Diagnostics.Debug.WriteLine("get EditableTextBlock.FormattedText:" + String.Format(TextFormat, Text)); 
-                return String.Format(TextFormat, Text); }
         }
 
         public static readonly DependencyProperty TextProperty =
@@ -125,13 +102,6 @@ namespace ElectronicLogbook
             typeof(bool),
             typeof(EditableTextBlock),
             new PropertyMetadata(false));
-
-        public static readonly DependencyProperty TextFormatProperty =
-            DependencyProperty.Register(
-            "TextFormat",
-            typeof(string),
-            typeof(EditableTextBlock),
-            new PropertyMetadata("{0}"));
 
         #endregion Properties
 
@@ -168,32 +138,6 @@ namespace ElectronicLogbook
                 Text = oldText;
                 e.Handled = true;
             }
-        }
-
-        void EdittableTextBlock_KeyDown(object sender, KeyEventArgs e) 
-        {
-            if (this.IsEditable) 
-            {
-                if (e.Key == Key.F2)
-                {
-                    this.IsInEditMode = true;
-                }
-            }
-        }
-
-        private void mainControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            /*if (this.IsEditable) 
-            {
-                this.IsInEditMode = true;
-            }*/
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            if (this.PropertyChanged != null)
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
 
         #endregion Event Handlers

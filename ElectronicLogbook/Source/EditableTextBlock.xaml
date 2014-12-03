@@ -4,9 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              x:Name="mainControl"
-             xmlns:local="clr-namespace:ElectronicLogbook"
-             KeyDown="EdittableTextBlock_KeyDown"
-             Loaded="mainControl_Loaded">
+             xmlns:local="clr-namespace:ElectronicLogbook">
     <UserControl.Resources>
 
         <DataTemplate x:Key="EditModeTemplate">
