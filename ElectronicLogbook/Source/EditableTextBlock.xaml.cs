@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -12,12 +13,13 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace ElectronicLogbook
 {
     /// <summary>
     /// Interaction logic for EditableTextBlock.xaml
     /// </summary>
-    public partial class EditableTextBlock : UserControl
+    public partial class EditableTextBlock : UserControl, INotifyPropertyChanged
     {
         public EditableTextBlock()
         {
@@ -38,20 +40,34 @@ namespace ElectronicLogbook
 
         public string Text
         {
-            get { return (string)GetValue(TextProperty); }
-            set { SetValue(TextProperty, value); }
+            get {
+                System.Diagnostics.Debug.WriteLine("get EditableTextBlock.Text:" + (string)GetValue(TextProperty));
+                return (string)GetValue(TextProperty); 
+            }
+            set {
+                System.Diagnostics.Debug.WriteLine("set EditableTextBlock.Text:" + value); 
+                SetValue(TextProperty, value);
+                //this.OnPropertyChanged("Text");
+            }
         }
 
         public bool IsEditable
         {
-            get { return (bool)GetValue(IsEditableProperty); }
-            set { SetValue(IsEditableProperty, value); }
+            get {
+                System.Diagnostics.Debug.WriteLine("get EditableTextBlock.IsEditable:" + (bool)GetValue(IsEditableProperty)); 
+                return (bool)GetValue(IsEditableProperty);
+            }
+            set {
+                System.Diagnostics.Debug.WriteLine("set EditableTextBlock.IsEditable:" + value); 
+                SetValue(IsEditableProperty, value); 
+            }
         }
 
         public bool IsInEditMode
         {
             get
             {
+                System.Diagnostics.Debug.WriteLine("get EditableTextBlock.IsInEditMode:" + (bool)GetValue(IsInEditModeProperty)); 
                 if (IsEditable)
                     return (bool)GetValue(IsInEditModeProperty);
                 else
@@ -59,19 +75,24 @@ namespace ElectronicLogbook
             }
             set
             {
+                System.Diagnostics.Debug.WriteLine("set EditableTextBlock.IsInEditMode:" + value); 
                 if (IsEditable)
                 {
                     if (value) oldText = Text;
                     SetValue(IsInEditModeProperty, value);
+                    //this.OnPropertyChanged("IsInEditMode");
                 }
             }
         }
 
         public string TextFormat
         {
-            get { return (string)GetValue(TextFormatProperty); }
+            get {
+                System.Diagnostics.Debug.WriteLine("get EditableTextBlock.TextFormat:" + (string)GetValue(TextFormatProperty)); 
+                return (string)GetValue(TextFormatProperty); }
             set
             {
+                System.Diagnostics.Debug.WriteLine("set EditableTextBlock.TextFormat:" + value); 
                 if (value == "") value = "{0}";
                 SetValue(TextFormatProperty, value);
             }
@@ -79,7 +100,9 @@ namespace ElectronicLogbook
 
         public string FormattedText
         {
-            get { return String.Format(TextFormat, Text); }
+            get {
+                System.Diagnostics.Debug.WriteLine("get EditableTextBlock.FormattedText:" + String.Format(TextFormat, Text)); 
+                return String.Format(TextFormat, Text); }
         }
 
         public static readonly DependencyProperty TextProperty =
@@ -156,6 +179,21 @@ namespace ElectronicLogbook
                     this.IsInEditMode = true;
                 }
             }
+        }
+
+        private void mainControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            /*if (this.IsEditable) 
+            {
+                this.IsInEditMode = true;
+            }*/
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            if (this.PropertyChanged != null)
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
 
         #endregion Event Handlers

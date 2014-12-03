@@ -305,7 +305,7 @@ namespace ElectronicLogbook.ViewModel
                     mSWPartList = { new SWPart("SWPart1", "22", "33"), new SWPart("SWPart2", "22", "33") }
                 });
             lAirCraftEquipmentConfig1.mSubEquipmentList.Add(lSubEquipment);
-            lSubEquipment = new SubEquipment();
+            /*lSubEquipment = new SubEquipment();
             lSubEquipment.mEquipmentID = "Equipment_ID: 4";
             lSubEquipment.mHWPartList.Add(new HWPart("HW_PART_114s1", "1", "1", "1", "1"));
             lSubEquipment.mHWPartList.Add(new HWPart("HW_PART_214s1", "2", "2", "2", "2"));
@@ -425,7 +425,7 @@ namespace ElectronicLogbook.ViewModel
                     mSWLocationDescription = "d421cdd",
                     mSWPartList = { new SWPart("SWPart1", "22", "33"), new SWPart("SWPart2", "22", "33") }
                 });
-            lAirCraftEquipmentConfig1.mSubEquipmentList.Add(lSubEquipment);
+            lAirCraftEquipmentConfig1.mSubEquipmentList.Add(lSubEquipment);*/
             myList.Add(lAirCraftEquipmentConfig1);
 
             return myList;

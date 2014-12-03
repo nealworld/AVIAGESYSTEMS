@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              x:Name="mainControl"
              xmlns:local="clr-namespace:ElectronicLogbook"
-             KeyDown="EdittableTextBlock_KeyDown">
+             KeyDown="EdittableTextBlock_KeyDown"
+             Loaded="mainControl_Loaded">
     <UserControl.Resources>
 
         <DataTemplate x:Key="EditModeTemplate">
@@ -15,10 +16,11 @@
         </DataTemplate>
 
         <DataTemplate x:Key="DisplayModeTemplate">
-            <TextBlock Text="{Binding ElementName=mainControl, Path=FormattedText}" Margin="5,3,5,3" />
+            <TextBlock Text="{Binding ElementName=mainControl, Path=Text}" Margin="5,3,5,3" />
         </DataTemplate>
 
         <Style TargetType="{x:Type local:EditableTextBlock}">
+            <!--<Setter Property="IsInEditMode" Value="{Binding IsInEditMode, Mode=TwoWay}" />-->
             <Style.Triggers>
                 <Trigger Property="IsInEditMode" Value="True">
                     <Setter Property="ContentTemplate" Value="{StaticResource EditModeTemplate}" />

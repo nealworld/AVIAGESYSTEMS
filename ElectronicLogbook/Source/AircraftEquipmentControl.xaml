@@ -43,7 +43,7 @@
                 <TreeViewItem.Resources>
                     <HierarchicalDataTemplate DataType="{x:Type local:AirCraftEquipmentConfigViewModel}" 
                                               ItemsSource="{Binding mChildren, Mode=TwoWay}">
-                        <usercontrol:EditableTextBlock Text="{Binding mConfigName, Mode=TwoWay}" IsEditable="True">
+                        <usercontrol:EditableTextBlock Text="{Binding mConfigName, Mode=TwoWay}">
                             <usercontrol:EditableTextBlock.ContextMenu>
                                 <ContextMenu>
                                     <MenuItem Header="New SubEquipment"/>
@@ -55,7 +55,7 @@
                     </HierarchicalDataTemplate>
 
                     <DataTemplate DataType="{x:Type local:SubEquipmentViewModel}">
-                        <usercontrol:EditableTextBlock Text="{Binding mEquipmentID, Mode=TwoWay}" IsEditable="True">
+                        <usercontrol:EditableTextBlock Text="{Binding mEquipmentID, Mode=TwoWay}">
                             <usercontrol:EditableTextBlock.ContextMenu>
                                 <ContextMenu>
                                     <MenuItem Header="Remove"/>

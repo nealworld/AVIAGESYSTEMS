@@ -13,7 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ElectronicLogbook.ViewModel;
 using ElectronicLogbookDataLib.AirCraftEquipment;
-
+using System.Threading;
 namespace ElectronicLogbook
 {
     /// <summary>
@@ -29,15 +29,19 @@ namespace ElectronicLogbook
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            TextBlock tb =   (TextBlock)((ContextMenu)(((MenuItem)sender).Parent)).PlacementTarget;
-            tb.Text = "neal is gooda!";
+            EditableTextBlock etb = (EditableTextBlock)((ContextMenu)(((MenuItem)sender).Parent)).PlacementTarget;
+            etb.IsInEditMode = true;
+            etb.Text = "neal is gooda!";
            
             foreach (AirCraftEquipmentConfigViewModel lAirCraftEquipmentConfigViewModel in 
                 ELBViewModel.getInstance().mAirCraftEquipmentConfigViewModelList) 
             {
+                System.Diagnostics.Debug.WriteLine(lAirCraftEquipmentConfigViewModel.mConfigName);
                 foreach (SubEquipmentViewModel lSubEquipment in lAirCraftEquipmentConfigViewModel.mChildren )
                 {
-                    System.Diagnostics.Debug.WriteLine(lSubEquipment.mEquipmentID);
+                    System.Diagnostics.Debug.WriteLine("    " +　lSubEquipment.mEquipmentID);
+                    etb.Text = "neal is goodassss!";
+
                 }
             }
 
@@ -50,6 +54,16 @@ namespace ElectronicLogbook
                 }
             }
 
+            Thread.Sleep(5000);
+
+            foreach (AirCraftEquipmentConfigViewModel lAirCraftEquipmentConfigViewModel in
+                ELBViewModel.getInstance().mAirCraftEquipmentConfigViewModelList)
+            {
+                foreach (SubEquipmentViewModel lSubEquipment in lAirCraftEquipmentConfigViewModel.mChildren)
+                {
+                    lSubEquipment.mEquipmentID = "neal is kioo!";
+                }
+            }
 
         }
 
