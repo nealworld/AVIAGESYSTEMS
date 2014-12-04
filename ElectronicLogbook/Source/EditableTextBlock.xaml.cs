@@ -110,6 +110,8 @@ namespace ElectronicLogbook
         // Invoked when we enter edit mode.
         void TextBox_Loaded(object sender, RoutedEventArgs e)
         {
+            oldText = Text;
+
             TextBox txt = sender as TextBox;
 
             // Give the TextBox input focus

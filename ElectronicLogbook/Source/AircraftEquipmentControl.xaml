@@ -22,7 +22,8 @@
         </Grid.ColumnDefinitions>
         <TreeView BorderBrush="Transparent" Grid.Column="0" Name="AircraftEquipmentConfigTreeView" Padding="-5,0,20,0">
             <TreeViewItem Header="Equipment List" BorderBrush="Transparent" 
-                          ItemsSource="{Binding Path=mAirCraftEquipmentConfigViewModelList, Mode=TwoWay}">
+                          ItemsSource="{Binding Path=mAirCraftEquipmentConfigViewModelList, Mode=TwoWay}"
+                          KeyDown="TreeViewItem_KeyDown">
                 <TreeViewItem.ItemContainerStyle>
                     <Style TargetType="{x:Type TreeViewItem}">
                         <Setter Property="FontWeight" Value="Normal" />
@@ -40,26 +41,27 @@
                         </MenuItem>
                     </ContextMenu>
                 </TreeViewItem.ContextMenu>
+                
                 <TreeViewItem.Resources>
                     <HierarchicalDataTemplate DataType="{x:Type local:AirCraftEquipmentConfigViewModel}" 
                                               ItemsSource="{Binding mChildren, Mode=TwoWay}">
-                        <usercontrol:EditableTextBlock Text="{Binding mConfigName, Mode=TwoWay}" KeyDown="EditableTextBlock_KeyDown">
+                        <usercontrol:EditableTextBlock Text="{Binding mConfigName, Mode=TwoWay}" IsInEditMode="{Binding IsInEditMode, Mode=TwoWay}">
                             <usercontrol:EditableTextBlock.ContextMenu>
                                 <ContextMenu>
-                                    <MenuItem Header="New SubEquipment"/>
-                                    <MenuItem Header="Remove"/>
-                                    <MenuItem Header="Rename"/>
+                                    <MenuItem Header="New SubEquipment" Click="CreateNewSubEquipment"/>
+                                    <MenuItem Header="Remove" Click="RemoveEquipment"/>
+                                    <MenuItem Header="Rename" Click="Rename"/>
                                 </ContextMenu>
                             </usercontrol:EditableTextBlock.ContextMenu>
                         </usercontrol:EditableTextBlock>
                     </HierarchicalDataTemplate>
 
                     <DataTemplate DataType="{x:Type local:SubEquipmentViewModel}">
-                        <usercontrol:EditableTextBlock Text="{Binding mEquipmentID, Mode=TwoWay}" KeyDown="EditableTextBlock_KeyDown">
+                        <usercontrol:EditableTextBlock Text="{Binding mEquipmentID, Mode=TwoWay}" IsInEditMode="{Binding IsInEditMode, Mode=TwoWay}">
                             <usercontrol:EditableTextBlock.ContextMenu>
                                 <ContextMenu>
-                                    <MenuItem Header="Remove"/>
-                                    <MenuItem Header="Rename" Click="MenuItem_Click"/>
+                                    <MenuItem Header="Remove" Click="RemoveSubEquipment"/>
+                                    <MenuItem Header="Rename" Click="Rename"/>
                                 </ContextMenu>
                             </usercontrol:EditableTextBlock.ContextMenu>
                         </usercontrol:EditableTextBlock>
@@ -75,7 +77,23 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Expander Header="HW Part" MinHeight="50">
-                <ListView ItemsSource="{Binding SelectedItem.mHWPartList, Mode=TwoWay}" BorderBrush="Transparent">
+                <DataGrid Name="HWPart_DataGrid" DataContext="{Binding SelectedItem.mHWPartList}" ItemsSource="{Binding}" CanUserReorderColumns="True"
+                          CanUserResizeColumns="True" CanUserResizeRows="True" CanUserSortColumns="True"
+                          SelectionMode="Extended" SelectionUnit="FullRow" AutoGenerateColumns="False"
+                          MouseDoubleClick="DataGrid_MouseDoubleClick">
+                    <DataGrid.Columns>
+                    
+                        <DataGridTextColumn Header="HW Part Index" Binding="{Binding mHWPartIndex}"/>
+                        <DataGridTextColumn Header="HW Part Number" Binding="{Binding mHWPartNumber}"/>
+                        <DataGridTextColumn Header="HW Part Description" Binding="{Binding mHWPartDescription}"/>
+                        <DataGridTextColumn Header="HW Part Status" Binding="{Binding mHWPartStatus}"/>
+                        <DataGridTextColumn Header="HW Part Serial Number" Binding="{Binding mHWPartSerialNumber}"/>
+                    </DataGrid.Columns>
+                    
+                    
+                </DataGrid>
+
+                <!--<ListView ItemsSource="{Binding SelectedItem.mHWPartList, Mode=TwoWay}" BorderBrush="Transparent">
                     <ListView.View >
                         <GridView >
                             <GridViewColumn Header="HW Part Index" DisplayMemberBinding="{Binding mHWPartIndex}" Width="150" />
@@ -85,7 +103,7 @@
                             <GridViewColumn Header="HW Part Serial Number"  DisplayMemberBinding="{Binding mHWPartSerialNumber}" />
                         </GridView>
                     </ListView.View>
-                </ListView>
+                </ListView>-->
             </Expander>
             <GridSplitter Height="2" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Style="{StaticResource GridSplitterStyle}"/>
 

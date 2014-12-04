@@ -66,13 +66,13 @@ namespace ElectronicLogbook.ViewModel
                 return _ConfigInfoList;
             }
         }
-        public SubEquipmentViewModel(SubEquipment aSubEquipment, TreeViewItemViewModel aParent)
-        : base(aParent)
+
+        private void Initialize(SubEquipment aSubEquipment, TreeViewItemViewModel aParent) 
         {
             mEquipmentID = aSubEquipment.mEquipmentID;
 
             mHWPartList = new ObservableCollection<HWPartViewModel>();
-            foreach (HWPart lHWPart in aSubEquipment.mHWPartList) 
+            foreach (HWPart lHWPart in aSubEquipment.mHWPartList)
             {
                 mHWPartList.Add(new HWPartViewModel(lHWPart));
             }
@@ -88,6 +88,17 @@ namespace ElectronicLogbook.ViewModel
             {
                 mConfigInfoList.Add(new ConfigInfoViewModel(lConfigInfo));
             }
+        }
+        public SubEquipmentViewModel(SubEquipment aSubEquipment, TreeViewItemViewModel aParent)
+        : base(aParent)
+        {
+            Initialize(aSubEquipment, aParent);
+        }
+        public SubEquipmentViewModel(SubEquipment aSubEquipment, TreeViewItemViewModel aParent, bool aIsInEditMode)
+            : base(aParent)
+        {
+            Initialize(aSubEquipment, aParent);
+            base.IsInEditMode = aIsInEditMode;
         }
     }
 }

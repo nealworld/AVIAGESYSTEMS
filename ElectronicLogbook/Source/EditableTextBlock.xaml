@@ -18,7 +18,6 @@
         </DataTemplate>
 
         <Style TargetType="{x:Type local:EditableTextBlock}">
-            <!--<Setter Property="IsInEditMode" Value="{Binding IsInEditMode, Mode=TwoWay}" />-->
             <Style.Triggers>
                 <Trigger Property="IsInEditMode" Value="True">
                     <Setter Property="ContentTemplate" Value="{StaticResource EditModeTemplate}" />

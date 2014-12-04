@@ -22,16 +22,27 @@ namespace ElectronicLogbook.ViewModel
                 return _ConfigName;
             }
         }
-
-        public AirCraftEquipmentConfigViewModel(AirCraftEquipmentConfig aAirCraftEquipmentConfig)
-            :base(null)
+        private void Initialize(AirCraftEquipmentConfig aAirCraftEquipmentConfig)
         {
             mConfigName = aAirCraftEquipmentConfig.mConfigName;
-            foreach (SubEquipment lSubEquipment in aAirCraftEquipmentConfig.mSubEquipmentList) 
+            foreach (SubEquipment lSubEquipment in aAirCraftEquipmentConfig.mSubEquipmentList)
             {
                 mChildren.Add(new SubEquipmentViewModel(lSubEquipment, this));
             }
-            
         }
+        public AirCraftEquipmentConfigViewModel(AirCraftEquipmentConfig aAirCraftEquipmentConfig)
+            :base(null)
+        {
+            Initialize(aAirCraftEquipmentConfig);
+        }
+
+        public AirCraftEquipmentConfigViewModel(AirCraftEquipmentConfig aAirCraftEquipmentConfig, bool aIsInEditMode)
+            : base(null)
+        {
+            Initialize(aAirCraftEquipmentConfig);
+            base.IsInEditMode = aIsInEditMode;
+
+        }
+
     }
 }
