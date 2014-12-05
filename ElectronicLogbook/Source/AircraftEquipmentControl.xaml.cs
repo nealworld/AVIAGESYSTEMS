@@ -52,6 +52,12 @@ namespace ElectronicLogbook
                                 + lHWPartViewModel.mHWPartStatus);
                         }
 
+                        foreach (SWConfigViewModel lSWConfigViewModel in lSubEquipment.mSWConfigList)
+                        {
+                            System.Diagnostics.Debug.WriteLine("    " +
+                                lSWConfigViewModel.mSWConfigIndex + "," + lSWConfigViewModel.mSWLocationDescription
+                                + lSWConfigViewModel.mSWLocationID + "," + lSWConfigViewModel.mSWPartList.ToString());
+                        }
                     }
                 }
 
@@ -87,7 +93,7 @@ namespace ElectronicLogbook
         private void CreateNewEquipment(object sender, RoutedEventArgs e) 
         {
             ELBViewModel.getInstance().mAirCraftEquipmentConfigViewModelList.Add(
-                new AirCraftEquipmentConfigViewModel(new AirCraftEquipmentConfig("NewEquipment",new List<SubEquipment>()),true));
+                new AirCraftEquipmentConfigViewModel(new AirCraftEquipmentConfig("New Equipment",new List<SubEquipment>()),true));
         }
 
         private void CreateNewSubEquipment(object sender, RoutedEventArgs e)
@@ -95,21 +101,38 @@ namespace ElectronicLogbook
             System.Diagnostics.Debug.WriteLine(" enter xxxx ");
             AirCraftEquipmentConfigViewModel lAirCraftEquipmentConfigViewModel = AircraftEquipmentConfigTreeView.SelectedItem as AirCraftEquipmentConfigViewModel;
             SubEquipment lnew = new SubEquipment();
-            lnew.mEquipmentID = "NewSubEquipment";
+            lnew.mEquipmentID = "New SubEquipment";
             lAirCraftEquipmentConfigViewModel.mChildren.Add(new SubEquipmentViewModel(lnew, lAirCraftEquipmentConfigViewModel, true));
 
         }
 
+        private void CreateNewSWConfig(object sender, RoutedEventArgs e)
+        {
+            if (AircraftEquipmentConfigTreeView.SelectedItem is SubEquipmentViewModel)
+            {
+                SubEquipmentViewModel lSubEquipmentViewModel = AircraftEquipmentConfigTreeView.SelectedItem as SubEquipmentViewModel;
+                SWConfigViewModel lSWConfigViewModel = new SWConfigViewModel(new SWConfig());
+                lSWConfigViewModel.mSWConfigIndex = "New SWConfig Index";
+                lSubEquipmentViewModel.mSWConfigList.Add(lSWConfigViewModel);
+            }
+        }
 
-        private void TreeViewItem_KeyDown(object sender, KeyEventArgs e)
+        private void AircraftEquipmentConfigTreeView_KeyDown(object sender, KeyEventArgs e)
         {
             if (AircraftEquipmentConfigTreeView.SelectedItem is TreeViewItemViewModel && e.Key == Key.F2)
             {
-                System.Diagnostics.Debug.WriteLine(" enter xxxx ");
                 TreeViewItemViewModel lTreeViewItemModel = AircraftEquipmentConfigTreeView.SelectedItem as TreeViewItemViewModel;
                 lTreeViewItemModel.IsInEditMode=true;
             }
+        }
 
+        private void SWConfigListTreeView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (SWConfigListTreeView.SelectedItem is ViewModel.ViewModel && e.Key == Key.F2)
+            {
+                ViewModel.ViewModel lViewModel = SWConfigListTreeView.SelectedItem as ViewModel.ViewModel;
+                lViewModel.IsInEditMode = true;
+            }
         }
 
         private void RemoveEquipment(object sender, RoutedEventArgs e)
@@ -124,9 +147,11 @@ namespace ElectronicLogbook
             lAirCraftEquipmentConfigViewModel.mParent.mChildren.Remove(lAirCraftEquipmentConfigViewModel);
         }
 
-        private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void RemoveSWConfig(object sender, RoutedEventArgs e) 
         {
-            HWPart_DataGrid.Items.Add(new HWPartViewModel(new HWPart()));
+            SWConfigViewModel lSWConfigViewModel = SWConfigListTreeView.SelectedItem as SWConfigViewModel;
+            SubEquipmentViewModel lAirCraftEquipmentConfigViewModel = AircraftEquipmentConfigTreeView.SelectedItem as SubEquipmentViewModel;
+            lAirCraftEquipmentConfigViewModel.mSWConfigList.Remove(lSWConfigViewModel);
         }
     }
 }

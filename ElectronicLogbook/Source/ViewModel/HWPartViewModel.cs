@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using ElectronicLogbookDataLib.AirCraftEquipment;
 
 namespace ElectronicLogbook.ViewModel
@@ -80,6 +75,13 @@ namespace ElectronicLogbook.ViewModel
             }
         }
 
+        public HWPartViewModel() {
+            mHWPartDescription = string.Empty;
+            mHWPartIndex = string.Empty;
+            mHWPartNumber = string.Empty;
+            mHWPartSerialNumber = string.Empty;
+            mHWPartStatus = string.Empty;
+        }
         public HWPartViewModel(HWPart aHWPart) 
         {
             mHWPartDescription = aHWPart.mHWPartDescription;

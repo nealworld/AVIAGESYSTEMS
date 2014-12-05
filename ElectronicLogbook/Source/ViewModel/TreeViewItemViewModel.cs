@@ -12,7 +12,6 @@ namespace ElectronicLogbook.ViewModel
         private ObservableCollection<TreeViewItemViewModel> _children;
         private TreeViewItemViewModel _parent;
         private bool _isSelected;
-        private bool _isInEditMode;
         #endregion // Data
 
         #region Constructors
@@ -65,25 +64,7 @@ namespace ElectronicLogbook.ViewModel
                 }
             }
         }
-
         #endregion // IsSelected
-
-        #region IsInEditMode
-
-        public bool IsInEditMode 
-        {
-            get { return _isInEditMode; }
-            set
-            {
-                if (value != _isInEditMode)
-                {
-                    _isInEditMode = value;
-                    this.OnPropertyChanged("IsInEditMode");
-                }
-            }
-        } 
-        
-        #endregion
         #region Parent
 
         public TreeViewItemViewModel mParent

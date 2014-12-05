@@ -51,6 +51,13 @@ namespace ElectronicLogbook.ViewModel
             }
         }
 
+        public SWPartViewModel() 
+        {
+            mSWPartIndex = String.Empty;
+            mLSAPPartNumber = String.Empty;
+            mLSAPDescription = String.Empty;
+        }
+
         public SWPartViewModel(SWPart aSWPart) 
         {
             mSWPartIndex = aSWPart.mSWPartIndex;
@@ -58,5 +65,8 @@ namespace ElectronicLogbook.ViewModel
             mLSAPDescription = aSWPart.mLSAPDescription;
         }
 
+        public string toString(){
+            return mSWPartIndex + "," + mLSAPPartNumber + "," + mLSAPDescription;
+        }
     }
 }

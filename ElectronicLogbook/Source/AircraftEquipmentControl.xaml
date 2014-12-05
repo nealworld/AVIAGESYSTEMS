@@ -21,9 +21,9 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <TreeView BorderBrush="Transparent" Grid.Column="0" Name="AircraftEquipmentConfigTreeView" Padding="-5,0,20,0">
-            <TreeViewItem Header="Equipment List" BorderBrush="Transparent" 
+            <TreeViewItem Name="testitem" Header="Equipment List" BorderBrush="Transparent" 
                           ItemsSource="{Binding Path=mAirCraftEquipmentConfigViewModelList, Mode=TwoWay}"
-                          KeyDown="TreeViewItem_KeyDown">
+                          KeyDown="AircraftEquipmentConfigTreeView_KeyDown">
                 <TreeViewItem.ItemContainerStyle>
                     <Style TargetType="{x:Type TreeViewItem}">
                         <Setter Property="FontWeight" Value="Normal" />
@@ -76,37 +76,22 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Expander Header="HW Part" MinHeight="50">
-                <DataGrid Name="HWPart_DataGrid" DataContext="{Binding SelectedItem.mHWPartList}" ItemsSource="{Binding}" CanUserReorderColumns="True"
+            <Expander Header="HW Part" MinHeight="50" >
+                <DataGrid Name="HWPart_DataGrid" ItemsSource="{Binding SelectedItem.mHWPartList, Mode=TwoWay}" CanUserReorderColumns="True"
                           CanUserResizeColumns="True" CanUserResizeRows="True" CanUserSortColumns="True"
                           SelectionMode="Extended" SelectionUnit="FullRow" AutoGenerateColumns="False"
-                          MouseDoubleClick="DataGrid_MouseDoubleClick">
+                          AreRowDetailsFrozen="False" Height="auto" Background="White">
                     <DataGrid.Columns>
-                    
                         <DataGridTextColumn Header="HW Part Index" Binding="{Binding mHWPartIndex}"/>
                         <DataGridTextColumn Header="HW Part Number" Binding="{Binding mHWPartNumber}"/>
                         <DataGridTextColumn Header="HW Part Description" Binding="{Binding mHWPartDescription}"/>
                         <DataGridTextColumn Header="HW Part Status" Binding="{Binding mHWPartStatus}"/>
                         <DataGridTextColumn Header="HW Part Serial Number" Binding="{Binding mHWPartSerialNumber}"/>
                     </DataGrid.Columns>
-                    
-                    
                 </DataGrid>
-
-                <!--<ListView ItemsSource="{Binding SelectedItem.mHWPartList, Mode=TwoWay}" BorderBrush="Transparent">
-                    <ListView.View >
-                        <GridView >
-                            <GridViewColumn Header="HW Part Index" DisplayMemberBinding="{Binding mHWPartIndex}" Width="150" />
-                            <GridViewColumn Header="HW Part Number" DisplayMemberBinding="{Binding mHWPartNumber}" Width="150" />
-                            <GridViewColumn Header="HW Part Description"  DisplayMemberBinding="{Binding mHWPartDescription}" Width="150" />
-                            <GridViewColumn Header="HW Part Status"  DisplayMemberBinding="{Binding mHWPartStatus}" Width="250" />
-                            <GridViewColumn Header="HW Part Serial Number"  DisplayMemberBinding="{Binding mHWPartSerialNumber}" />
-                        </GridView>
-                    </ListView.View>
-                </ListView>-->
             </Expander>
-            <GridSplitter Height="2" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Style="{StaticResource GridSplitterStyle}"/>
-
+           <!-- <GridSplitter Height="2" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Style="{StaticResource GridSplitterStyle}"/>
+-->
             <Expander Header="SW_Config" Grid.Row="1"  MinHeight="100">
                 <Grid DataContext="{Binding ElementName=AircraftEquipmentConfigTreeView}">
                     <Grid.RowDefinitions>
@@ -118,11 +103,10 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
                     <TreeView Name="SWConfigListTreeView" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3"
-                              Padding="-5,0,10,0" BorderBrush="Transparent">
+                              Padding="-5,0,10,0" BorderBrush="Transparent" KeyDown="SWConfigListTreeView_KeyDown">
                         <TreeViewItem Header="SWConfigIndex" ItemsSource="{Binding SelectedItem.mSWConfigList, Mode=TwoWay}">
                             <TreeViewItem.ItemContainerStyle>
                                 <Style TargetType="{x:Type TreeViewItem}">
@@ -134,32 +118,57 @@
                                     </Style.Triggers>
                                 </Style>
                             </TreeViewItem.ItemContainerStyle>
+                            <TreeViewItem.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="New SWConfig..." Click="CreateNewSWConfig"/>
+                                </ContextMenu>
+                            </TreeViewItem.ContextMenu>
                             <TreeViewItem.ItemTemplate>
-                                <HierarchicalDataTemplate>
-                                    <TextBlock Text="{Binding mSWConfigIndex, Mode=TwoWay}"/>
-                                </HierarchicalDataTemplate>
+                                <DataTemplate DataType="{x:Type local:SWConfigViewModel}">
+                                    <usercontrol:EditableTextBlock Text="{Binding mSWConfigIndex, Mode=TwoWay}" IsInEditMode="{Binding IsInEditMode, Mode=TwoWay}">
+                                        <usercontrol:EditableTextBlock.ContextMenu>
+                                            <ContextMenu>
+                                                <MenuItem Header="Remove" Click="RemoveSWConfig"/>
+                                                <MenuItem Header="Rename" Click="Rename" />
+                                            </ContextMenu>
+                                        </usercontrol:EditableTextBlock.ContextMenu>
+                                    </usercontrol:EditableTextBlock>
+                                </DataTemplate>
                             </TreeViewItem.ItemTemplate>
                         </TreeViewItem>
                     </TreeView>
 
                     <GridSplitter Width="2.5" Grid.Column="0" Grid.RowSpan="3"  Style="{StaticResource GridSplitterStyle}"/>
-                    <Label Grid.Row="0" Grid.Column="1" Margin="10,0,0,0">SW Location ID:</Label>
-                    <Label Grid.Row="0" Grid.Column="2" Margin="10,0,0,0" 
-                           Content="{Binding ElementName=SWConfigListTreeView, Path=SelectedItem.mSWLocationID, Mode=TwoWay}"/>
-                    <Label Grid.Row="1" Grid.Column="1" Margin="10,0,0,0">SW Location Description:</Label>
-                    <Label Grid.Row="1" Grid.Column="2" Margin="10,0,0,0"
-                           Content="{Binding ElementName=SWConfigListTreeView, Path=SelectedItem.mSWLocationDescription, Mode=TwoWay}"/>
+                    <Grid Grid.Row="0" Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
 
-                    <ListView Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,0,0,0" BorderBrush="Transparent"
-                              ItemsSource="{Binding ElementName=SWConfigListTreeView, Path=SelectedItem.mSWPartList, Mode=TwoWay}">
-                        <ListView.View>
-                            <GridView >
-                                <GridViewColumn Header="SW Part Index" DisplayMemberBinding="{Binding mSWPartIndex}" Width="150" />
-                                <GridViewColumn Header="LSAP Part Number"  DisplayMemberBinding="{Binding mLSAPPartNumber}" Width="200" />
-                                <GridViewColumn Header="LSAP Description"  DisplayMemberBinding="{Binding mLSAPDescription}" Width="250" />
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="{Binding label1.width}" />
+                            <ColumnDefinition Width="{Binding TextBox.width}" />
+                        </Grid.ColumnDefinitions>
+                        
+                        <Label Name="label1" Grid.Row="0" Grid.Column="0">SW Location ID:</Label>
+                        <TextBox Name="TextBox" Grid.Row="0" Grid.Column="1" Text="{Binding ElementName=SWConfigListTreeView, 
+                    Path=SelectedItem.mSWLocationID, Mode=TwoWay}" IsReadOnly="True"/>
+                        <Label Grid.Row="1" Grid.Column="0">SW Location Description:</Label>
+                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ElementName=SWConfigListTreeView, 
+                    Path=SelectedItem.mSWLocationDescription, Mode=TwoWay}" IsReadOnly="True"/>
+
+                        <ListView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" DockPanel.Dock="Bottom" Margin="10,0,0,0" BorderBrush="Transparent"
+                            ItemsSource="{Binding ElementName=SWConfigListTreeView, Path=SelectedItem.mSWPartList, Mode=TwoWay}">
+                            <ListView.View>
+                                <GridView >
+                                    <GridViewColumn Header="SW Part Index" DisplayMemberBinding="{Binding mSWPartIndex}" Width="150" />
+                                    <GridViewColumn Header="LSAP Part Number"  DisplayMemberBinding="{Binding mLSAPPartNumber}" Width="200" />
+                                    <GridViewColumn Header="LSAP Description"  DisplayMemberBinding="{Binding mLSAPDescription}" Width="250" />
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
                 </Grid>
             </Expander>
 
