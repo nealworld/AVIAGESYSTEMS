@@ -12,14 +12,17 @@ namespace ElectronicLogbook.ViewModel
 {
     public class ELBViewModel : ViewModel
     {
-        private static ELBViewModel mSingleton = null;
-        public static ELBViewModel getInstance()
+        public static ELBViewModel mSingleton { get { return Nested.instance; } }
+
+        private class Nested
         {
-            if (mSingleton == null) 
+            // Explicit static constructor to tell C# compiler
+            // not to mark type as beforefieldinit
+            static Nested()
             {
-                mSingleton = new ELBViewModel();
             }
-            return mSingleton;
+
+            internal static readonly ELBViewModel instance = new ELBViewModel();
         }
 
         private struct SystemConfiguration{
@@ -127,10 +130,9 @@ namespace ElectronicLogbook.ViewModel
 
         private void CollectCurrentConfigurationFromSystem()
         {
-            //ConfigurationProcessor lConfigurationProcessor = ConfigurationProcessor.GetInstance();
-            //mAirCraftEquipmentConfigViewModel = new AirCraftEquipmentConfigViewModel(
-              //  lConfigurationProcessor.GetAirCraftEquipmentConfigList());
-            foreach (AirCraftEquipmentConfig lAirCraftEquipmentConfig in GetList()) 
+            //ConfigurationProcessor lConfigurationProcessor = ConfigurationProcessor.mSingleton;
+            foreach (AirCraftEquipmentConfig lAirCraftEquipmentConfig in 
+                /*lConfigurationProcessor.GetAirCraftEquipmentConfigList()*/ GetList()) 
             {
                 mCurrentSystemConfiguration.mAirCraftEquipmentConfigViewModelList.Add
                     (new AirCraftEquipmentConfigViewModel(lAirCraftEquipmentConfig));

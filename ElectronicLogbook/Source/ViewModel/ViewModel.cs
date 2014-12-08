@@ -25,6 +25,11 @@ namespace ElectronicLogbook.ViewModel
         }
         #endregion
 
+        public ViewModel() 
+        {
+            this.IsInEditMode = false;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
         {

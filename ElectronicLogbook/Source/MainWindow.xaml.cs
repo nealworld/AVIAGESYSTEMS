@@ -22,10 +22,10 @@ namespace ElectronicLogbook
         public MainWindow()
         {
             InitializeComponent();
-            base.DataContext = ELBViewModel.getInstance();
+            base.DataContext = ELBViewModel.mSingleton;
 
-            ShowCurrentConfigMenuItem.Click += new RoutedEventHandler(ELBViewModel.getInstance().GetCurrentConfiguration_MenuItemClick);
-            ShowExpectConfigMenuItem.Click += new RoutedEventHandler(ELBViewModel.getInstance().GetExpectConfiguration_MenuItemClick );
+            ShowCurrentConfigMenuItem.Click += new RoutedEventHandler(ELBViewModel.mSingleton.GetCurrentConfiguration_MenuItemClick);
+            ShowExpectConfigMenuItem.Click += new RoutedEventHandler(ELBViewModel.mSingleton.GetExpectConfiguration_MenuItemClick );
         }
     }
 }

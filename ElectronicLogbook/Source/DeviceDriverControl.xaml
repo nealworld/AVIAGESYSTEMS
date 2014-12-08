@@ -4,16 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d">
-    <DockPanel DataContext="{Binding mDeviceDriverListViewModel}">
-        <ListView ItemsSource="{Binding}">
-            <ListView.View>
-                <GridView >
-                    <GridViewColumn Header="Device Name" DisplayMemberBinding="{Binding mDeviceName}" Width="100" />
-                    <GridViewColumn Header="Driver Name"  DisplayMemberBinding="{Binding mDriverName}" Width="100" />
-                    <GridViewColumn Header="Driver Version Number"  DisplayMemberBinding="{Binding mDriverVersionNumber}" Width="150" />
-                    <GridViewColumn Header="Driver Location"  DisplayMemberBinding="{Binding mDriverLocation}" Width="150" />
-                </GridView>
-            </ListView.View>
-        </ListView>
+    <DockPanel>
+        <DataGrid Grid.Row="0" Grid.Column="0" ItemsSource="{Binding mDeviceDriverListViewModel, Mode=TwoWay}" CanUserReorderColumns="True"
+                          CanUserResizeColumns="True" CanUserResizeRows="True" CanUserSortColumns="True"
+                          SelectionMode="Extended" SelectionUnit="FullRow" AutoGenerateColumns="False"
+                          AreRowDetailsFrozen="False" Height="auto" Background="White">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Device Name" Binding="{Binding mDeviceName}"/>
+                <DataGridTextColumn Header="Driver Name" Binding="{Binding mDriverName}"/>
+                <DataGridTextColumn Header="Driver Version Number" Binding="{Binding mDriverVersionNumber}"/>
+                <DataGridTextColumn Header="Driver Location" Binding="{Binding mDriverLocation}"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </DockPanel>
 </UserControl>

@@ -38,7 +38,7 @@ namespace ElectronicLogbook
             {
                 Thread.Sleep(5000);
                 foreach (AirCraftEquipmentConfigViewModel lAirCraftEquipmentConfigViewModel in
-                ELBViewModel.getInstance().mAirCraftEquipmentConfigViewModelList)
+                ELBViewModel.mSingleton.mAirCraftEquipmentConfigViewModelList)
                 {
                     System.Diagnostics.Debug.WriteLine(lAirCraftEquipmentConfigViewModel.mConfigName + "    " +lAirCraftEquipmentConfigViewModel.IsInEditMode);
                     foreach (SubEquipmentViewModel lSubEquipment in lAirCraftEquipmentConfigViewModel.mChildren)
@@ -54,9 +54,16 @@ namespace ElectronicLogbook
 
                         foreach (SWConfigViewModel lSWConfigViewModel in lSubEquipment.mSWConfigList)
                         {
-                            System.Diagnostics.Debug.WriteLine("    " +
+                            string display = string.Empty;
+                            display = "    " +
                                 lSWConfigViewModel.mSWConfigIndex + "," + lSWConfigViewModel.mSWLocationDescription
-                                + lSWConfigViewModel.mSWLocationID + "," + lSWConfigViewModel.mSWPartList.ToString());
+                                + lSWConfigViewModel.mSWLocationID ;
+                            foreach (SWPartViewModel temp in lSWConfigViewModel.mSWPartList)
+                            {
+                                display += ","  + temp.toString();
+                            }
+
+                            System.Diagnostics.Debug.WriteLine(display);
                         }
                     }
                 }
@@ -92,7 +99,7 @@ namespace ElectronicLogbook
 
         private void CreateNewEquipment(object sender, RoutedEventArgs e) 
         {
-            ELBViewModel.getInstance().mAirCraftEquipmentConfigViewModelList.Add(
+            ELBViewModel.mSingleton.mAirCraftEquipmentConfigViewModelList.Add(
                 new AirCraftEquipmentConfigViewModel(new AirCraftEquipmentConfig("New Equipment",new List<SubEquipment>()),true));
         }
 
@@ -138,7 +145,7 @@ namespace ElectronicLogbook
         private void RemoveEquipment(object sender, RoutedEventArgs e)
         {
             AirCraftEquipmentConfigViewModel lAirCraftEquipmentConfigViewModel = AircraftEquipmentConfigTreeView.SelectedItem as AirCraftEquipmentConfigViewModel;
-            ELBViewModel.getInstance().mAirCraftEquipmentConfigViewModelList.Remove(lAirCraftEquipmentConfigViewModel);
+            ELBViewModel.mSingleton.mAirCraftEquipmentConfigViewModelList.Remove(lAirCraftEquipmentConfigViewModel);
         }
 
         private void RemoveSubEquipment(object sender, RoutedEventArgs e) 

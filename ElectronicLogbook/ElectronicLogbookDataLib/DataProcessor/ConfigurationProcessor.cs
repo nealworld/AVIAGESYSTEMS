@@ -16,11 +16,30 @@ namespace ElectronicLogbookDataLib.DataProcessor
     {
         private string mELBConfig = AppDomain.CurrentDomain.SetupInformation.ApplicationBase + "ElectronicLogbook_Config.txt";
         private List<A664ACRMessagePeriodicInput> mAllEquipmentMsgList = new List<A664ACRMessagePeriodicInput>();
-        private static ConfigurationProcessor mSingleton = null;
         private ELBParticipant mELBParticipant;
         private List<string> m3rdPartySWCheckList = new List<string>();
-        
-        private Error LoadELBConfig() {
+
+        private class Nested
+        {
+            // Explicit static constructor to tell C# compiler
+            // not to mark type as beforefieldinit
+            static Nested()
+            {
+            }
+
+            internal static readonly ConfigurationProcessor instance = new ConfigurationProcessor();
+        }
+
+        public static ConfigurationProcessor mSingleton { get { return Nested.instance; }}
+
+        private ConfigurationProcessor() {
+            mELBParticipant = ELBParticipant.getInstance();
+            LoadELBConfig();
+            ASN1_Decoder_ConfigReport.cASN1Format.BuildValueTree();
+        }
+
+        private Error LoadELBConfig()
+        {
             if (!System.IO.File.Exists(mELBConfig))
             {
                 return new Error(mELBConfig + " doesn't exist!");
@@ -85,24 +104,6 @@ namespace ElectronicLogbookDataLib.DataProcessor
                 }
             }
             return Error.OK;
-        }
-
-        private ConfigurationProcessor() {
-            mELBParticipant = ELBParticipant.getInstance();
-            LoadELBConfig();
-
-            ASN1_Decoder_ConfigReport.cASN1Format.BuildValueTree();
-        }
-
-        
-
-        public static ConfigurationProcessor GetInstance() 
-        {
-            if (mSingleton == null)
-            {
-                mSingleton = new ConfigurationProcessor();
-            }
-            return mSingleton; 
         }
 
         public List<AirCraftEquipmentConfig> GetAirCraftEquipmentConfigList() 

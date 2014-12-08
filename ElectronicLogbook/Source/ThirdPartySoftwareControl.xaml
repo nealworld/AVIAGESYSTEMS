@@ -3,15 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008">
-    <DockPanel DataContext="{Binding mThirdPartySoftwareListViewModel}" >
-        <ListView ItemsSource="{Binding }" >
-            <ListView.View>
-                <GridView >
-                    <GridViewColumn Header="Software Name" DisplayMemberBinding="{Binding mSoftwareName}" Width="Auto" />
-                    <GridViewColumn Header="Software Version Number" DisplayMemberBinding="{Binding mSoftwareVersionNumber}" Width="Auto" />
-                    <GridViewColumn Header="Software Location" DisplayMemberBinding="{Binding mSoftwareLocation}" Width="Auto" />
-                </GridView>
-            </ListView.View>
-        </ListView>
+    <DockPanel>
+        <DataGrid Grid.Row="0" Grid.Column="0" ItemsSource="{Binding mThirdPartySoftwareListViewModel, Mode=TwoWay}" CanUserReorderColumns="True"
+                          CanUserResizeColumns="True" CanUserResizeRows="True" CanUserSortColumns="True"
+                          SelectionMode="Extended" SelectionUnit="FullRow" AutoGenerateColumns="False"
+                          AreRowDetailsFrozen="False" Height="auto" Background="White">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Software Name" Binding="{Binding mSoftwareName}"/>
+                <DataGridTextColumn Header="Software Version Number" Binding="{Binding mSoftwareVersionNumber}"/>
+                <DataGridTextColumn Header="Software Location" Binding="{Binding mSoftwareLocation}"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </DockPanel>
 </UserControl>
