@@ -37,20 +37,19 @@
                 </TreeViewItem.ItemContainerStyle>
                 <TreeViewItem.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="New Equipment..." Click="CreateNewEquipment" IsEnabled="False">
-                        </MenuItem>
+                        <MenuItem Header="New Equipment..." Click="CreateNewEquipment" IsEnabled="{Binding mIsEditable}"/>
                     </ContextMenu>
                 </TreeViewItem.ContextMenu>
                 
                 <TreeViewItem.Resources>
-                    <HierarchicalDataTemplate DataType="{x:Type local:AirCraftEquipmentConfigViewModel}" 
+                    <HierarchicalDataTemplate DataType="{x:Type local:AirCraftEquipmentConfigViewModel}"
                                               ItemsSource="{Binding mChildren, Mode=TwoWay}">
-                        <usercontrol:EditableTextBlock Text="{Binding mConfigName, Mode=TwoWay}" IsInEditMode="{Binding IsInEditMode, Mode=TwoWay}">
+                        <usercontrol:EditableTextBlock DataContext="{Binding }" Text="{Binding mConfigName, Mode=TwoWay}" IsInEditMode="{Binding IsInEditMode, Mode=TwoWay}">
                             <usercontrol:EditableTextBlock.ContextMenu>
                                 <ContextMenu>
                                     <MenuItem Header="New SubEquipment" Click="CreateNewSubEquipment"/>
-                                    <MenuItem Header="Remove" Click="RemoveEquipment"/>
-                                    <MenuItem Header="Rename" Click="Rename"/>
+                                    <MenuItem Header="Remove" Click="RemoveEquipment" IsEnabled="{Binding mIsEditable}"/>
+                                    <MenuItem Header="Rename" Click="Rename" IsEnabled="{Binding mIsEditable}"/>
                                 </ContextMenu>
                             </usercontrol:EditableTextBlock.ContextMenu>
                         </usercontrol:EditableTextBlock>
@@ -60,8 +59,8 @@
                         <usercontrol:EditableTextBlock Text="{Binding mEquipmentID, Mode=TwoWay}" IsInEditMode="{Binding IsInEditMode, Mode=TwoWay}">
                             <usercontrol:EditableTextBlock.ContextMenu>
                                 <ContextMenu>
-                                    <MenuItem Header="Remove" Click="RemoveSubEquipment"/>
-                                    <MenuItem Header="Rename" Click="Rename"/>
+                                    <MenuItem Header="Remove" Click="RemoveSubEquipment" IsEnabled="{Binding mIsEditable}"/>
+                                    <MenuItem Header="Rename" Click="Rename" IsEnabled="{Binding mIsEditable}"/>
                                 </ContextMenu>
                             </usercontrol:EditableTextBlock.ContextMenu>
                         </usercontrol:EditableTextBlock>
@@ -70,17 +69,17 @@
             </TreeViewItem>
         </TreeView>
         <GridSplitter Width="2.5" Grid.Column="0" Style="{StaticResource GridSplitterStyle}"/>
-        <Grid Grid.Column="1" Background="White" DataContext="{Binding ElementName=AircraftEquipmentConfigTreeView}">
+        <Grid Grid.Column="1" Background="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Expander Header="HW Part" MinHeight="50" >
-                <DataGrid ItemsSource="{Binding SelectedItem.mHWPartList, Mode=TwoWay}" CanUserReorderColumns="True"
+                <DataGrid ItemsSource="{Binding ElementName=AircraftEquipmentConfigTreeView, Path=SelectedItem.mHWPartList, Mode=TwoWay}" CanUserReorderColumns="True"
                             CanUserResizeColumns="True" CanUserResizeRows="True" CanUserSortColumns="True"
                             SelectionMode="Extended" SelectionUnit="FullRow" AutoGenerateColumns="False"
-                            AreRowDetailsFrozen="False" Height="auto" Background="White">
+                            AreRowDetailsFrozen="False" Height="auto" Background="White" Name="TestDataGrid" IsReadOnly="True">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="HW Part Index" Binding="{Binding mHWPartIndex}"/>
                         <DataGridTextColumn Header="HW Part Number" Binding="{Binding mHWPartNumber}"/>
@@ -93,7 +92,7 @@
            <!-- <GridSplitter Height="2" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Style="{StaticResource GridSplitterStyle}"/>
 -->
             <Expander Header="SW_Config" Grid.Row="1"  MinHeight="100">
-                <Grid DataContext="{Binding ElementName=AircraftEquipmentConfigTreeView}">
+                <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
@@ -105,7 +104,9 @@
 
                     <TreeView Name="SWConfigListTreeView" Grid.Row="0" Grid.Column="0"
                               Padding="-5,0,10,0" BorderBrush="Transparent" KeyDown="SWConfigListTreeView_KeyDown">
-                        <TreeViewItem Header="SWConfigIndex" ItemsSource="{Binding SelectedItem.mSWConfigList, Mode=TwoWay}">
+                        <TreeViewItem Header="SWConfigIndex" 
+                                      ItemsSource="{Binding AircraftEquipmentConfigTreeView.SelectedItem.mSWConfigList, 
+                            Mode=TwoWay}">
                             <TreeViewItem.ItemContainerStyle>
                                 <Style TargetType="{x:Type TreeViewItem}">
                                     <Setter Property="FontWeight" Value="Normal" />
@@ -151,16 +152,16 @@
                         
                             <Label Name="label1" Grid.Row="0" Grid.Column="0">SW Location ID:</Label>
                             <TextBox Name="TextBox" Grid.Row="0" Grid.Column="1" Text="{Binding ElementName=SWConfigListTreeView, 
-                        Path=SelectedItem.mSWLocationID, Mode=TwoWay}" IsReadOnly="True"/>
+                        Path=SelectedItem.mSWLocationID, Mode=TwoWay}" IsReadOnly="{Binding mIsEditable}"/>
                             <Label Grid.Row="1" Grid.Column="0">SW Location Description:</Label>
                             <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ElementName=SWConfigListTreeView, 
-                        Path=SelectedItem.mSWLocationDescription, Mode=TwoWay}" IsReadOnly="True"/>
+                        Path=SelectedItem.mSWLocationDescription, Mode=TwoWay}" IsReadOnly="{Binding mIsEditable}"/>
                         </Grid>
 
                         <DataGrid ItemsSource="{Binding ElementName=SWConfigListTreeView, Path=SelectedItem.mSWPartList, Mode=TwoWay}" CanUserReorderColumns="True"
                           CanUserResizeColumns="True" CanUserResizeRows="True" CanUserSortColumns="True"
                           SelectionMode="Extended" SelectionUnit="FullRow" AutoGenerateColumns="False"
-                          AreRowDetailsFrozen="False" Height="auto" Background="White">
+                          AreRowDetailsFrozen="False" Height="auto" Background="White" IsReadOnly="{Binding mIsEditable}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="SW Part Index" Binding="{Binding mSWPartIndex}"/>
                                 <DataGridTextColumn Header="LSAP Part Number" Binding="{Binding mLSAPPartNumber}"/>
@@ -185,7 +186,7 @@
                     <DataGrid Grid.Row="0" Grid.Column="0" ItemsSource="{Binding ElementName=AircraftEquipmentConfigTreeView, Path=SelectedItem.mConfigInfoList, Mode=TwoWay}" CanUserReorderColumns="True"
                           CanUserResizeColumns="True" CanUserResizeRows="True" CanUserSortColumns="True"
                           SelectionMode="Extended" SelectionUnit="FullRow" AutoGenerateColumns="False"
-                          AreRowDetailsFrozen="False" Height="auto" Background="White">
+                          AreRowDetailsFrozen="False" Height="auto" Background="White" IsReadOnly="{Binding mIsEditable}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Config Info Index" Binding="{Binding mItemIndex}"/>
                             <DataGridTextColumn Header="Config info" Binding="{Binding mItemInfo}"/>

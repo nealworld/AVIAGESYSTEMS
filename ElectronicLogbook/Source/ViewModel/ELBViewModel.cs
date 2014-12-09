@@ -12,8 +12,6 @@ namespace ElectronicLogbook.ViewModel
 {
     public class ELBViewModel : ViewModel
     {
-        public static ELBViewModel mSingleton { get { return Nested.instance; } }
-
         private class Nested
         {
             // Explicit static constructor to tell C# compiler
@@ -25,15 +23,48 @@ namespace ElectronicLogbook.ViewModel
             internal static readonly ELBViewModel instance = new ELBViewModel();
         }
 
+        public static ELBViewModel mSingleton { get { return Nested.instance; } }
+
         private struct SystemConfiguration{
             public ObservableCollection<AirCraftEquipmentConfigViewModel> mAirCraftEquipmentConfigViewModelList;
             public ObservableCollection<VAISParticipant> mVAISParticipantList;
             public ObservableCollection<DeviceDriver> mDeviceDriverList;
             public ObservableCollection<ThirdPartySoftware> mThirdPartySoftware;
+            public bool mIsEditable;
+            public bool mIsReadOnly;
         }
-
+        
         private SystemConfiguration mCurrentSystemConfiguration;
         private SystemConfiguration mExpectSystemConfiguration;
+
+        private bool _IsEditable;
+        public bool mIsEditable 
+        {
+            set 
+            {
+                _IsEditable = value;
+                this.OnPropertyChanged("mIsEditable");
+            }
+            get 
+            {
+                return _IsEditable;
+            }
+        }
+
+        private bool _isReadOnly;
+        public bool mIsReadOnly
+        {
+            set
+            {
+                _isReadOnly = value;
+                this.OnPropertyChanged("mIsReadOnly");
+            }
+            get
+            {
+                return _isReadOnly;
+            }
+        }
+
 
         private ObservableCollection<AirCraftEquipmentConfigViewModel> _AirCraftEquipmentConfigList;
         public ObservableCollection<AirCraftEquipmentConfigViewModel> mAirCraftEquipmentConfigViewModelList
@@ -110,11 +141,15 @@ namespace ElectronicLogbook.ViewModel
             mCurrentSystemConfiguration.mDeviceDriverList = new ObservableCollection<DeviceDriver>();
             mCurrentSystemConfiguration.mThirdPartySoftware = new ObservableCollection<ThirdPartySoftware>();
             mCurrentSystemConfiguration.mVAISParticipantList = new ObservableCollection<VAISParticipant>();
+            mCurrentSystemConfiguration.mIsEditable = false;
+            mCurrentSystemConfiguration.mIsReadOnly = true;
 
             mExpectSystemConfiguration.mAirCraftEquipmentConfigViewModelList = new ObservableCollection<AirCraftEquipmentConfigViewModel>();
             mExpectSystemConfiguration.mDeviceDriverList = new ObservableCollection<DeviceDriver>();
             mExpectSystemConfiguration.mThirdPartySoftware = new ObservableCollection<ThirdPartySoftware>();
             mExpectSystemConfiguration.mVAISParticipantList = new ObservableCollection<VAISParticipant>();
+            mExpectSystemConfiguration.mIsEditable = true;
+            mCurrentSystemConfiguration.mIsReadOnly = false;
         }
 
         public void GetCurrentConfiguration_MenuItemClick(object sender, RoutedEventArgs e)
@@ -157,6 +192,8 @@ namespace ElectronicLogbook.ViewModel
             this.mVAISParticipantListViewModel = aSystemConfiguration.mVAISParticipantList;
             this.mDeviceDriverListViewModel = aSystemConfiguration.mDeviceDriverList;
             this.mThirdPartySoftwareListViewModel = aSystemConfiguration.mThirdPartySoftware;
+            this.mIsEditable = aSystemConfiguration.mIsEditable;
+            this.mIsReadOnly = aSystemConfiguration.mIsReadOnly;
         }
 
         private List<AirCraftEquipmentConfig> GetList()

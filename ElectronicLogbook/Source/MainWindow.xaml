@@ -4,8 +4,7 @@
         xmlns:local="clr-namespace:ElectronicLogbook"
         FontSize="14"
         Title="ELB" Height="Auto" Width="Auto"
-        WindowStartupLocation="CenterScreen" 
-        >
+        WindowStartupLocation="CenterScreen" >
     <DockPanel>
         <Menu Background="White" Height="23"  FontSize="14" DockPanel.Dock="Top">
             <MenuItem Header="Configuration">
@@ -24,7 +23,7 @@
                         <TextBlock Text="Aircraft equipment" FontFamily="Arial" TextAlignment="Center" Width="150" Height="22" />
                     </DockPanel>
                 </TabItem.Header>
-                <local:AircraftEquipmentControl />
+                <local:AircraftEquipmentControl/>
             </TabItem>
             <TabItem Height="30" Background="White" BorderBrush="Transparent">
                 <TabItem.Header>
@@ -32,7 +31,7 @@
                         <TextBlock Text="VAIS participant" FontFamily="Arial" Width="150" Height="22" TextAlignment="Center" />
                     </DockPanel>
                 </TabItem.Header>
-                <local:VAISParticipantControl />
+                <local:VAISParticipantControl/>
             </TabItem>
             <TabItem Height="30" Background="White" BorderBrush="Transparent">
                 <TabItem.Header>

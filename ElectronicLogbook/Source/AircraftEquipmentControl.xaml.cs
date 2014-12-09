@@ -25,7 +25,9 @@ namespace ElectronicLogbook
         public AircraftEquipmentControl()
         {
             InitializeComponent();
-                   
+            //TestDataGrid.DataContext = ELBViewModel.mSingleton;
+           // TestMenuItem.DataContext = ELBViewModel.mSingleton;
+
             ThreadStart thr_start_func = new ThreadStart(First_Thread);
             Thread fThread = new Thread(thr_start_func) { IsBackground=true};
             fThread.Name = "first_thread";
@@ -34,6 +36,7 @@ namespace ElectronicLogbook
 
         public void First_Thread()
         {
+            ELBViewModel.mSingleton.mIsEditable = false;
             while (true)
             {
                 Thread.Sleep(5000);
