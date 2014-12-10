@@ -4,7 +4,8 @@
         xmlns:local="clr-namespace:ElectronicLogbook"
         FontSize="14"
         Title="ELB" Height="Auto" Width="Auto"
-        WindowStartupLocation="CenterScreen" >
+        WindowStartupLocation="CenterScreen" 
+        Name="ConfigurationWindow">
     <DockPanel>
         <Menu Background="White" Height="23"  FontSize="14" DockPanel.Dock="Top">
             <MenuItem Header="Configuration">

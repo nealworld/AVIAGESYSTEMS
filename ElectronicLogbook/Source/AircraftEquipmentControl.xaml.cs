@@ -25,8 +25,8 @@ namespace ElectronicLogbook
         public AircraftEquipmentControl()
         {
             InitializeComponent();
-            //TestDataGrid.DataContext = ELBViewModel.mSingleton;
-           // TestMenuItem.DataContext = ELBViewModel.mSingleton;
+            TestGrid.DataContext = ELBViewModel.mSingleton;
+            //TestExpander.DataContext = ELBViewModel.mSingleton;
 
             ThreadStart thr_start_func = new ThreadStart(First_Thread);
             Thread fThread = new Thread(thr_start_func) { IsBackground=true};
@@ -36,10 +36,12 @@ namespace ElectronicLogbook
 
         public void First_Thread()
         {
-            ELBViewModel.mSingleton.mIsEditable = false;
+            
             while (true)
             {
-                Thread.Sleep(5000);
+                Thread.Sleep(20000);
+                ELBViewModel.mSingleton.mIsReadOnly = false;
+                ELBViewModel.mSingleton.mIsEditable = true;
                 foreach (AirCraftEquipmentConfigViewModel lAirCraftEquipmentConfigViewModel in
                 ELBViewModel.mSingleton.mAirCraftEquipmentConfigViewModelList)
                 {
@@ -147,8 +149,13 @@ namespace ElectronicLogbook
 
         private void RemoveEquipment(object sender, RoutedEventArgs e)
         {
-            AirCraftEquipmentConfigViewModel lAirCraftEquipmentConfigViewModel = AircraftEquipmentConfigTreeView.SelectedItem as AirCraftEquipmentConfigViewModel;
-            ELBViewModel.mSingleton.mAirCraftEquipmentConfigViewModelList.Remove(lAirCraftEquipmentConfigViewModel);
+            MenuItem mi = sender as MenuItem;
+            ContextMenu cm = mi.Parent as ContextMenu;
+            System.Diagnostics.Debug.WriteLine(((EditableTextBlock)cm.PlacementTarget).TemplatedParent);
+
+
+            //AirCraftEquipmentConfigViewModel lAirCraftEquipmentConfigViewModel = AircraftEquipmentConfigTreeView.SelectedItem as AirCraftEquipmentConfigViewModel;
+            //ELBViewModel.mSingleton.mAirCraftEquipmentConfigViewModelList.Remove(lAirCraftEquipmentConfigViewModel);
         }
 
         private void RemoveSubEquipment(object sender, RoutedEventArgs e) 

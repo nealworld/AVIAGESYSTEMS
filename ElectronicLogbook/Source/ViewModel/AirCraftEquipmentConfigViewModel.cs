@@ -22,6 +22,19 @@ namespace ElectronicLogbook.ViewModel
                 return _ConfigName;
             }
         }
+
+        private bool mIsReadOnly 
+        {
+            get 
+            {
+                return ELBViewModel.mSingleton.mIsReadOnly;
+            }
+            set 
+            {
+                ELBViewModel.mSingleton.mIsReadOnly = value;
+                this.OnPropertyChanged("");
+            }
+        }
         private void Initialize(AirCraftEquipmentConfig aAirCraftEquipmentConfig)
         {
             mConfigName = aAirCraftEquipmentConfig.mConfigName;

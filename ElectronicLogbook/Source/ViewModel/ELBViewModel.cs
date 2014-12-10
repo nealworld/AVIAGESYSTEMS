@@ -149,7 +149,7 @@ namespace ElectronicLogbook.ViewModel
             mExpectSystemConfiguration.mThirdPartySoftware = new ObservableCollection<ThirdPartySoftware>();
             mExpectSystemConfiguration.mVAISParticipantList = new ObservableCollection<VAISParticipant>();
             mExpectSystemConfiguration.mIsEditable = true;
-            mCurrentSystemConfiguration.mIsReadOnly = false;
+            mExpectSystemConfiguration.mIsReadOnly = false;
         }
 
         public void GetCurrentConfiguration_MenuItemClick(object sender, RoutedEventArgs e)
