@@ -151,9 +151,9 @@ namespace ElectronicLogbook
         {
             MenuItem mi = sender as MenuItem;
             ContextMenu cm = mi.Parent as ContextMenu;
-            System.Diagnostics.Debug.WriteLine(((EditableTextBlock)cm.PlacementTarget).TemplatedParent);
+            System.Diagnostics.Debug.WriteLine(((Border)((ContentPresenter)(((EditableTextBlock)cm.PlacementTarget).TemplatedParent)).Parent).Parent);
 
-
+            cm.DataContext = ((Grid)((Border)((ContentPresenter)(((EditableTextBlock)cm.PlacementTarget).TemplatedParent)).Parent).Parent).DataContext;
             //AirCraftEquipmentConfigViewModel lAirCraftEquipmentConfigViewModel = AircraftEquipmentConfigTreeView.SelectedItem as AirCraftEquipmentConfigViewModel;
             //ELBViewModel.mSingleton.mAirCraftEquipmentConfigViewModelList.Remove(lAirCraftEquipmentConfigViewModel);
         }

@@ -15,7 +15,15 @@
                     </Trigger>
                 </Style.Triggers>
             </Style>
+            <FrameworkElement x:Key="DataContextBridge" />
         </Grid.Resources>
+        <Grid.DataContext>
+            <!-- This Binding sets the DataContext on the "root node"
+       of the virtual logical tree branch.  This Binding
+       must be applied to the DataContext of the element
+       which is actually assigned the data context value. -->
+            <Binding Mode="OneWayToSource" Path="DataContext" Source="{StaticResource DataContextBridge}"/>
+        </Grid.DataContext>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
@@ -40,15 +48,17 @@
                         <MenuItem Header="New Equipment..." Click="CreateNewEquipment" IsEnabled="{Binding mIsEditable}"/>
                     </ContextMenu>
                 </TreeViewItem.ContextMenu>
-                
+                <!--Text="{Binding mConfigName, Mode=TwoWay}"-->
                 <TreeViewItem.Resources>
                     <HierarchicalDataTemplate DataType="{x:Type local:AirCraftEquipmentConfigViewModel}"
                                               ItemsSource="{Binding mChildren, Mode=TwoWay}">
-                        <usercontrol:EditableTextBlock Text="{Binding mConfigName, Mode=TwoWay}" IsInEditMode="{Binding IsInEditMode, Mode=TwoWay}">
+                        <usercontrol:EditableTextBlock  Text="{Binding mConfigName, Mode=TwoWay}" IsInEditMode="{Binding IsInEditMode, Mode=TwoWay}">
                             <usercontrol:EditableTextBlock.ContextMenu>
                                 <ContextMenu>
                                     <MenuItem Header="New SubEquipment" Click="CreateNewSubEquipment"/>
-                                    <MenuItem Header="Remove" Click="RemoveEquipment" IsEnabled="{Binding Path=PlacementTarget.Parent, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
+                                    <MenuItem Header="Remove" Click="RemoveEquipment" DataContext="{Binding 
+                                        Source={StaticResource DataContextBridge}, Path=DataContext}" 
+                                              IsEnabled="{Binding mIsEditable}"/>
                                     <MenuItem Header="Rename" Click="Rename" IsEnabled="{Binding mIsEditable}"/>
                                 </ContextMenu>
                             </usercontrol:EditableTextBlock.ContextMenu>                                

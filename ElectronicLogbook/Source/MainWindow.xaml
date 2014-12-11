@@ -6,6 +6,20 @@
         Title="ELB" Height="Auto" Width="Auto"
         WindowStartupLocation="CenterScreen" 
         Name="ConfigurationWindow">
+    <Window.Resources>
+        <!-- This is the "root node" in the virtual branch
+       attached to the logical tree. It has its
+       DataContext set by the Binding applied to the
+       Window's DataContext property. -->
+        <FrameworkElement x:Key="DataContextBridge" />
+    </Window.Resources>
+    <Window.DataContext>
+        <!-- This Binding sets the DataContext on the "root node"
+       of the virtual logical tree branch.  This Binding
+       must be applied to the DataContext of the element
+       which is actually assigned the data context value. -->
+        <Binding Mode="OneWayToSource" Path="DataContext" Source="{StaticResource DataContextBridge}"/>
+    </Window.DataContext>
     <DockPanel>
         <Menu Background="White" Height="23"  FontSize="14" DockPanel.Dock="Top">
             <MenuItem Header="Configuration">
