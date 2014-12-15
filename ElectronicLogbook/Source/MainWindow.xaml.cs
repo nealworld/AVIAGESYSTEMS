@@ -22,7 +22,7 @@ namespace ElectronicLogbook
         public MainWindow()
         {
             InitializeComponent();
-            ConfigurationWindow.DataContext = ELBViewModel.mSingleton;
+            base.DataContext = ELBViewModel.mSingleton;
 
             ShowCurrentConfigMenuItem.Click += new RoutedEventHandler(ELBViewModel.mSingleton.GetCurrentConfiguration_MenuItemClick);
             ShowExpectConfigMenuItem.Click += new RoutedEventHandler(ELBViewModel.mSingleton.GetExpectConfiguration_MenuItemClick );

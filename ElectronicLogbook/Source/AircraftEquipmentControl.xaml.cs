@@ -25,7 +25,7 @@ namespace ElectronicLogbook
         public AircraftEquipmentControl()
         {
             InitializeComponent();
-            TestGrid.DataContext = ELBViewModel.mSingleton;
+            TopGrid.DataContext = ELBViewModel.mSingleton;
             //TestExpander.DataContext = ELBViewModel.mSingleton;
 
             ThreadStart thr_start_func = new ThreadStart(First_Thread);
@@ -39,9 +39,7 @@ namespace ElectronicLogbook
             
             while (true)
             {
-                Thread.Sleep(20000);
-                ELBViewModel.mSingleton.mIsReadOnly = false;
-                ELBViewModel.mSingleton.mIsEditable = true;
+                Thread.Sleep(5000);
                 foreach (AirCraftEquipmentConfigViewModel lAirCraftEquipmentConfigViewModel in
                 ELBViewModel.mSingleton.mAirCraftEquipmentConfigViewModelList)
                 {
@@ -149,13 +147,8 @@ namespace ElectronicLogbook
 
         private void RemoveEquipment(object sender, RoutedEventArgs e)
         {
-            MenuItem mi = sender as MenuItem;
-            ContextMenu cm = mi.Parent as ContextMenu;
-            System.Diagnostics.Debug.WriteLine(((Border)((ContentPresenter)(((EditableTextBlock)cm.PlacementTarget).TemplatedParent)).Parent).Parent);
-
-            cm.DataContext = ((Grid)((Border)((ContentPresenter)(((EditableTextBlock)cm.PlacementTarget).TemplatedParent)).Parent).Parent).DataContext;
-            //AirCraftEquipmentConfigViewModel lAirCraftEquipmentConfigViewModel = AircraftEquipmentConfigTreeView.SelectedItem as AirCraftEquipmentConfigViewModel;
-            //ELBViewModel.mSingleton.mAirCraftEquipmentConfigViewModelList.Remove(lAirCraftEquipmentConfigViewModel);
+            AirCraftEquipmentConfigViewModel lAirCraftEquipmentConfigViewModel = AircraftEquipmentConfigTreeView.SelectedItem as AirCraftEquipmentConfigViewModel;
+            ELBViewModel.mSingleton.mAirCraftEquipmentConfigViewModelList.Remove(lAirCraftEquipmentConfigViewModel);
         }
 
         private void RemoveSubEquipment(object sender, RoutedEventArgs e) 
