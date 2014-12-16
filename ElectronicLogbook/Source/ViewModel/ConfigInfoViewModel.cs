@@ -35,6 +35,7 @@ namespace ElectronicLogbook.ViewModel
             }
         }
 
+        public ConfigInfoViewModel() { }
         public ConfigInfoViewModel(ConfigInfo aConfigInfo)
         {
             mItemIndex = aConfigInfo.mItemIndex;
