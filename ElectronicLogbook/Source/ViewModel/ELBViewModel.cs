@@ -92,7 +92,10 @@ namespace ElectronicLogbook.ViewModel
             ConfigurationViewModel lConfigurationViewModel = new ConfigurationViewModel();
             Utility.DeSerialize(ref lConfigurationViewModel, "ELBConfig.cnf");
 
-            mConfigurationViewModel = lConfigurationViewModel;
+            mConfigurationViewModel.mAirCraftEquipmentConfigViewModelList = lConfigurationViewModel.mAirCraftEquipmentConfigViewModelList;
+            mConfigurationViewModel.mDeviceDriverListViewModel = lConfigurationViewModel.mDeviceDriverListViewModel;
+            mConfigurationViewModel.mThirdPartySoftwareListViewModel = lConfigurationViewModel.mThirdPartySoftwareListViewModel;
+            mConfigurationViewModel.mVAISParticipantListViewModel = lConfigurationViewModel.mVAISParticipantListViewModel;
             mConfigurationViewModel.mIsEditable = true;
             mConfigurationViewModel.mIsReadOnly = false;
         }

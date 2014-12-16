@@ -104,6 +104,8 @@ namespace ElectronicLogbook.ViewModel
             info.AddValue("mHWPartList", mHWPartList);
             info.AddValue("mSWConfigList", mSWConfigList);
             info.AddValue("mConfigInfoList", mConfigInfoList);
+            info.AddValue("mChildren", mChildren);
+            info.AddValue("mParent", mParent);
         }
 
         //Deserialization constructor.
@@ -117,6 +119,9 @@ namespace ElectronicLogbook.ViewModel
                 info.GetValue("mSWConfigList", typeof(ObservableCollection<SWConfigViewModel>));
             mConfigInfoList = (ObservableCollection<ConfigInfoViewModel>)
                 info.GetValue("mConfigInfoList", typeof(ObservableCollection<ConfigInfoViewModel>));
+            mChildren = (ObservableCollection<TreeViewItemViewModel>)info.
+                GetValue("mChildren", typeof(ObservableCollection<TreeViewItemViewModel>));
+            mParent = (TreeViewItemViewModel)info.GetValue("mParent", typeof(TreeViewItemViewModel));
         }
     }
 }

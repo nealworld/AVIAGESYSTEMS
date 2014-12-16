@@ -53,17 +53,17 @@ namespace ElectronicLogbook.ViewModel
 
         public void GetObjectData(SerializationInfo info, StreamingContext ctxt) 
         {
-            info.AddValue("mChildren",mChildren);
-            info.AddValue("mParent",mParent);
+            //info.AddValue("mChildren",mChildren);
+            //info.AddValue("mParent",mParent);
         }
 
         //Deserialization constructor.
         public TreeViewItemViewModel(SerializationInfo info, StreamingContext ctxt)
         {
             //Get the values from info and assign them to the appropriate properties
-            mChildren = (ObservableCollection<TreeViewItemViewModel>)info.
-                GetValue("mChildren", typeof(ObservableCollection<TreeViewItemViewModel>));
-            mParent = (TreeViewItemViewModel)info.GetValue("mParent", typeof(TreeViewItemViewModel));
+            //mChildren = (ObservableCollection<TreeViewItemViewModel>)info.
+                //GetValue("mChildren", typeof(ObservableCollection<TreeViewItemViewModel>));
+            //mParent = (TreeViewItemViewModel)info.GetValue("mParent", typeof(TreeViewItemViewModel));
         }
     }
 }
