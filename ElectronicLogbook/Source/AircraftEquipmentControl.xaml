@@ -133,7 +133,9 @@
                             </TreeViewItem.ItemContainerStyle>
                             <TreeViewItem.ContextMenu>
                                 <ContextMenu>
-                                    <MenuItem Header="New SWConfig..." Click="CreateNewSWConfig"/>
+                                    <MenuItem Header="New SWConfig..." Click="CreateNewSWConfig" DataContext="{Binding 
+                                        Source={StaticResource DataContextBridge}, Path=DataContext}" 
+                                              IsEnabled="{Binding mIsEditable}"/>
                                 </ContextMenu>
                             </TreeViewItem.ContextMenu>
                             <TreeViewItem.ItemTemplate>

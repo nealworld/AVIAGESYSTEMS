@@ -25,7 +25,7 @@ namespace ElectronicLogbook
         public AircraftEquipmentControl()
         {
             InitializeComponent();
-            TopGrid.DataContext = ELBViewModel.mSingleton;
+            TopGrid.DataContext = ELBViewModel.mSingleton.mConfigurationViewModel;
             //TestExpander.DataContext = ELBViewModel.mSingleton;
 
             ThreadStart thr_start_func = new ThreadStart(First_Thread);
@@ -39,9 +39,11 @@ namespace ElectronicLogbook
             
             while (true)
             {
-                Thread.Sleep(5000);
+                Thread.Sleep(15000);
+                ELBViewModel.mSingleton.mConfigurationViewModel.mIsEditable = true;
+                ELBViewModel.mSingleton.mConfigurationViewModel.mIsReadOnly = false;
                 foreach (AirCraftEquipmentConfigViewModel lAirCraftEquipmentConfigViewModel in
-                ELBViewModel.mSingleton.mAirCraftEquipmentConfigViewModelList)
+                ELBViewModel.mSingleton.mConfigurationViewModel.mAirCraftEquipmentConfigViewModelList)
                 {
                     System.Diagnostics.Debug.WriteLine(lAirCraftEquipmentConfigViewModel.mConfigName + "    " +lAirCraftEquipmentConfigViewModel.IsInEditMode);
                     foreach (SubEquipmentViewModel lSubEquipment in lAirCraftEquipmentConfigViewModel.mChildren)
@@ -61,10 +63,6 @@ namespace ElectronicLogbook
                             display = "    " +
                                 lSWConfigViewModel.mSWConfigIndex + "," + lSWConfigViewModel.mSWLocationDescription
                                 + lSWConfigViewModel.mSWLocationID ;
-                            foreach (SWPartViewModel temp in lSWConfigViewModel.mSWPartList)
-                            {
-                                display += ","  + temp.toString();
-                            }
 
                             System.Diagnostics.Debug.WriteLine(display);
                         }
@@ -102,13 +100,12 @@ namespace ElectronicLogbook
 
         private void CreateNewEquipment(object sender, RoutedEventArgs e) 
         {
-            ELBViewModel.mSingleton.mAirCraftEquipmentConfigViewModelList.Add(
+            ELBViewModel.mSingleton.mConfigurationViewModel.mAirCraftEquipmentConfigViewModelList.Add(
                 new AirCraftEquipmentConfigViewModel(new AirCraftEquipmentConfig("New Equipment",new List<SubEquipment>()),true));
         }
 
         private void CreateNewSubEquipment(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine(" enter xxxx ");
             AirCraftEquipmentConfigViewModel lAirCraftEquipmentConfigViewModel = AircraftEquipmentConfigTreeView.SelectedItem as AirCraftEquipmentConfigViewModel;
             SubEquipment lnew = new SubEquipment();
             lnew.mEquipmentID = "New SubEquipment";
@@ -124,12 +121,13 @@ namespace ElectronicLogbook
                 SWConfigViewModel lSWConfigViewModel = new SWConfigViewModel(new SWConfig());
                 lSWConfigViewModel.mSWConfigIndex = "New SWConfig Index";
                 lSubEquipmentViewModel.mSWConfigList.Add(lSWConfigViewModel);
+                lSWConfigViewModel.IsInEditMode = true;
             }
         }
 
         private void AircraftEquipmentConfigTreeView_KeyDown(object sender, KeyEventArgs e)
         {
-            if (AircraftEquipmentConfigTreeView.SelectedItem is TreeViewItemViewModel && e.Key == Key.F2)
+            if (AircraftEquipmentConfigTreeView.SelectedItem is TreeViewItemViewModel && e.Key == Key.F2 && ELBViewModel.mSingleton.mConfigurationViewModel.mIsEditable)
             {
                 TreeViewItemViewModel lTreeViewItemModel = AircraftEquipmentConfigTreeView.SelectedItem as TreeViewItemViewModel;
                 lTreeViewItemModel.IsInEditMode=true;
@@ -138,7 +136,7 @@ namespace ElectronicLogbook
 
         private void SWConfigListTreeView_KeyDown(object sender, KeyEventArgs e)
         {
-            if (SWConfigListTreeView.SelectedItem is ViewModel.ViewModel && e.Key == Key.F2)
+            if (SWConfigListTreeView.SelectedItem is ViewModel.ViewModel && e.Key == Key.F2 && ELBViewModel.mSingleton.mConfigurationViewModel.mIsEditable)
             {
                 ViewModel.ViewModel lViewModel = SWConfigListTreeView.SelectedItem as ViewModel.ViewModel;
                 lViewModel.IsInEditMode = true;
@@ -148,7 +146,7 @@ namespace ElectronicLogbook
         private void RemoveEquipment(object sender, RoutedEventArgs e)
         {
             AirCraftEquipmentConfigViewModel lAirCraftEquipmentConfigViewModel = AircraftEquipmentConfigTreeView.SelectedItem as AirCraftEquipmentConfigViewModel;
-            ELBViewModel.mSingleton.mAirCraftEquipmentConfigViewModelList.Remove(lAirCraftEquipmentConfigViewModel);
+            ELBViewModel.mSingleton.mConfigurationViewModel.mAirCraftEquipmentConfigViewModelList.Remove(lAirCraftEquipmentConfigViewModel);
         }
 
         private void RemoveSubEquipment(object sender, RoutedEventArgs e) 

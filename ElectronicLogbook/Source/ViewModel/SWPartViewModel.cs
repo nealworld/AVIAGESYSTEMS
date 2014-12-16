@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
+using System.Runtime.Serialization;
 using ElectronicLogbookDataLib.AirCraftEquipment;
 
 namespace ElectronicLogbook.ViewModel
 {
-    public class SWPartViewModel : ViewModel
+    [Serializable()]
+    public class SWPartViewModel : ViewModel, ISerializable
     {
         private String _SWPartIndex;
         public String mSWPartIndex {
@@ -65,8 +62,20 @@ namespace ElectronicLogbook.ViewModel
             mLSAPDescription = aSWPart.mLSAPDescription;
         }
 
-        public string toString(){
-            return mSWPartIndex + "," + mLSAPPartNumber + "," + mLSAPDescription;
+        public void GetObjectData(SerializationInfo info, StreamingContext ctxt) 
+        {
+            info.AddValue("mSWPartIndex",mSWPartIndex);
+            info.AddValue("mLSAPPartNumber", mLSAPPartNumber);
+            info.AddValue("mLSAPDescription", mLSAPDescription);
+        }
+
+        //Deserialization constructor.
+        public SWPartViewModel(SerializationInfo info, StreamingContext ctxt)
+        {
+            //Get the values from info and assign them to the appropriate properties
+            mSWPartIndex = (String)info.GetValue("mSWPartIndex", typeof(String));
+            mLSAPPartNumber = (String)info.GetValue("mLSAPPartNumber", typeof(String));
+            mLSAPDescription = (String)info.GetValue("mLSAPDescription", typeof(String));
         }
     }
 }

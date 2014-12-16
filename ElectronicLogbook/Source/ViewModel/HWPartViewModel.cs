@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Runtime.Serialization;
 using ElectronicLogbookDataLib.AirCraftEquipment;
 
 namespace ElectronicLogbook.ViewModel
 {
-    public class HWPartViewModel : ViewModel
+    [System.Serializable()]
+    public class HWPartViewModel : ViewModel, ISerializable
     {
         private String _HWPartIndex;
         public String mHWPartIndex 
@@ -89,6 +91,26 @@ namespace ElectronicLogbook.ViewModel
             mHWPartNumber = aHWPart.mHWPartNumber;
             mHWPartSerialNumber = aHWPart.mHWPartSerialNumber;
             mHWPartStatus = aHWPart.mHWPartStatus;
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext ctxt) 
+        {
+            info.AddValue("mHWPartIndex",mHWPartIndex);
+            info.AddValue("mHWPartNumber", mHWPartNumber);
+            info.AddValue("mHWPartDescription", mHWPartDescription);
+            info.AddValue("mHWPartStatus", mHWPartStatus);
+            info.AddValue("mHWPartSerialNumber", mHWPartSerialNumber);
+        }
+
+        //Deserialization constructor.
+        public HWPartViewModel(SerializationInfo info, StreamingContext ctxt)
+        {
+            //Get the values from info and assign them to the appropriate properties
+            mHWPartIndex = (String)info.GetValue("mHWPartIndex", typeof(String));
+            mHWPartNumber = (String)info.GetValue("mHWPartNumber", typeof(String));
+            mHWPartDescription = (String)info.GetValue("mHWPartDescription", typeof(String));
+            mHWPartStatus = (String)info.GetValue("mHWPartStatus", typeof(String));
+            mHWPartSerialNumber = (String)info.GetValue("mHWPartSerialNumber", typeof(String));
         }
     }
 }

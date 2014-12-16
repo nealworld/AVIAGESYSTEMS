@@ -8,8 +8,11 @@
     <DockPanel>
         <Menu Background="White" Height="23"  FontSize="14" DockPanel.Dock="Top">
             <MenuItem Header="Configuration">
-                <MenuItem Header="Show Current Configuration" Name="ShowCurrentConfigMenuItem"/>
-                <MenuItem Header="Show Expect Configuration" Name="ShowExpectConfigMenuItem"/>
+                <MenuItem Header="New Configuration..." Name="NewConfiguration"/>
+                <MenuItem Header="Open Configuration..." Name="OpenConfiguration"/>
+                <MenuItem Header="Get Current Configuration" Name="GetCurrentConfigration"/>
+                <MenuItem Header="Save" Name="SaveConfiguration"/>
+                <MenuItem Header="Compare..." Name="CompareConfiguration"/>
             </MenuItem>
 
             <MenuItem Header="Compare" >

@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using ElectronicLogbookDataLib.AirCraftEquipment;
 using ElectronicLogbookDataLib.DataProcessor;
-using System.ComponentModel;
+using System.Collections.ObjectModel;
 
 namespace ElectronicLogbook.ViewModel
 {
-    public class AirCraftEquipmentConfigViewModel : TreeViewItemViewModel
+    [Serializable()]
+    public class AirCraftEquipmentConfigViewModel : TreeViewItemViewModel, ISerializable 
     {
         private String _ConfigName;
         public String mConfigName{
@@ -23,18 +26,6 @@ namespace ElectronicLogbook.ViewModel
             }
         }
 
-        private bool mIsReadOnly 
-        {
-            get 
-            {
-                return ELBViewModel.mSingleton.mIsReadOnly;
-            }
-            set 
-            {
-                ELBViewModel.mSingleton.mIsReadOnly = value;
-                this.OnPropertyChanged("");
-            }
-        }
         private void Initialize(AirCraftEquipmentConfig aAirCraftEquipmentConfig)
         {
             mConfigName = aAirCraftEquipmentConfig.mConfigName;
@@ -55,6 +46,18 @@ namespace ElectronicLogbook.ViewModel
             Initialize(aAirCraftEquipmentConfig);
             base.IsInEditMode = aIsInEditMode;
 
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext ctxt) 
+        {
+            info.AddValue("mConfigName",mConfigName);
+        }
+
+        //Deserialization constructor.
+        public AirCraftEquipmentConfigViewModel(SerializationInfo info, StreamingContext ctxt)
+        {
+            //Get the values from info and assign them to the appropriate properties
+            mConfigName = (String)info.GetValue("mConfigName", typeof(String));
         }
 
     }

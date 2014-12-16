@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
+using System.Runtime.Serialization;
 using ElectronicLogbookDataLib.AirCraftEquipment;
 
 namespace ElectronicLogbook.ViewModel
 {
-    public class SWConfigViewModel : ViewModel
+    [Serializable()]
+    public class SWConfigViewModel : ViewModel, ISerializable
     {
         private String _SWConfigIndex;
         public String mSWConfigIndex 
@@ -76,6 +74,25 @@ namespace ElectronicLogbook.ViewModel
             {
                 mSWPartList.Add(new SWPartViewModel(lSWPart));
             }
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext ctxt) 
+        {
+            info.AddValue("mSWConfigIndex",mSWConfigIndex);
+            info.AddValue("mSWLocationID", mSWLocationID);
+            info.AddValue("mSWLocationDescription", mSWLocationDescription);
+            info.AddValue("mSWPartList", mSWPartList);
+        }
+
+        //Deserialization constructor.
+        public SWConfigViewModel(SerializationInfo info, StreamingContext ctxt)
+        {
+            //Get the values from info and assign them to the appropriate properties
+            mSWConfigIndex = (String)info.GetValue("mSWConfigIndex", typeof(String));
+            mSWLocationID = (String)info.GetValue("mSWLocationID", typeof(String));
+            mSWLocationDescription = (String)info.GetValue("mSWLocationDescription", typeof(String));
+            mSWPartList = (ObservableCollection<SWPartViewModel>)
+                info.GetValue("mSWPartList", typeof(ObservableCollection<SWPartViewModel>));
         }
     }
 }

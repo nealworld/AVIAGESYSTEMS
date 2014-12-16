@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.ComponentModel;
-using ElectronicLogbookDataLib;
-using ElectronicLogbookDataLib.DataProcessor;
 using System.Collections.ObjectModel;
-using ElectronicLogbookDataLib.AirCraftEquipment;
 using System.Windows;
+using ElectronicLogbookDataLib;
+using ElectronicLogbookDataLib.AirCraftEquipment;
 namespace ElectronicLogbook.ViewModel
 {
     public class ELBViewModel : ViewModel
@@ -24,176 +20,81 @@ namespace ElectronicLogbook.ViewModel
         }
 
         public static ELBViewModel mSingleton { get { return Nested.instance; } }
-
-        private struct SystemConfiguration{
-            public ObservableCollection<AirCraftEquipmentConfigViewModel> mAirCraftEquipmentConfigViewModelList;
-            public ObservableCollection<VAISParticipant> mVAISParticipantList;
-            public ObservableCollection<DeviceDriver> mDeviceDriverList;
-            public ObservableCollection<ThirdPartySoftware> mThirdPartySoftware;
-            public bool mIsEditable;
-            public bool mIsReadOnly;
-        }
         
-        private SystemConfiguration mCurrentSystemConfiguration;
-        private SystemConfiguration mExpectSystemConfiguration;
-
-        private bool _IsEditable;
-        public bool mIsEditable 
+        private ConfigurationViewModel _ConfigurationViewModel;
+        public ConfigurationViewModel mConfigurationViewModel 
         {
-            set 
-            {
-                _IsEditable = value;
-                this.OnPropertyChanged("mIsEditable");
-            }
             get 
             {
-                return _IsEditable;
+                return _ConfigurationViewModel;
+            }
+            set 
+            {
+                _ConfigurationViewModel = value;
+                this.OnPropertyChanged("mConfigurationViewModel");
             }
         }
-
-        private bool _isReadOnly;
-        public bool mIsReadOnly
-        {
-            set
-            {
-                _isReadOnly = value;
-                this.OnPropertyChanged("mIsReadOnly");
-            }
-            get
-            {
-                return _isReadOnly;
-            }
-        }
-
-
-        private ObservableCollection<AirCraftEquipmentConfigViewModel> _AirCraftEquipmentConfigList;
-        public ObservableCollection<AirCraftEquipmentConfigViewModel> mAirCraftEquipmentConfigViewModelList
-        {
-            set
-            {
-                _AirCraftEquipmentConfigList = value;
-                this.OnPropertyChanged("mAirCraftEquipmentConfigViewModelList");
-            }
-            get
-            {
-                return _AirCraftEquipmentConfigList;
-            }
-        }
-
-        private ObservableCollection<VAISParticipant> _VAISParticipantList;
-        public ObservableCollection<VAISParticipant> mVAISParticipantListViewModel 
-        {
-            set
-            {
-                _VAISParticipantList = value;
-                this.OnPropertyChanged("mVAISParticipantListViewModel");
-            }
-            get
-            {
-                return _VAISParticipantList;
-            }
-        }
-
-        private ObservableCollection<DeviceDriver> _DeviceDriverList;
-        public ObservableCollection<DeviceDriver> mDeviceDriverListViewModel 
-        {
-            set
-            {
-                _DeviceDriverList = value;
-                this.OnPropertyChanged("mDeviceDriverListViewModel");
-            }
-            get
-            {
-                return _DeviceDriverList;
-            }
-        }
-
-        private ObservableCollection<ThirdPartySoftware> _ThirdPartySoftwareList;
-        public ObservableCollection<ThirdPartySoftware> mThirdPartySoftwareListViewModel 
-        {
-            set
-            {
-                _ThirdPartySoftwareList = value;
-                this.OnPropertyChanged("mThirdPartySoftwareListViewModel");
-            }
-            get
-            {
-                return _ThirdPartySoftwareList;
-            }
-        }
-
 
         private ELBViewModel() 
         {
-            Initialize();
-            CollectCurrentConfigurationFromSystem();
-            UpdateELBViewModel(mCurrentSystemConfiguration);
+            mConfigurationViewModel = new ConfigurationViewModel();
+            CollectConfigurationFromSystem();
         }
 
-        private void Initialize()
+        public void GetCurrentConfigration_Click(object sender, RoutedEventArgs e)
         {
-            mAirCraftEquipmentConfigViewModelList = new ObservableCollection<AirCraftEquipmentConfigViewModel>();
-            mVAISParticipantListViewModel = new ObservableCollection<VAISParticipant>();
-            mDeviceDriverListViewModel = new ObservableCollection<DeviceDriver>();
-            mThirdPartySoftwareListViewModel = new ObservableCollection<ThirdPartySoftware>();
-
-            mCurrentSystemConfiguration.mAirCraftEquipmentConfigViewModelList = new ObservableCollection<AirCraftEquipmentConfigViewModel>();
-            mCurrentSystemConfiguration.mDeviceDriverList = new ObservableCollection<DeviceDriver>();
-            mCurrentSystemConfiguration.mThirdPartySoftware = new ObservableCollection<ThirdPartySoftware>();
-            mCurrentSystemConfiguration.mVAISParticipantList = new ObservableCollection<VAISParticipant>();
-            mCurrentSystemConfiguration.mIsEditable = false;
-            mCurrentSystemConfiguration.mIsReadOnly = true;
-
-            mExpectSystemConfiguration.mAirCraftEquipmentConfigViewModelList = new ObservableCollection<AirCraftEquipmentConfigViewModel>();
-            mExpectSystemConfiguration.mDeviceDriverList = new ObservableCollection<DeviceDriver>();
-            mExpectSystemConfiguration.mThirdPartySoftware = new ObservableCollection<ThirdPartySoftware>();
-            mExpectSystemConfiguration.mVAISParticipantList = new ObservableCollection<VAISParticipant>();
-            mExpectSystemConfiguration.mIsEditable = true;
-            mExpectSystemConfiguration.mIsReadOnly = false;
+            CollectConfigurationFromSystem();
         }
 
-        public void GetCurrentConfiguration_MenuItemClick(object sender, RoutedEventArgs e)
+        public void NewConfiguration_Click(object sender, RoutedEventArgs e)
         {
-            CollectCurrentConfigurationFromSystem();
-            UpdateELBViewModel(mCurrentSystemConfiguration);
-        }
-        public void GetExpectConfiguration_MenuItemClick(object sender, RoutedEventArgs e)
-        {
-            CollectExpectConfigurationFromFile();
-            UpdateELBViewModel(mExpectSystemConfiguration);
+            mConfigurationViewModel.initialize();
+            mConfigurationViewModel.mIsReadOnly = false;
+            mConfigurationViewModel.mIsEditable = true;
         }
 
-        private void CollectCurrentConfigurationFromSystem()
+        public void OpenConfiguration_Click(object sender, RoutedEventArgs e)
         {
+            CollectConfigurationFromFile();
+        }
+
+        public void SaveConfiguration_Click(object sender, RoutedEventArgs e)
+        {
+            Utility.Serialize(mConfigurationViewModel,"ELBConfig.cnf");
+        }
+
+        public void CompareConfiguration_Click(object sender, RoutedEventArgs e)
+        { 
+        }
+
+        private void CollectConfigurationFromSystem()
+        {
+            mConfigurationViewModel.mIsEditable = false;
+            mConfigurationViewModel.mIsReadOnly = true;
             //ConfigurationProcessor lConfigurationProcessor = ConfigurationProcessor.mSingleton;
-            foreach (AirCraftEquipmentConfig lAirCraftEquipmentConfig in 
-                /*lConfigurationProcessor.GetAirCraftEquipmentConfigList()*/ GetList()) 
+            foreach (AirCraftEquipmentConfig lAirCraftEquipmentConfig in
+                /*lConfigurationProcessor.GetAirCraftEquipmentConfigList()*/ GetList())
             {
-                mCurrentSystemConfiguration.mAirCraftEquipmentConfigViewModelList.Add
+                mConfigurationViewModel.mAirCraftEquipmentConfigViewModelList.Add
                     (new AirCraftEquipmentConfigViewModel(lAirCraftEquipmentConfig));
             }
-            /*mCurrentSystemConfiguration.mVAISParticipantList = new ObservableCollection<VAISParticipant>(
+            /*mConfigurationViewModel.mVAISParticipantList = new ObservableCollection<VAISParticipant>(
                 lConfigurationProcessor.GetVAISParticipantList());
             string lDriverConfig = "";
             string l3rdPartySW = "";
             lConfigurationProcessor.GetDriverAnd3rdPartyConfig(out lDriverConfig, out l3rdPartySW);
-            mCurrentSystemConfiguration.mDeviceDriverList = ConvertStrToDriver(lDriverConfig);
-            mCurrentSystemConfiguration.mThirdPartySoftware = ConverStrToThirdPartySoftware(l3rdPartySW);*/
+            mConfigurationViewModel.mDeviceDriverList = ConvertStrToDriver(lDriverConfig);
+            mConfigurationViewModel.mThirdPartySoftware = ConverStrToThirdPartySoftware(l3rdPartySW);*/
         }
 
-        public void CollectExpectConfigurationFromFile() 
+        public void CollectConfigurationFromFile() 
         {
-            /*TODO: get expect configuation from expect configuration file*/
-        }
+            ConfigurationViewModel lConfigurationViewModel = new ConfigurationViewModel();
+            Utility.DeSerialize(ref lConfigurationViewModel, "ELBConfig.cnf");
 
-        private void UpdateELBViewModel(SystemConfiguration aSystemConfiguration)
-        {
-            this.mAirCraftEquipmentConfigViewModelList = aSystemConfiguration.mAirCraftEquipmentConfigViewModelList;
-            this.mVAISParticipantListViewModel = aSystemConfiguration.mVAISParticipantList;
-            this.mDeviceDriverListViewModel = aSystemConfiguration.mDeviceDriverList;
-            this.mThirdPartySoftwareListViewModel = aSystemConfiguration.mThirdPartySoftware;
-            this.mIsEditable = aSystemConfiguration.mIsEditable;
-            this.mIsReadOnly = aSystemConfiguration.mIsReadOnly;
+            mConfigurationViewModel = lConfigurationViewModel;
+            mConfigurationViewModel.mIsEditable = true;
+            mConfigurationViewModel.mIsReadOnly = false;
         }
 
         private List<AirCraftEquipmentConfig> GetList()

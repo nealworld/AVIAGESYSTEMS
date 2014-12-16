@@ -1,21 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
+using System.Runtime.Serialization;
 namespace ElectronicLogbook.ViewModel
 {
-    public class TreeViewItemViewModel : ViewModel
+    [Serializable()]
+    public class TreeViewItemViewModel : ViewModel, ISerializable
     {
-        #region Data
-        private ObservableCollection<TreeViewItemViewModel> _children;
-        private TreeViewItemViewModel _parent;
-        private bool _isSelected;
-        #endregion // Data
-
-        #region Constructors
-
         public TreeViewItemViewModel(TreeViewItemViewModel parent)
         {
             _parent = parent;
@@ -26,15 +16,8 @@ namespace ElectronicLogbook.ViewModel
         {
         }
 
-        #endregion // Constructors
 
-        #region Presentation Members
-
-        #region Children
-
-        /// <summary>
-        /// Returns the logical child items of this object.
-        /// </summary>
+        private ObservableCollection<TreeViewItemViewModel> _children;
         public ObservableCollection<TreeViewItemViewModel> mChildren
         {
             get { return _children; }
@@ -44,14 +27,8 @@ namespace ElectronicLogbook.ViewModel
             }
         }
 
-        #endregion // Children
 
-        #region IsSelected
-
-        /// <summary>
-        /// Gets/sets whether the TreeViewItem 
-        /// associated with this object is selected.
-        /// </summary>
+        private bool _isSelected;
         public bool IsSelected
         {
             get { return _isSelected; }
@@ -64,16 +41,29 @@ namespace ElectronicLogbook.ViewModel
                 }
             }
         }
-        #endregion // IsSelected
-        #region Parent
-
+        private TreeViewItemViewModel _parent;
         public TreeViewItemViewModel mParent
         {
             get { return _parent; }
+            set { _parent = value; }
         }
 
-        #endregion // Parent
 
-        #endregion // Presentation Members
+
+
+        public void GetObjectData(SerializationInfo info, StreamingContext ctxt) 
+        {
+            info.AddValue("mChildren",mChildren);
+            info.AddValue("mParent",mParent);
+        }
+
+        //Deserialization constructor.
+        public TreeViewItemViewModel(SerializationInfo info, StreamingContext ctxt)
+        {
+            //Get the values from info and assign them to the appropriate properties
+            mChildren = (ObservableCollection<TreeViewItemViewModel>)info.
+                GetValue("mChildren", typeof(ObservableCollection<TreeViewItemViewModel>));
+            mParent = (TreeViewItemViewModel)info.GetValue("mParent", typeof(TreeViewItemViewModel));
+        }
     }
 }

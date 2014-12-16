@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
+using System.Runtime.Serialization;
 using ElectronicLogbookDataLib.AirCraftEquipment;
-using ElectronicLogbookDataLib.DataProcessor;
-using System.ComponentModel;
 
 namespace ElectronicLogbook.ViewModel
 {
-    public class SubEquipmentViewModel : TreeViewItemViewModel
+    [Serializable()]
+    public class SubEquipmentViewModel : TreeViewItemViewModel, ISerializable
     {
         private String _EquipmentID;
         public String mEquipmentID 
@@ -99,6 +96,27 @@ namespace ElectronicLogbook.ViewModel
         {
             Initialize(aSubEquipment, aParent);
             base.IsInEditMode = aIsInEditMode;
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext ctxt) 
+        {
+            info.AddValue("mEquipmentID",mEquipmentID);
+            info.AddValue("mHWPartList", mHWPartList);
+            info.AddValue("mSWConfigList", mSWConfigList);
+            info.AddValue("mConfigInfoList", mConfigInfoList);
+        }
+
+        //Deserialization constructor.
+        public SubEquipmentViewModel(SerializationInfo info, StreamingContext ctxt)
+        {
+            //Get the values from info and assign them to the appropriate properties
+            mEquipmentID = (String)info.GetValue("mEquipmentID", typeof(String));
+            mHWPartList = (ObservableCollection<HWPartViewModel>)
+                info.GetValue("mHWPartList", typeof(ObservableCollection<HWPartViewModel>));
+            mSWConfigList = (ObservableCollection<SWConfigViewModel>)
+                info.GetValue("mSWConfigList", typeof(ObservableCollection<SWConfigViewModel>));
+            mConfigInfoList = (ObservableCollection<ConfigInfoViewModel>)
+                info.GetValue("mConfigInfoList", typeof(ObservableCollection<ConfigInfoViewModel>));
         }
     }
 }
