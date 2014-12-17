@@ -55,22 +55,59 @@ namespace ElectronicLogbook.ViewModel
 
         public void OpenConfiguration_Click(object sender, RoutedEventArgs e)
         {
-            CollectConfigurationFromFile();
+            Microsoft.Win32.OpenFileDialog lDlg = new Microsoft.Win32.OpenFileDialog();
+            lDlg.FileName = "Configuration"; 
+            lDlg.DefaultExt = ".cnf";
+            lDlg.Filter = "Configuration files (.cnf)|*.cnf";
+            Nullable<bool> lResult = lDlg.ShowDialog();
+            if (lResult == true)
+            {
+                String lFileName = lDlg.FileName;
+                CollectConfigurationFromFile(lFileName);
+            }
         }
 
         public void SaveConfiguration_Click(object sender, RoutedEventArgs e)
         {
-            Utility.Serialize(mConfigurationViewModel,"ELBConfig.cnf");
+            Microsoft.Win32.SaveFileDialog lDlg = new Microsoft.Win32.SaveFileDialog();
+            lDlg.FileName = "Configuration";
+            lDlg.DefaultExt = ".cnf";
+            lDlg.Filter = "Configuration files (.cnf)|*.cnf";
+            Nullable<bool> result = lDlg.ShowDialog();
+            if (result == true)
+            {
+                String lFileName = lDlg.FileName;
+                if(!Utility.Serialize(mConfigurationViewModel,lFileName))
+                {
+                    String messageBoxText = "Save failed!";
+                    String caption = "ELB";
+                    MessageBoxButton button = MessageBoxButton.OKCancel;
+                    MessageBoxImage icon = MessageBoxImage.Warning;
+                    MessageBox.Show(messageBoxText, caption, button, icon);
+                }
+            }
         }
 
         public void CompareConfiguration_Click(object sender, RoutedEventArgs e)
-        { 
+        {
+            Microsoft.Win32.OpenFileDialog lDlg = new Microsoft.Win32.OpenFileDialog();
+            lDlg.FileName = "Configuration";
+            lDlg.DefaultExt = ".cnf";
+            lDlg.Filter = "Configuration files (.cnf)|*.cnf";
+            Nullable<bool> lResult = lDlg.ShowDialog();
+            if (lResult == true)
+            {
+                String lFileName = lDlg.FileName;
+                CollectConfigurationFromFile(lFileName);
+            }
         }
 
         private void CollectConfigurationFromSystem()
         {
+            mConfigurationViewModel.initialize();
             mConfigurationViewModel.mIsEditable = false;
             mConfigurationViewModel.mIsReadOnly = true;
+
             //ConfigurationProcessor lConfigurationProcessor = ConfigurationProcessor.mSingleton;
             foreach (AirCraftEquipmentConfig lAirCraftEquipmentConfig in
                 /*lConfigurationProcessor.GetAirCraftEquipmentConfigList()*/ GetList())
@@ -87,17 +124,27 @@ namespace ElectronicLogbook.ViewModel
             mConfigurationViewModel.mThirdPartySoftware = ConverStrToThirdPartySoftware(l3rdPartySW);*/
         }
 
-        public void CollectConfigurationFromFile() 
+        public void CollectConfigurationFromFile(String aFileName) 
         {
             ConfigurationViewModel lConfigurationViewModel = new ConfigurationViewModel();
-            Utility.DeSerialize(ref lConfigurationViewModel, "ELBConfig.cnf");
+            if(Utility.DeSerialize(ref lConfigurationViewModel, aFileName))
+            {
+                mConfigurationViewModel.mAirCraftEquipmentConfigViewModelList = lConfigurationViewModel.mAirCraftEquipmentConfigViewModelList;
+                mConfigurationViewModel.mDeviceDriverListViewModel = lConfigurationViewModel.mDeviceDriverListViewModel;
+                mConfigurationViewModel.mThirdPartySoftwareListViewModel = lConfigurationViewModel.mThirdPartySoftwareListViewModel;
+                mConfigurationViewModel.mVAISParticipantListViewModel = lConfigurationViewModel.mVAISParticipantListViewModel;
+                mConfigurationViewModel.mIsEditable = true;
+                mConfigurationViewModel.mIsReadOnly = false;
+            }
+            else
+            {
+                String messageBoxText = "Open failed!";
+                String caption = "ELB";
+                MessageBoxButton button = MessageBoxButton.OKCancel;
+                MessageBoxImage icon = MessageBoxImage.Warning;
+                MessageBox.Show(messageBoxText, caption, button, icon);
+            }
 
-            mConfigurationViewModel.mAirCraftEquipmentConfigViewModelList = lConfigurationViewModel.mAirCraftEquipmentConfigViewModelList;
-            mConfigurationViewModel.mDeviceDriverListViewModel = lConfigurationViewModel.mDeviceDriverListViewModel;
-            mConfigurationViewModel.mThirdPartySoftwareListViewModel = lConfigurationViewModel.mThirdPartySoftwareListViewModel;
-            mConfigurationViewModel.mVAISParticipantListViewModel = lConfigurationViewModel.mVAISParticipantListViewModel;
-            mConfigurationViewModel.mIsEditable = true;
-            mConfigurationViewModel.mIsReadOnly = false;
         }
 
         private List<AirCraftEquipmentConfig> GetList()

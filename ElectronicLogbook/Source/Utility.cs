@@ -35,7 +35,6 @@ namespace ElectronicLogbook
             }
             try
             {
-                //Open the file written above and read values from it.
                 Stream lStream = File.Open(aFile, FileMode.Open);
                 BinaryFormatter lFormatter = new BinaryFormatter();
                 aValue = (T)lFormatter.Deserialize(lStream);

@@ -12,11 +12,8 @@
                 <MenuItem Header="Open Configuration..." Name="OpenConfiguration"/>
                 <MenuItem Header="Get Current Configuration" Name="GetCurrentConfigration"/>
                 <MenuItem Header="Save" Name="SaveConfiguration"/>
-                <MenuItem Header="Compare..." Name="CompareConfiguration"/>
             </MenuItem>
-
-            <MenuItem Header="Compare" >
-            </MenuItem>
+            <MenuItem Header="Compare" Name="CompareConfiguration"/>
             <MenuItem Header="Remark" >
             </MenuItem>
         </Menu>
