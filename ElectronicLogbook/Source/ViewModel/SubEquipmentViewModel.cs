@@ -6,7 +6,8 @@ using ElectronicLogbookDataLib.AirCraftEquipment;
 namespace ElectronicLogbook.ViewModel
 {
     [Serializable()]
-    public class SubEquipmentViewModel : TreeViewItemViewModel, ISerializable
+    public class SubEquipmentViewModel : TreeViewItemViewModel, ISerializable,
+        IEquatable<SubEquipmentViewModel>, IComparable<SubEquipmentViewModel>
     {
         private String _EquipmentID;
         public String mEquipmentID 
@@ -122,6 +123,36 @@ namespace ElectronicLogbook.ViewModel
             mChildren = (ObservableCollection<TreeViewItemViewModel>)info.
                 GetValue("mChildren", typeof(ObservableCollection<TreeViewItemViewModel>));
             mParent = (TreeViewItemViewModel)info.GetValue("mParent", typeof(TreeViewItemViewModel));
+        }
+
+        public override bool Equals(object aobj)
+        {
+            if (aobj == null) return false;
+            SubEquipmentViewModel lobj = aobj as SubEquipmentViewModel;
+            if (lobj == null) return false;
+            else return Equals(lobj);
+        }
+
+        public override int GetHashCode()
+        {
+            return mEquipmentID.GetHashCode();
+        }
+
+        public bool Equals(SubEquipmentViewModel aOther)
+        {
+            if (aOther == null) return false;
+            return (this.mEquipmentID.Equals(aOther.mEquipmentID));
+        }
+
+        public int CompareTo(SubEquipmentViewModel aOther)
+        {
+            if (aOther == null) return 1;
+            return this.mEquipmentID.CompareTo(aOther.mEquipmentID);
+        }
+
+        public void Compare(SubEquipmentViewModel lTargetSubEquipment)
+        {
+            throw new NotImplementedException();
         }
     }
 }

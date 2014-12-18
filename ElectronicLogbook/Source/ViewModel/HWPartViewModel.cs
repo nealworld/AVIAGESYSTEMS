@@ -78,11 +78,11 @@ namespace ElectronicLogbook.ViewModel
         }
 
         public HWPartViewModel() {
-            mHWPartDescription = string.Empty;
-            mHWPartIndex = string.Empty;
-            mHWPartNumber = string.Empty;
-            mHWPartSerialNumber = string.Empty;
-            mHWPartStatus = string.Empty;
+            mHWPartDescription = String.Empty;
+            mHWPartIndex = String.Empty;
+            mHWPartNumber = String.Empty;
+            mHWPartSerialNumber = String.Empty;
+            mHWPartStatus = String.Empty;
         }
         public HWPartViewModel(HWPart aHWPart) 
         {
@@ -95,6 +95,7 @@ namespace ElectronicLogbook.ViewModel
 
         public void GetObjectData(SerializationInfo info, StreamingContext ctxt) 
         {
+            info.AddValue("mCompareResult", mCompareResult);
             info.AddValue("mHWPartIndex",mHWPartIndex);
             info.AddValue("mHWPartNumber", mHWPartNumber);
             info.AddValue("mHWPartDescription", mHWPartDescription);
@@ -102,10 +103,9 @@ namespace ElectronicLogbook.ViewModel
             info.AddValue("mHWPartSerialNumber", mHWPartSerialNumber);
         }
 
-        //Deserialization constructor.
         public HWPartViewModel(SerializationInfo info, StreamingContext ctxt)
         {
-            //Get the values from info and assign them to the appropriate properties
+            mCompareResult = (String)info.GetValue("mCompareResult", typeof(String));
             mHWPartIndex = (String)info.GetValue("mHWPartIndex", typeof(String));
             mHWPartNumber = (String)info.GetValue("mHWPartNumber", typeof(String));
             mHWPartDescription = (String)info.GetValue("mHWPartDescription", typeof(String));

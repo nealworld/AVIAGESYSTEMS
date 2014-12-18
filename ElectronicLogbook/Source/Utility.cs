@@ -47,5 +47,9 @@ namespace ElectronicLogbook
                 return false;
             }
         }
+
+        public static readonly String Deleted = "(Deleted)";
+        public static readonly String Modified = "(Modified)";
+        public static readonly String New = "(New)";
     }
 }

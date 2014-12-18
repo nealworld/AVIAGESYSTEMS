@@ -98,7 +98,69 @@ namespace ElectronicLogbook.ViewModel
             if (lResult == true)
             {
                 String lFileName = lDlg.FileName;
-                CollectConfigurationFromFile(lFileName);
+                ConfigurationViewModel lConfigurationViewModel = new ConfigurationViewModel();
+                if (Utility.DeSerialize(ref lConfigurationViewModel, lFileName))
+                {
+                    performCompare(mConfigurationViewModel, lConfigurationViewModel);
+                    mConfigurationViewModel.mIsEditable = false;
+                    mConfigurationViewModel.mIsReadOnly = true;
+                }
+                else 
+                {
+                    String messageBoxText = "Open failed!";
+                    String caption = "ELB";
+                    MessageBoxButton button = MessageBoxButton.OKCancel;
+                    MessageBoxImage icon = MessageBoxImage.Warning;
+                    MessageBox.Show(messageBoxText, caption, button, icon);
+                }
+            }
+        }
+
+        private void performCompare(ConfigurationViewModel aSourceConfiguration, ConfigurationViewModel aTargetConfiguration)
+        {
+            CompareAirCraftEquipmentConfigList(aSourceConfiguration.mAirCraftEquipmentConfigViewModelList, aTargetConfiguration.mAirCraftEquipmentConfigViewModelList);
+            CompareVAISParticipant(aSourceConfiguration.mVAISParticipantListViewModel, aTargetConfiguration.mVAISParticipantListViewModel);
+            CompareThirdPartySoftware(aSourceConfiguration.mThirdPartySoftwareListViewModel, aTargetConfiguration.mThirdPartySoftwareListViewModel);
+            CompareDeviceDriver(aSourceConfiguration.mDeviceDriverListViewModel, aTargetConfiguration.mDeviceDriverListViewModel);
+        }
+
+        private ObservableCollection<DeviceDriverViewModel> CompareDeviceDriver(ObservableCollection<DeviceDriverViewModel> observableCollection1, ObservableCollection<DeviceDriverViewModel> observableCollection2)
+        {
+            throw new NotImplementedException();
+        }
+
+        private ObservableCollection<ThirdPartySoftwareViewModel> CompareThirdPartySoftware(ObservableCollection<ThirdPartySoftwareViewModel> observableCollection1, ObservableCollection<ThirdPartySoftwareViewModel> observableCollection2)
+        {
+            throw new NotImplementedException();
+        }
+
+        private ObservableCollection<VAISParticipantViewModel> CompareVAISParticipant(ObservableCollection<VAISParticipantViewModel> observableCollection1, ObservableCollection<VAISParticipantViewModel> observableCollection2)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void CompareAirCraftEquipmentConfigList(ObservableCollection<AirCraftEquipmentConfigViewModel> aSourceList,
+            ObservableCollection<AirCraftEquipmentConfigViewModel> aTargetList)
+        {
+            foreach (AirCraftEquipmentConfigViewModel lSourceRecord in aSourceList) 
+            {
+                if (aTargetList.Contains(lSourceRecord))
+                {
+                    lSourceRecord.Compare(aTargetList[aTargetList.IndexOf(lSourceRecord)]);
+                }
+                else 
+                {
+                    lSourceRecord.mConfigName += Utility.Deleted;
+                }
+            }
+
+            foreach (AirCraftEquipmentConfigViewModel lTargetRecord in aTargetList) 
+            {
+                if (!aSourceList.Contains(lTargetRecord)) 
+                {
+                    lTargetRecord.mConfigName += Utility.New;
+                    aSourceList.Add(lTargetRecord);
+                }
             }
         }
 
@@ -124,7 +186,7 @@ namespace ElectronicLogbook.ViewModel
             mConfigurationViewModel.mThirdPartySoftware = ConverStrToThirdPartySoftware(l3rdPartySW);*/
         }
 
-        public void CollectConfigurationFromFile(String aFileName) 
+        private void CollectConfigurationFromFile(String aFileName) 
         {
             ConfigurationViewModel lConfigurationViewModel = new ConfigurationViewModel();
             if(Utility.DeSerialize(ref lConfigurationViewModel, aFileName))

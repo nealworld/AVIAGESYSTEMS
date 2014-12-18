@@ -1,10 +1,12 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
+using System.Runtime.Serialization;
 
 namespace ElectronicLogbook.ViewModel
 {
-    public class ViewModel : INotifyPropertyChanged
+    [System.Serializable()]
+    public class ViewModel : INotifyPropertyChanged, ISerializable
     {
-        #region IsInEditMode
         private bool _isInEditMode;
         public bool IsInEditMode
         {
@@ -18,10 +20,24 @@ namespace ElectronicLogbook.ViewModel
                 }
             }
         }
-        #endregion
+
+        private String _CompareResult;
+        public String mCompareResult
+        {
+            set
+            {
+                _CompareResult = value;
+                this.OnPropertyChanged("mCompareResult");
+            }
+            get
+            {
+                return _CompareResult;
+            }
+        }
 
         public ViewModel() 
         {
+            mCompareResult = String.Empty;
             this.IsInEditMode = false;
         }
 
@@ -30,6 +46,15 @@ namespace ElectronicLogbook.ViewModel
         {
             if (this.PropertyChanged != null)
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext ctxt) 
+        {
+        }
+
+        //Deserialization constructor.
+        public ViewModel(SerializationInfo info, StreamingContext ctxt)
+        {
         }
     }
 }
