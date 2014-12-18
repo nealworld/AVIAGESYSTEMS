@@ -12,7 +12,7 @@ namespace ElectronicLogbook.ViewModel
 {
     [Serializable()]
     public class AirCraftEquipmentConfigViewModel : TreeViewItemViewModel, ISerializable,
-        IEquatable<AirCraftEquipmentConfigViewModel>, IComparable<AirCraftEquipmentConfigViewModel>
+        IEquatable<AirCraftEquipmentConfigViewModel>
 
     {
         private String _ConfigName;
@@ -86,27 +86,20 @@ namespace ElectronicLogbook.ViewModel
             return (this.mConfigName.Equals(aOther.mConfigName));
         }
 
-        public int CompareTo(AirCraftEquipmentConfigViewModel aOther)
-        {
-            if (aOther == null) return 1;
-            return this.mConfigName.CompareTo(aOther.mConfigName);
-        }
-
         public void Compare(AirCraftEquipmentConfigViewModel aTarget)
         {
             foreach (SubEquipmentViewModel lSourceSubEquipment in this.mChildren) 
             {
-                bool lFound = false;
                 if(aTarget.mChildren.Contains(lSourceSubEquipment)) {
                     lSourceSubEquipment.Compare(
                         aTarget.mChildren[aTarget.mChildren.IndexOf(lSourceSubEquipment)] 
                         as SubEquipmentViewModel);
-                    lFound = true;
                 }
-                if (!lFound) 
+                else
                 {
-                    lSourceSubEquipment.mEquipmentID += Utility.Deleted;
-                    mCompareResult = Utility.Modified;
+                    lSourceSubEquipment.mCompareResult = Utility.Deleted;
+                    lSourceSubEquipment.mEquipmentID += lSourceSubEquipment.mCompareResult;
+                    this.mCompareResult = Utility.Modified;
                 }
             }
 
@@ -114,16 +107,13 @@ namespace ElectronicLogbook.ViewModel
             {
                 if (!this.mChildren.Contains(lTargetSubEquipment)) 
                 {
-                    mCompareResult = Utility.Modified;
-                    lTargetSubEquipment.mEquipmentID += Utility.New;
+                    this.mCompareResult = Utility.Modified;
+                    lTargetSubEquipment.mCompareResult = Utility.New;
+                    lTargetSubEquipment.mEquipmentID += lTargetSubEquipment.mCompareResult;
                     this.mChildren.Add(lTargetSubEquipment);
                 }
             }
-
-            if (mCompareResult != String.Empty) 
-            {
-                this.mConfigName += mCompareResult;
-            }
+            this.mConfigName += this.mCompareResult;
         }
     }
 }

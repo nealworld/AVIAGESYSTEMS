@@ -5,7 +5,7 @@ using ElectronicLogbookDataLib.AirCraftEquipment;
 namespace ElectronicLogbook.ViewModel
 {
     [System.Serializable()]
-    public class HWPartViewModel : ViewModel, ISerializable
+    public class HWPartViewModel : ViewModel, ISerializable, IEquatable<HWPartViewModel> 
     {
         private String _HWPartIndex;
         public String mHWPartIndex 
@@ -112,5 +112,26 @@ namespace ElectronicLogbook.ViewModel
             mHWPartStatus = (String)info.GetValue("mHWPartStatus", typeof(String));
             mHWPartSerialNumber = (String)info.GetValue("mHWPartSerialNumber", typeof(String));
         }
+
+        public override bool Equals(object aobj)
+        {
+            if (aobj == null) return false;
+            SubEquipmentViewModel lobj = aobj as SubEquipmentViewModel;
+            if (lobj == null) return false;
+            else return Equals(lobj);
+        }
+
+        public override int GetHashCode()
+        {
+            return (mHWPartIndex + mHWPartNumber + mHWPartDescription + mHWPartStatus + mHWPartSerialNumber).GetHashCode();
+        }
+
+        public bool Equals(HWPartViewModel aOther)
+        {
+            if (aOther == null) return false;
+            return (mHWPartIndex + mHWPartNumber + mHWPartDescription + mHWPartStatus + mHWPartSerialNumber).
+                Equals(aOther.mHWPartIndex + aOther.mHWPartNumber + aOther.mHWPartDescription + aOther.mHWPartStatus + aOther.mHWPartSerialNumber);
+        }
+
     }
 }

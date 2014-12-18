@@ -7,7 +7,7 @@ namespace ElectronicLogbook.ViewModel
 {
     [Serializable()]
     public class SubEquipmentViewModel : TreeViewItemViewModel, ISerializable,
-        IEquatable<SubEquipmentViewModel>, IComparable<SubEquipmentViewModel>
+        IEquatable<SubEquipmentViewModel>
     {
         private String _EquipmentID;
         public String mEquipmentID 
@@ -101,6 +101,7 @@ namespace ElectronicLogbook.ViewModel
 
         public void GetObjectData(SerializationInfo info, StreamingContext ctxt) 
         {
+            info.AddValue("mCompareResult", mCompareResult);
             info.AddValue("mEquipmentID",mEquipmentID);
             info.AddValue("mHWPartList", mHWPartList);
             info.AddValue("mSWConfigList", mSWConfigList);
@@ -109,10 +110,9 @@ namespace ElectronicLogbook.ViewModel
             info.AddValue("mParent", mParent);
         }
 
-        //Deserialization constructor.
         public SubEquipmentViewModel(SerializationInfo info, StreamingContext ctxt)
         {
-            //Get the values from info and assign them to the appropriate properties
+            mCompareResult = (String)info.GetValue("mCompareResult", typeof(String));
             mEquipmentID = (String)info.GetValue("mEquipmentID", typeof(String));
             mHWPartList = (ObservableCollection<HWPartViewModel>)
                 info.GetValue("mHWPartList", typeof(ObservableCollection<HWPartViewModel>));
@@ -144,15 +144,74 @@ namespace ElectronicLogbook.ViewModel
             return (this.mEquipmentID.Equals(aOther.mEquipmentID));
         }
 
-        public int CompareTo(SubEquipmentViewModel aOther)
-        {
-            if (aOther == null) return 1;
-            return this.mEquipmentID.CompareTo(aOther.mEquipmentID);
-        }
-
         public void Compare(SubEquipmentViewModel lTargetSubEquipment)
         {
+            if (!CompareHWPartList(this.mHWPartList, lTargetSubEquipment.mHWPartList)
+                || !CompareSWConfigList(this.mSWConfigList, lTargetSubEquipment.mSWConfigList)
+                ||  !CompareConfigInfoList(this.mConfigInfoList, lTargetSubEquipment.mConfigInfoList)) 
+            {
+                this.mCompareResult = Utility.Modified;
+                this.mParent.mCompareResult = Utility.Modified;
+            }
+            this.mEquipmentID += this.mCompareResult;
+        }
+
+        private bool CompareConfigInfoList(ObservableCollection<ConfigInfoViewModel> aSourceList, 
+            ObservableCollection<ConfigInfoViewModel> aTargetList)
+        {
+            bool lResult = true;
+            foreach (ConfigInfoViewModel lSourceConfigInfo in aSourceList)
+            {
+                if (!aTargetList.Contains(lSourceConfigInfo))
+                {
+                    lSourceConfigInfo.mCompareResult = Utility.Deleted;
+                    lResult = false;
+                }
+            }
+
+            foreach (ConfigInfoViewModel lTargetConfigInfo in aTargetList)
+            {
+                if (!aSourceList.Contains(lTargetConfigInfo))
+                {
+                    lTargetConfigInfo.mCompareResult = Utility.New;
+                    aSourceList.Add(lTargetConfigInfo);
+                    lResult = false;
+                }
+            }
+
+            return lResult;
+        }
+
+        private bool CompareSWConfigList(ObservableCollection<SWConfigViewModel> aSourceList, 
+            ObservableCollection<SWConfigViewModel> aTargetList)
+        {
             throw new NotImplementedException();
+        }
+
+        private bool CompareHWPartList(ObservableCollection<HWPartViewModel> aSourceList, 
+            ObservableCollection<HWPartViewModel> aTargetList)
+        {
+            bool lResult = true;
+            foreach (HWPartViewModel lSourceHWPart in aSourceList)
+            {
+                if (!aTargetList.Contains(lSourceHWPart))
+                {
+                    lSourceHWPart.mCompareResult = Utility.Deleted;
+                    lResult = false;
+                }
+            }
+
+            foreach (HWPartViewModel lTargetHWPart in aTargetList)
+            {
+                if (!aSourceList.Contains(lTargetHWPart))
+                {
+                    lTargetHWPart.mCompareResult = Utility.New;
+                    aSourceList.Add(lTargetHWPart);
+                    lResult = false;
+                }
+            }
+
+            return lResult;
         }
     }
 }

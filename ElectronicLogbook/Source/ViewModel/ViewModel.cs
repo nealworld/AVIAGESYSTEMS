@@ -21,19 +21,7 @@ namespace ElectronicLogbook.ViewModel
             }
         }
 
-        private String _CompareResult;
-        public String mCompareResult
-        {
-            set
-            {
-                _CompareResult = value;
-                this.OnPropertyChanged("mCompareResult");
-            }
-            get
-            {
-                return _CompareResult;
-            }
-        }
+        public String mCompareResult { set; get; }
 
         public ViewModel() 
         {

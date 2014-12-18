@@ -114,10 +114,8 @@ namespace ElectronicLogbook.ViewModel
             info.AddValue("mThirdPartySoftwareListViewModel",mThirdPartySoftwareListViewModel);
         }
 
-        //Deserialization constructor.
         public ConfigurationViewModel(SerializationInfo info, StreamingContext ctxt)
         {
-            //Get the values from info and assign them to the appropriate properties
             mAirCraftEquipmentConfigViewModelList = (ObservableCollection<AirCraftEquipmentConfigViewModel>)
                 info.GetValue("mAirCraftEquipmentConfigViewModelList", typeof(ObservableCollection<AirCraftEquipmentConfigViewModel>));
             mVAISParticipantListViewModel = (ObservableCollection<VAISParticipantViewModel>)
@@ -128,5 +126,52 @@ namespace ElectronicLogbook.ViewModel
                 info.GetValue("mThirdPartySoftwareListViewModel", typeof(ObservableCollection<ThirdPartySoftwareViewModel>));
         }
 
+
+        public void Compare(ConfigurationViewModel aTargetConfiguration)
+        {
+            CompareAirCraftEquipmentConfigList(this.mAirCraftEquipmentConfigViewModelList, aTargetConfiguration.mAirCraftEquipmentConfigViewModelList);
+            CompareVAISParticipant(this.mVAISParticipantListViewModel, aTargetConfiguration.mVAISParticipantListViewModel);
+            CompareThirdPartySoftware(this.mThirdPartySoftwareListViewModel, aTargetConfiguration.mThirdPartySoftwareListViewModel);
+            CompareDeviceDriver(this.mDeviceDriverListViewModel, aTargetConfiguration.mDeviceDriverListViewModel);
+        }
+
+        private void CompareDeviceDriver(ObservableCollection<DeviceDriverViewModel> observableCollection1, ObservableCollection<DeviceDriverViewModel> observableCollection2)
+        {
+        }
+
+        private void CompareThirdPartySoftware(ObservableCollection<ThirdPartySoftwareViewModel> observableCollection1, ObservableCollection<ThirdPartySoftwareViewModel> observableCollection2)
+        {
+        }
+
+        private void CompareVAISParticipant(ObservableCollection<VAISParticipantViewModel> observableCollection1, ObservableCollection<VAISParticipantViewModel> observableCollection2)
+        {
+        }
+
+        private void CompareAirCraftEquipmentConfigList(ObservableCollection<AirCraftEquipmentConfigViewModel> aSourceList,
+            ObservableCollection<AirCraftEquipmentConfigViewModel> aTargetList)
+        {
+            foreach (AirCraftEquipmentConfigViewModel lSourceRecord in aSourceList)
+            {
+                if (aTargetList.Contains(lSourceRecord))
+                {
+                    lSourceRecord.Compare(aTargetList[aTargetList.IndexOf(lSourceRecord)]);
+                }
+                else
+                {
+                    lSourceRecord.mCompareResult = Utility.Deleted;
+                    lSourceRecord.mConfigName += lSourceRecord.mCompareResult;
+                }
+            }
+
+            foreach (AirCraftEquipmentConfigViewModel lTargetRecord in aTargetList)
+            {
+                if (!aSourceList.Contains(lTargetRecord))
+                {
+                    lTargetRecord.mCompareResult = Utility.New;
+                    lTargetRecord.mConfigName += lTargetRecord.mCompareResult;
+                    aSourceList.Add(lTargetRecord);
+                }
+            }
+        }
     }
 }
