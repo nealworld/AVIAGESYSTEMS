@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 using ElectronicLogbookDataLib;
+using System.Security;
 
 namespace ElectronicLogbook.ViewModel
 {
@@ -47,6 +48,7 @@ namespace ElectronicLogbook.ViewModel
             mSoftwareLocation = aThirdPartySoftware.mSoftwareLocation;
         }
 
+        [SecurityCritical]
         public void GetObjectData(SerializationInfo info, StreamingContext ctxt) 
         {
             info.AddValue("mSoftwareName", mSoftwareName);

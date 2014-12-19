@@ -95,6 +95,7 @@
                             SelectionMode="Extended" SelectionUnit="FullRow" AutoGenerateColumns="False"
                             AreRowDetailsFrozen="False" Height="auto" Background="White" Name="TestDataGrid" IsReadOnly="{Binding mIsReadOnly}">
                     <DataGrid.Columns>
+                        <DataGridTextColumn Header="Compare Result" Binding="{Binding mCompareResult}" Foreground="Purple"/>
                         <DataGridTextColumn Header="HW Part Index" Binding="{Binding mHWPartIndex}"/>
                         <DataGridTextColumn Header="HW Part Number" Binding="{Binding mHWPartNumber}"/>
                         <DataGridTextColumn Header="HW Part Description" Binding="{Binding mHWPartDescription}"/>
@@ -208,6 +209,7 @@
                           SelectionMode="Extended" SelectionUnit="FullRow" AutoGenerateColumns="False"
                           AreRowDetailsFrozen="False" Height="auto" Background="White" IsReadOnly="{Binding mIsReadOnly}">
                         <DataGrid.Columns>
+                            <DataGridTextColumn Header="Compare Result" Binding="{Binding mCompareResult}" Visibility="{Binding mIsComparing}"/>
                             <DataGridTextColumn Header="Config Info Index" Binding="{Binding mItemIndex}"/>
                             <DataGridTextColumn Header="Config info" Binding="{Binding mItemInfo}"/>
                         </DataGrid.Columns>

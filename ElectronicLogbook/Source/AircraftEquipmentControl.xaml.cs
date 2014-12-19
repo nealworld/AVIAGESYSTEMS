@@ -40,8 +40,8 @@ namespace ElectronicLogbook
             while (true)
             {
                 Thread.Sleep(15000);
-                ELBViewModel.mSingleton.mConfigurationViewModel.mIsEditable = true;
-                ELBViewModel.mSingleton.mConfigurationViewModel.mIsReadOnly = false;
+                //ELBViewModel.mSingleton.mConfigurationViewModel.mIsEditable = true;
+                //ELBViewModel.mSingleton.mConfigurationViewModel.mIsReadOnly = false;
                 foreach (AirCraftEquipmentConfigViewModel lAirCraftEquipmentConfigViewModel in
                 ELBViewModel.mSingleton.mConfigurationViewModel.mAirCraftEquipmentConfigViewModelList)
                 {

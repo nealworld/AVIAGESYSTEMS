@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using ElectronicLogbookDataLib.AirCraftEquipment;
+using System.Security;
 
 namespace ElectronicLogbook.ViewModel
 {
@@ -99,6 +100,7 @@ namespace ElectronicLogbook.ViewModel
             base.IsInEditMode = aIsInEditMode;
         }
 
+        [SecurityCritical]
         public void GetObjectData(SerializationInfo info, StreamingContext ctxt) 
         {
             info.AddValue("mCompareResult", mCompareResult);
@@ -146,16 +148,11 @@ namespace ElectronicLogbook.ViewModel
 
         public void Compare(SubEquipmentViewModel lTargetSubEquipment)
         {
-            if (!CompareHWPartList(this.mHWPartList, lTargetSubEquipment.mHWPartList)
-                || !CompareSWConfigList(this.mSWConfigList, lTargetSubEquipment.mSWConfigList)
-                ||  !CompareConfigInfoList(this.mConfigInfoList, lTargetSubEquipment.mConfigInfoList)) 
-            {
-                this.mCompareResult = Utility.Modified;
-                this.mParent.mCompareResult = Utility.Modified;
-            }
-            this.mEquipmentID += this.mCompareResult;
+            CompareLists(this.mHWPartList, lTargetSubEquipment.mHWPartList);
+            CompareLists(this.mSWConfigList, lTargetSubEquipment.mSWConfigList);
+            CompareLists(this.mConfigInfoList, lTargetSubEquipment.mConfigInfoList);
         }
-
+/*
         private bool CompareConfigInfoList(ObservableCollection<ConfigInfoViewModel> aSourceList, 
             ObservableCollection<ConfigInfoViewModel> aTargetList)
         {
@@ -185,7 +182,27 @@ namespace ElectronicLogbook.ViewModel
         private bool CompareSWConfigList(ObservableCollection<SWConfigViewModel> aSourceList, 
             ObservableCollection<SWConfigViewModel> aTargetList)
         {
-            throw new NotImplementedException();
+            bool lResult = true;
+            foreach (SWConfigViewModel lSourceSWConfig in aSourceList)
+            {
+                if (!aTargetList.Contains(lSourceSWConfig))
+                {
+                    lSourceSWConfig.mCompareResult = Utility.Deleted;
+                    lResult = false;
+                }
+            }
+
+            foreach (SWConfigViewModel lTargetSWConfig in aTargetList)
+            {
+                if (!aSourceList.Contains(lTargetSWConfig))
+                {
+                    lTargetSWConfig.mCompareResult = Utility.New;
+                    aSourceList.Add(lTargetSWConfig);
+                    lResult = false;
+                }
+            }
+
+            return lResult;
         }
 
         private bool CompareHWPartList(ObservableCollection<HWPartViewModel> aSourceList, 
@@ -212,6 +229,39 @@ namespace ElectronicLogbook.ViewModel
             }
 
             return lResult;
+        }
+*/
+        private void CompareLists<T>(ObservableCollection<T> aSourceList, ObservableCollection<T> aTargetList)
+        {
+            foreach (T lSourceElement in aSourceList)
+            {
+
+                if (!aTargetList.Contains(lSourceElement))
+                {
+                    (lSourceElement as ViewModel).mCompareResult = Utility.Deleted;
+                    this.mCompareResult = Utility.Modified;
+                    this.mParent.mCompareResult = Utility.Modified;
+                }
+            }
+
+            foreach (T lTargetElement in aTargetList)
+            {
+                if (!aSourceList.Contains(lTargetElement))
+                {
+                    (lTargetElement as ViewModel).mCompareResult = Utility.New;
+                    aSourceList.Add(lTargetElement);
+                    this.mCompareResult = Utility.Modified;
+                    this.mParent.mCompareResult = Utility.Modified;
+                }
+            }
+
+            if(aSourceList is ObservableCollection<SWConfigViewModel>)
+            {
+                foreach (SWConfigViewModel lElement in aSourceList as ObservableCollection<SWConfigViewModel>)
+                {
+                    lElement.mSWConfigIndex += lElement.mCompareResult;
+                }
+            }
         }
     }
 }

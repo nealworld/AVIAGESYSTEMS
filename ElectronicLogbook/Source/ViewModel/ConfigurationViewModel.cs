@@ -1,6 +1,9 @@
 ﻿using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using ElectronicLogbookDataLib;
+using System.Security;
+using System;
+using System.Windows;
 
 namespace ElectronicLogbook.ViewModel
 {
@@ -106,6 +109,7 @@ namespace ElectronicLogbook.ViewModel
             mThirdPartySoftwareListViewModel = new ObservableCollection<ThirdPartySoftwareViewModel>();
         }
 
+        [SecurityCritical]
         public void GetObjectData(SerializationInfo info, StreamingContext ctxt) 
         {
             info.AddValue("mAirCraftEquipmentConfigViewModelList",mAirCraftEquipmentConfigViewModelList);
@@ -124,6 +128,7 @@ namespace ElectronicLogbook.ViewModel
                 info.GetValue("mDeviceDriverListViewModel", typeof(ObservableCollection<DeviceDriverViewModel>));
             mThirdPartySoftwareListViewModel = (ObservableCollection<ThirdPartySoftwareViewModel>)
                 info.GetValue("mThirdPartySoftwareListViewModel", typeof(ObservableCollection<ThirdPartySoftwareViewModel>));
+
         }
 
 
@@ -159,7 +164,6 @@ namespace ElectronicLogbook.ViewModel
                 else
                 {
                     lSourceRecord.mCompareResult = Utility.Deleted;
-                    lSourceRecord.mConfigName += lSourceRecord.mCompareResult;
                 }
             }
 
@@ -168,9 +172,13 @@ namespace ElectronicLogbook.ViewModel
                 if (!aSourceList.Contains(lTargetRecord))
                 {
                     lTargetRecord.mCompareResult = Utility.New;
-                    lTargetRecord.mConfigName += lTargetRecord.mCompareResult;
                     aSourceList.Add(lTargetRecord);
                 }
+            }
+
+            foreach (AirCraftEquipmentConfigViewModel lElement in aSourceList) 
+            {
+                lElement.mConfigName += lElement.mCompareResult;
             }
         }
     }

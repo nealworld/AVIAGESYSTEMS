@@ -2,11 +2,12 @@
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using ElectronicLogbookDataLib.AirCraftEquipment;
+using System.Security;
 
 namespace ElectronicLogbook.ViewModel
 {
     [Serializable()]
-    public class SWConfigViewModel : ViewModel, ISerializable
+    public class SWConfigViewModel : ViewModel, ISerializable, IEquatable<SWConfigViewModel>
     {
         private String _SWConfigIndex;
         public String mSWConfigIndex 
@@ -76,23 +77,44 @@ namespace ElectronicLogbook.ViewModel
             }
         }
 
+        [SecurityCritical]
         public void GetObjectData(SerializationInfo info, StreamingContext ctxt) 
         {
+            info.AddValue("mCompareResult", mCompareResult);
             info.AddValue("mSWConfigIndex",mSWConfigIndex);
             info.AddValue("mSWLocationID", mSWLocationID);
             info.AddValue("mSWLocationDescription", mSWLocationDescription);
             info.AddValue("mSWPartList", mSWPartList);
         }
 
-        //Deserialization constructor.
         public SWConfigViewModel(SerializationInfo info, StreamingContext ctxt)
         {
-            //Get the values from info and assign them to the appropriate properties
+            mCompareResult = (String)info.GetValue("mCompareResult", typeof(String));
             mSWConfigIndex = (String)info.GetValue("mSWConfigIndex", typeof(String));
             mSWLocationID = (String)info.GetValue("mSWLocationID", typeof(String));
             mSWLocationDescription = (String)info.GetValue("mSWLocationDescription", typeof(String));
             mSWPartList = (ObservableCollection<SWPartViewModel>)
                 info.GetValue("mSWPartList", typeof(ObservableCollection<SWPartViewModel>));
+        }
+
+        public override bool Equals(object aobj)
+        {
+            if (aobj == null) return false;
+            SubEquipmentViewModel lobj = aobj as SubEquipmentViewModel;
+            if (lobj == null) return false;
+            else return Equals(lobj);
+        }
+
+        public override int GetHashCode()
+        {
+            return (mSWConfigIndex + mSWLocationID + mSWPartList.ToString()).GetHashCode();
+        }
+
+        public bool Equals(SWConfigViewModel aOther)
+        {
+            if (aOther == null) return false;
+            return (this.mSWConfigIndex + this.mSWLocationID + this.mSWPartList.ToString()).
+                Equals(aOther.mSWConfigIndex + aOther.mSWLocationID + aOther.mSWPartList.ToString());
         }
     }
 }

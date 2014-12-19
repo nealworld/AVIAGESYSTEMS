@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 using ElectronicLogbookDataLib.AirCraftEquipment;
+using System.Security;
 
 namespace ElectronicLogbook.ViewModel
 {
@@ -62,6 +63,7 @@ namespace ElectronicLogbook.ViewModel
             mLSAPDescription = aSWPart.mLSAPDescription;
         }
 
+        [SecurityCritical]
         public void GetObjectData(SerializationInfo info, StreamingContext ctxt) 
         {
             info.AddValue("mSWPartIndex",mSWPartIndex);
@@ -76,6 +78,11 @@ namespace ElectronicLogbook.ViewModel
             mSWPartIndex = (String)info.GetValue("mSWPartIndex", typeof(String));
             mLSAPPartNumber = (String)info.GetValue("mLSAPPartNumber", typeof(String));
             mLSAPDescription = (String)info.GetValue("mLSAPDescription", typeof(String));
+        }
+
+        public override string ToString()
+        {
+            return mSWPartIndex + mLSAPPartNumber + mLSAPDescription;
         }
     }
 }

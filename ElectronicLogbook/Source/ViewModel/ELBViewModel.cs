@@ -64,6 +64,8 @@ namespace ElectronicLogbook.ViewModel
             {
                 String lFileName = lDlg.FileName;
                 CollectConfigurationFromFile(lFileName);
+                mConfigurationViewModel.mIsEditable = true;
+                mConfigurationViewModel.mIsReadOnly = false;
             }
         }
 
@@ -119,10 +121,6 @@ namespace ElectronicLogbook.ViewModel
         private void performCompare(ConfigurationViewModel aSourceConfiguration, ConfigurationViewModel aTargetConfiguration)
         {
             aSourceConfiguration.Compare(aTargetConfiguration);
-            CompareAirCraftEquipmentConfigList(aSourceConfiguration.mAirCraftEquipmentConfigViewModelList, aTargetConfiguration.mAirCraftEquipmentConfigViewModelList);
-            CompareVAISParticipant(aSourceConfiguration.mVAISParticipantListViewModel, aTargetConfiguration.mVAISParticipantListViewModel);
-            CompareThirdPartySoftware(aSourceConfiguration.mThirdPartySoftwareListViewModel, aTargetConfiguration.mThirdPartySoftwareListViewModel);
-            CompareDeviceDriver(aSourceConfiguration.mDeviceDriverListViewModel, aTargetConfiguration.mDeviceDriverListViewModel);
         }
 
         private void CollectConfigurationFromSystem()
@@ -156,8 +154,6 @@ namespace ElectronicLogbook.ViewModel
                 mConfigurationViewModel.mDeviceDriverListViewModel = lConfigurationViewModel.mDeviceDriverListViewModel;
                 mConfigurationViewModel.mThirdPartySoftwareListViewModel = lConfigurationViewModel.mThirdPartySoftwareListViewModel;
                 mConfigurationViewModel.mVAISParticipantListViewModel = lConfigurationViewModel.mVAISParticipantListViewModel;
-                mConfigurationViewModel.mIsEditable = true;
-                mConfigurationViewModel.mIsReadOnly = false;
             }
             else
             {

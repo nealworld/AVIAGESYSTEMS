@@ -7,6 +7,8 @@ using System.Text;
 using ElectronicLogbookDataLib.AirCraftEquipment;
 using ElectronicLogbookDataLib.DataProcessor;
 using System.Collections.ObjectModel;
+using System.Security;
+using System.Windows;
 
 namespace ElectronicLogbook.ViewModel
 {
@@ -50,6 +52,7 @@ namespace ElectronicLogbook.ViewModel
 
         }
 
+        [SecurityCritical]
         public void GetObjectData(SerializationInfo info, StreamingContext ctxt) 
         {
             info.AddValue("mCompareResult", mCompareResult);
@@ -98,7 +101,6 @@ namespace ElectronicLogbook.ViewModel
                 else
                 {
                     lSourceSubEquipment.mCompareResult = Utility.Deleted;
-                    lSourceSubEquipment.mEquipmentID += lSourceSubEquipment.mCompareResult;
                     this.mCompareResult = Utility.Modified;
                 }
             }
@@ -109,11 +111,41 @@ namespace ElectronicLogbook.ViewModel
                 {
                     this.mCompareResult = Utility.Modified;
                     lTargetSubEquipment.mCompareResult = Utility.New;
-                    lTargetSubEquipment.mEquipmentID += lTargetSubEquipment.mCompareResult;
                     this.mChildren.Add(lTargetSubEquipment);
                 }
             }
-            this.mConfigName += this.mCompareResult;
+
+
+            foreach (SubEquipmentViewModel lElement in this.mChildren)
+            {
+                lElement.mEquipmentID += lElement.mCompareResult;
+            }
+        }
+
+        private void setVisibility(SubEquipmentViewModel aSubEquipment) 
+        {
+            if (aSubEquipment.mCompareResult == Utility.Deleted || aSubEquipment.mCompareResult == Utility.New)
+            {
+                foreach (HWPartViewModel lHWPart in aSubEquipment.mHWPartList)
+                {
+                    lHWPart.mIsComparing = Visibility.Hidden;
+                }
+                foreach (ConfigInfoViewModel lConfigInfo in aSubEquipment.mConfigInfoList)
+                {
+                    lConfigInfo.mIsComparing = Visibility.Hidden;
+                }
+            }
+            else 
+            {
+                foreach (HWPartViewModel lHWPart in aSubEquipment.mHWPartList)
+                {
+                    lHWPart.mIsComparing = Visibility.Visible;
+                }
+                foreach (ConfigInfoViewModel lConfigInfo in aSubEquipment.mConfigInfoList)
+                {
+                    lConfigInfo.mIsComparing = Visibility.Visible;
+                }
+            }
         }
     }
 }

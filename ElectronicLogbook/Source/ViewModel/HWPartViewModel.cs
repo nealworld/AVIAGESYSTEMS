@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 using ElectronicLogbookDataLib.AirCraftEquipment;
+using System.Security;
 
 namespace ElectronicLogbook.ViewModel
 {
@@ -84,6 +85,7 @@ namespace ElectronicLogbook.ViewModel
             mHWPartSerialNumber = String.Empty;
             mHWPartStatus = String.Empty;
         }
+
         public HWPartViewModel(HWPart aHWPart) 
         {
             mHWPartDescription = aHWPart.mHWPartDescription;
@@ -93,6 +95,7 @@ namespace ElectronicLogbook.ViewModel
             mHWPartStatus = aHWPart.mHWPartStatus;
         }
 
+        [SecurityCritical]
         public void GetObjectData(SerializationInfo info, StreamingContext ctxt) 
         {
             info.AddValue("mCompareResult", mCompareResult);

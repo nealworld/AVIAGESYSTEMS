@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 using ElectronicLogbookDataLib;
+using System.Security;
 
 namespace ElectronicLogbook.ViewModel
 {
@@ -59,6 +60,7 @@ namespace ElectronicLogbook.ViewModel
             mDriverLocation = aDeviceDriver.mDriverLocation;
         }
 
+        [SecurityCritical]
         public void GetObjectData(SerializationInfo info, StreamingContext ctxt) 
         {
             info.AddValue("mDeviceName", mDeviceName);
@@ -67,10 +69,8 @@ namespace ElectronicLogbook.ViewModel
             info.AddValue("mDriverLocation",mDriverLocation);
         }
 
-        //Deserialization constructor.
         public DeviceDriverViewModel(SerializationInfo info, StreamingContext ctxt)
         {
-            //Get the values from info and assign them to the appropriate properties
             mDeviceName = (String)info.GetValue("mDeviceName", typeof(String));
             mDriverName = (String)info.GetValue("mDriverName", typeof(String));
             mDriverVersionNumber = (String)info.GetValue("mDriverVersionNumber", typeof(String));

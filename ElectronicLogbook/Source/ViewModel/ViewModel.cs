@@ -1,11 +1,13 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
+using System.Security;
+using System.Windows;
 
 namespace ElectronicLogbook.ViewModel
 {
     [System.Serializable()]
-    public class ViewModel : INotifyPropertyChanged, ISerializable
+    public abstract class ViewModel : INotifyPropertyChanged
     {
         private bool _isInEditMode;
         public bool IsInEditMode
@@ -21,12 +23,39 @@ namespace ElectronicLogbook.ViewModel
             }
         }
 
-        public String mCompareResult { set; get; }
+        private String _CompareResult;
+        public String mCompareResult 
+        { 
+            set
+            {
+                _CompareResult = value;
+                this.OnPropertyChanged("mCompareResult");
+            }
+            get 
+            {
+                return _CompareResult;
+            } 
+        }
+
+        private Visibility _IsComparing;
+        public Visibility mIsComparing
+        {
+            set
+            {
+                _IsComparing = value;
+                this.OnPropertyChanged("mIsComparing");
+            }
+            get
+            {
+                return _IsComparing;
+            }
+        }
 
         public ViewModel() 
         {
-            mCompareResult = String.Empty;
+            this.mCompareResult = String.Empty;
             this.IsInEditMode = false;
+            this.mIsComparing = Visibility.Hidden;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -36,13 +65,14 @@ namespace ElectronicLogbook.ViewModel
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        /*[SecurityCritical]
         public void GetObjectData(SerializationInfo info, StreamingContext ctxt) 
-        {
+        { 
         }
 
         //Deserialization constructor.
         public ViewModel(SerializationInfo info, StreamingContext ctxt)
         {
-        }
+        }*/
     }
 }

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
+using System.Security;
 namespace ElectronicLogbook.ViewModel
 {
     [Serializable()]
-    public class TreeViewItemViewModel : ViewModel, ISerializable
+    public class TreeViewItemViewModel : ViewModel
     {
         public TreeViewItemViewModel(TreeViewItemViewModel parent)
         {
@@ -50,8 +51,8 @@ namespace ElectronicLogbook.ViewModel
 
 
 
-
-        public void GetObjectData(SerializationInfo info, StreamingContext ctxt) 
+       /* [SecurityCritical]
+        public override void GetObjectData(SerializationInfo info, StreamingContext ctxt) 
         {
             //info.AddValue("mChildren",mChildren);
             //info.AddValue("mParent",mParent);
@@ -64,6 +65,6 @@ namespace ElectronicLogbook.ViewModel
             //mChildren = (ObservableCollection<TreeViewItemViewModel>)info.
                 //GetValue("mChildren", typeof(ObservableCollection<TreeViewItemViewModel>));
             //mParent = (TreeViewItemViewModel)info.GetValue("mParent", typeof(TreeViewItemViewModel));
-        }
+        }*/
     }
 }

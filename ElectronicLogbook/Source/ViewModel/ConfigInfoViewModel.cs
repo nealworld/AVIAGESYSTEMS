@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Runtime.Serialization;
 using ElectronicLogbookDataLib.AirCraftEquipment;
+using System.Security;
 
 namespace ElectronicLogbook.ViewModel
 {
     [System.Serializable()]
-    public class ConfigInfoViewModel : ViewModel, ISerializable, IEquatable<HWPartViewModel>
+    public class ConfigInfoViewModel : ViewModel, ISerializable, IEquatable<ConfigInfoViewModel>
     {
         private String _ItemIndex;
         public String mItemIndex 
@@ -45,6 +46,7 @@ namespace ElectronicLogbook.ViewModel
             mItemInfo = aConfigInfo.mItemInfo;
         }
 
+        [SecurityCritical]
         public void GetObjectData(SerializationInfo info, StreamingContext ctxt) 
         {
             info.AddValue("mCompareResult", mCompareResult);
