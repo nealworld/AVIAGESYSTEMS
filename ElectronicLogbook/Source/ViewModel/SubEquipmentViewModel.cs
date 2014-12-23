@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using ElectronicLogbookDataLib.AirCraftEquipment;
 using System.Security;
+using System.Windows;
 
 namespace ElectronicLogbook.ViewModel
 {
@@ -10,6 +11,34 @@ namespace ElectronicLogbook.ViewModel
     public class SubEquipmentViewModel : TreeViewItemViewModel, ISerializable,
         IEquatable<SubEquipmentViewModel>
     {
+        private Visibility _HWPartCompareResultColumnVisibility;
+        public Visibility mHWPartCompareResultColumnVisibility
+        {
+            set
+            {
+                _HWPartCompareResultColumnVisibility = value;
+                this.OnPropertyChanged("mHWPartCompareResultColumnVisibility");
+            }
+            get
+            {
+                return _HWPartCompareResultColumnVisibility;
+            }
+        }
+
+        private Visibility _ConfigInfoCompareResultColumnVisibility;
+        public Visibility mConfigInfoCompareResultColumnVisibility
+        {
+            set
+            {
+                _ConfigInfoCompareResultColumnVisibility = value;
+                this.OnPropertyChanged("mConfigInfoCompareResultColumnVisibility");
+            }
+            get
+            {
+                return _ConfigInfoCompareResultColumnVisibility;
+            }
+        }
+
         private String _EquipmentID;
         public String mEquipmentID 
         {
@@ -68,6 +97,8 @@ namespace ElectronicLogbook.ViewModel
 
         private void Initialize(SubEquipment aSubEquipment, TreeViewItemViewModel aParent) 
         {
+            mHWPartCompareResultColumnVisibility = Visibility.Hidden;
+            mConfigInfoCompareResultColumnVisibility = Visibility.Hidden;
             mEquipmentID = aSubEquipment.mEquipmentID;
 
             mHWPartList = new ObservableCollection<HWPartViewModel>();
@@ -98,12 +129,15 @@ namespace ElectronicLogbook.ViewModel
         {
             Initialize(aSubEquipment, aParent);
             base.IsInEditMode = aIsInEditMode;
+            base.IsSelected = true;
         }
 
         [SecurityCritical]
         public void GetObjectData(SerializationInfo info, StreamingContext ctxt) 
         {
             info.AddValue("mCompareResult", mCompareResult);
+            info.AddValue("mConfigInfoCompareResultColumnVisibility",mConfigInfoCompareResultColumnVisibility);
+            info.AddValue("mHWPartCompareResultColumnVisibility", mHWPartCompareResultColumnVisibility);
             info.AddValue("mEquipmentID",mEquipmentID);
             info.AddValue("mHWPartList", mHWPartList);
             info.AddValue("mSWConfigList", mSWConfigList);
@@ -114,6 +148,8 @@ namespace ElectronicLogbook.ViewModel
 
         public SubEquipmentViewModel(SerializationInfo info, StreamingContext ctxt)
         {
+            mConfigInfoCompareResultColumnVisibility = (Visibility)info.GetValue("mConfigInfoCompareResultColumnVisibility", typeof(Visibility));
+            mHWPartCompareResultColumnVisibility = (Visibility)info.GetValue("mHWPartCompareResultColumnVisibility", typeof(Visibility));
             mCompareResult = (String)info.GetValue("mCompareResult", typeof(String));
             mEquipmentID = (String)info.GetValue("mEquipmentID", typeof(String));
             mHWPartList = (ObservableCollection<HWPartViewModel>)
@@ -146,93 +182,18 @@ namespace ElectronicLogbook.ViewModel
             return (this.mEquipmentID.Equals(aOther.mEquipmentID));
         }
 
-        public void Compare(SubEquipmentViewModel lTargetSubEquipment)
+        public override Boolean Compare(ViewModel lTarget)
         {
-            CompareLists(this.mHWPartList, lTargetSubEquipment.mHWPartList);
-            CompareLists(this.mSWConfigList, lTargetSubEquipment.mSWConfigList);
-            CompareLists(this.mConfigInfoList, lTargetSubEquipment.mConfigInfoList);
-        }
-/*
-        private bool CompareConfigInfoList(ObservableCollection<ConfigInfoViewModel> aSourceList, 
-            ObservableCollection<ConfigInfoViewModel> aTargetList)
-        {
-            bool lResult = true;
-            foreach (ConfigInfoViewModel lSourceConfigInfo in aSourceList)
-            {
-                if (!aTargetList.Contains(lSourceConfigInfo))
-                {
-                    lSourceConfigInfo.mCompareResult = Utility.Deleted;
-                    lResult = false;
-                }
-            }
-
-            foreach (ConfigInfoViewModel lTargetConfigInfo in aTargetList)
-            {
-                if (!aSourceList.Contains(lTargetConfigInfo))
-                {
-                    lTargetConfigInfo.mCompareResult = Utility.New;
-                    aSourceList.Add(lTargetConfigInfo);
-                    lResult = false;
-                }
-            }
-
-            return lResult;
+            Boolean lIsChanged = false;
+            lIsChanged |= Compare(this.mHWPartList, (lTarget as SubEquipmentViewModel).mHWPartList);
+            lIsChanged |= Compare(this.mSWConfigList, (lTarget as SubEquipmentViewModel).mSWConfigList);
+            lIsChanged |= Compare(this.mConfigInfoList, (lTarget as SubEquipmentViewModel).mConfigInfoList);
+            return lIsChanged;
         }
 
-        private bool CompareSWConfigList(ObservableCollection<SWConfigViewModel> aSourceList, 
-            ObservableCollection<SWConfigViewModel> aTargetList)
+        private Boolean Compare<T>(ObservableCollection<T> aSourceList, ObservableCollection<T> aTargetList)
         {
-            bool lResult = true;
-            foreach (SWConfigViewModel lSourceSWConfig in aSourceList)
-            {
-                if (!aTargetList.Contains(lSourceSWConfig))
-                {
-                    lSourceSWConfig.mCompareResult = Utility.Deleted;
-                    lResult = false;
-                }
-            }
-
-            foreach (SWConfigViewModel lTargetSWConfig in aTargetList)
-            {
-                if (!aSourceList.Contains(lTargetSWConfig))
-                {
-                    lTargetSWConfig.mCompareResult = Utility.New;
-                    aSourceList.Add(lTargetSWConfig);
-                    lResult = false;
-                }
-            }
-
-            return lResult;
-        }
-
-        private bool CompareHWPartList(ObservableCollection<HWPartViewModel> aSourceList, 
-            ObservableCollection<HWPartViewModel> aTargetList)
-        {
-            bool lResult = true;
-            foreach (HWPartViewModel lSourceHWPart in aSourceList)
-            {
-                if (!aTargetList.Contains(lSourceHWPart))
-                {
-                    lSourceHWPart.mCompareResult = Utility.Deleted;
-                    lResult = false;
-                }
-            }
-
-            foreach (HWPartViewModel lTargetHWPart in aTargetList)
-            {
-                if (!aSourceList.Contains(lTargetHWPart))
-                {
-                    lTargetHWPart.mCompareResult = Utility.New;
-                    aSourceList.Add(lTargetHWPart);
-                    lResult = false;
-                }
-            }
-
-            return lResult;
-        }
-*/
-        private void CompareLists<T>(ObservableCollection<T> aSourceList, ObservableCollection<T> aTargetList)
-        {
+            Boolean lIsChanged = false;
             foreach (T lSourceElement in aSourceList)
             {
 
@@ -241,6 +202,7 @@ namespace ElectronicLogbook.ViewModel
                     (lSourceElement as ViewModel).mCompareResult = Utility.Deleted;
                     this.mCompareResult = Utility.Modified;
                     this.mParent.mCompareResult = Utility.Modified;
+                    lIsChanged = true;
                 }
             }
 
@@ -252,6 +214,7 @@ namespace ElectronicLogbook.ViewModel
                     aSourceList.Add(lTargetElement);
                     this.mCompareResult = Utility.Modified;
                     this.mParent.mCompareResult = Utility.Modified;
+                    lIsChanged = true;
                 }
             }
 
@@ -262,6 +225,8 @@ namespace ElectronicLogbook.ViewModel
                     lElement.mSWConfigIndex += lElement.mCompareResult;
                 }
             }
+
+            return lIsChanged;
         }
     }
 }

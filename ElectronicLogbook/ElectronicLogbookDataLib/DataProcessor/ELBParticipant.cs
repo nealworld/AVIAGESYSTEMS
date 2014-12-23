@@ -12,7 +12,17 @@ namespace ElectronicLogbookDataLib.DataProcessor
     {
 
         public UtilityParticipant mUtilityParticipant{get; private set;}
-        private static ELBParticipant mSingleton = null;
+
+        private class Nested
+        {
+            static Nested()
+            {
+            }
+
+            internal static readonly ELBParticipant instance = new ELBParticipant();
+        }
+
+        public static ELBParticipant mSingleton { get { return Nested.instance; } }
 
         private ELBParticipant() 
         {
@@ -26,17 +36,9 @@ namespace ElectronicLogbookDataLib.DataProcessor
             mUtilityParticipant.SetState(CommonSimTypes.Status.Running);
         }
 
-        public static ELBParticipant getInstance() 
-        {
-            if (mSingleton == null)
-            {
-                mSingleton = new ELBParticipant();
-            }
-            return mSingleton;
-        }
-
         private UtilityParticipant GetParticipant()
         {
+            System.Diagnostics.Debug.WriteLine("enter GetParticipant");
             string lSimulationName = "Electronic_Logbook";
             string lSimulationDescription = "Electronic_Logbook";
             string lSimulationPartNumber = "1002197-002";

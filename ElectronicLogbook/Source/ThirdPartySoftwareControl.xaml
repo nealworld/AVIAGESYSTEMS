@@ -3,12 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008">
-    <DockPanel>
+    <DockPanel Name="ThirdPartySoftwarePanel">
+        <DockPanel.Resources>
+            <FrameworkElement x:Key="ThirdPartySoftwarePanelDataContext"/>
+        </DockPanel.Resources>
+        <DockPanel.DataContext>
+            <Binding Mode="OneWayToSource" Path="DataContext" Source="{StaticResource ThirdPartySoftwarePanelDataContext}"/>
+        </DockPanel.DataContext>
         <DataGrid Grid.Row="0" Grid.Column="0" ItemsSource="{Binding mThirdPartySoftwareListViewModel, Mode=TwoWay}" CanUserReorderColumns="True"
                           CanUserResizeColumns="True" CanUserResizeRows="True" CanUserSortColumns="True"
                           SelectionMode="Extended" SelectionUnit="FullRow" AutoGenerateColumns="False"
-                          AreRowDetailsFrozen="False" Height="auto" Background="White">
+                          AreRowDetailsFrozen="False" Height="auto" Background="White" IsReadOnly="{Binding mIsReadOnly}">
             <DataGrid.Columns>
+                <DataGridTextColumn Header="Compare Result" Binding="{Binding mCompareResult}" 
+                                            Visibility="{Binding Path=DataContext.mThirdPartySoftwareCompareResultColumnVisibility, Source={StaticResource ThirdPartySoftwarePanelDataContext}}"/>
                 <DataGridTextColumn Header="Software Name" Binding="{Binding mSoftwareName}"/>
                 <DataGridTextColumn Header="Software Version Number" Binding="{Binding mSoftwareVersionNumber}"/>
                 <DataGridTextColumn Header="Software Location" Binding="{Binding mSoftwareLocation}"/>

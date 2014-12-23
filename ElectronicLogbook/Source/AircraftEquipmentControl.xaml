@@ -15,7 +15,7 @@
                     </Trigger>
                 </Style.Triggers>
             </Style>
-            <FrameworkElement x:Key="DataContextBridge" />
+            <FrameworkElement x:Key="DataContextBridge"/>
         </Grid.Resources>
         <Grid.DataContext>
             <Binding Mode="OneWayToSource" Path="DataContext" Source="{StaticResource DataContextBridge}"/>
@@ -89,13 +89,14 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Expander Header="HW Part" MinHeight="50" Name="TestExpander">
+            <Expander Header="HW Part" MinHeight="50" Name="TestExpander" IsExpanded="True">
                 <DataGrid ItemsSource="{Binding ElementName=AircraftEquipmentConfigTreeView, Path=SelectedItem.mHWPartList, Mode=TwoWay}" CanUserReorderColumns="True"
                             CanUserResizeColumns="True" CanUserResizeRows="True" CanUserSortColumns="True"
                             SelectionMode="Extended" SelectionUnit="FullRow" AutoGenerateColumns="False"
-                            AreRowDetailsFrozen="False" Height="auto" Background="White" Name="TestDataGrid" IsReadOnly="{Binding mIsReadOnly}">
+                            AreRowDetailsFrozen="False" Height="auto" Background="White" IsReadOnly="{Binding mIsReadOnly}">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Compare Result" Binding="{Binding mCompareResult}" Foreground="Purple"/>
+                        <DataGridTextColumn Header="Compare Result" Binding="{Binding mCompareResult}" 
+                                            Visibility="{Binding  Source={x:Reference AircraftEquipmentConfigTreeView}, Path=SelectedItem.mHWPartCompareResultColumnVisibility}"/>
                         <DataGridTextColumn Header="HW Part Index" Binding="{Binding mHWPartIndex}"/>
                         <DataGridTextColumn Header="HW Part Number" Binding="{Binding mHWPartNumber}"/>
                         <DataGridTextColumn Header="HW Part Description" Binding="{Binding mHWPartDescription}"/>
@@ -106,7 +107,7 @@
             </Expander>
            <!-- <GridSplitter Height="2" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Style="{StaticResource GridSplitterStyle}"/>
 -->
-            <Expander Header="SW_Config" Grid.Row="1"  MinHeight="100">
+            <Expander Header="SW_Config" Grid.Row="1"  MinHeight="100" IsExpanded="True">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
@@ -196,7 +197,7 @@
 
             <!--<GridSplitter Height="2" Grid.Row="1" HorizontalAlignment="Stretch" 
                           VerticalAlignment="Bottom" Style="{StaticResource GridSplitterStyle}"/>-->
-            <Expander Header="Config info" Grid.Row="2"  MinHeight="50">
+            <Expander Header="Config info" Grid.Row="2"  MinHeight="50" IsExpanded="True">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
@@ -209,7 +210,8 @@
                           SelectionMode="Extended" SelectionUnit="FullRow" AutoGenerateColumns="False"
                           AreRowDetailsFrozen="False" Height="auto" Background="White" IsReadOnly="{Binding mIsReadOnly}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Compare Result" Binding="{Binding mCompareResult}" Visibility="{Binding mIsComparing}"/>
+                            <DataGridTextColumn Header="Compare Result" Binding="{Binding mCompareResult}" 
+                                                Visibility="{Binding Source={x:Reference AircraftEquipmentConfigTreeView}, Path=SelectedItem.mConfigInfoCompareResultColumnVisibility}"/>
                             <DataGridTextColumn Header="Config Info Index" Binding="{Binding mItemIndex}"/>
                             <DataGridTextColumn Header="Config info" Binding="{Binding mItemInfo}"/>
                         </DataGrid.Columns>

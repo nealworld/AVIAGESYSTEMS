@@ -23,6 +23,7 @@ namespace ElectronicLogbook
         public DeviceDriverControl()
         {
             InitializeComponent();
+            DeviceDriverPanel.DataContext = ELBViewModel.mSingleton.mConfigurationViewModel;
         }
     }
 }

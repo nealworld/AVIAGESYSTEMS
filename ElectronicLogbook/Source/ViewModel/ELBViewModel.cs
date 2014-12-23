@@ -4,14 +4,13 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using ElectronicLogbookDataLib;
 using ElectronicLogbookDataLib.AirCraftEquipment;
+using ElectronicLogbookDataLib.DataProcessor;
 namespace ElectronicLogbook.ViewModel
 {
     public class ELBViewModel : ViewModel
     {
         private class Nested
         {
-            // Explicit static constructor to tell C# compiler
-            // not to mark type as beforefieldinit
             static Nested()
             {
             }
@@ -33,6 +32,11 @@ namespace ElectronicLogbook.ViewModel
                 _ConfigurationViewModel = value;
                 this.OnPropertyChanged("mConfigurationViewModel");
             }
+        }
+
+        public override Boolean Compare(ViewModel aViewModel)
+        {
+            throw new NotImplementedException();
         }
 
         private ELBViewModel() 
@@ -129,20 +133,33 @@ namespace ElectronicLogbook.ViewModel
             mConfigurationViewModel.mIsEditable = false;
             mConfigurationViewModel.mIsReadOnly = true;
 
-            //ConfigurationProcessor lConfigurationProcessor = ConfigurationProcessor.mSingleton;
+            ConfigurationProcessor lConfigurationProcessor = ConfigurationProcessor.mSingleton;
             foreach (AirCraftEquipmentConfig lAirCraftEquipmentConfig in
-                /*lConfigurationProcessor.GetAirCraftEquipmentConfigList()*/ GetList())
+                lConfigurationProcessor.GetAirCraftEquipmentConfigList() /*GetList()*/)
             {
                 mConfigurationViewModel.mAirCraftEquipmentConfigViewModelList.Add
                     (new AirCraftEquipmentConfigViewModel(lAirCraftEquipmentConfig));
             }
-            /*mConfigurationViewModel.mVAISParticipantList = new ObservableCollection<VAISParticipant>(
-                lConfigurationProcessor.GetVAISParticipantList());
+
+            foreach (VAISParticipant lElement in lConfigurationProcessor.GetVAISParticipantList()) 
+            {
+                mConfigurationViewModel.mVAISParticipantListViewModel.Add(new VAISParticipantViewModel(lElement));
+            }
+
+            
             string lDriverConfig = "";
             string l3rdPartySW = "";
             lConfigurationProcessor.GetDriverAnd3rdPartyConfig(out lDriverConfig, out l3rdPartySW);
-            mConfigurationViewModel.mDeviceDriverList = ConvertStrToDriver(lDriverConfig);
-            mConfigurationViewModel.mThirdPartySoftware = ConverStrToThirdPartySoftware(l3rdPartySW);*/
+
+            foreach (DeviceDriver lElement in ConvertStrToDriver(lDriverConfig)) 
+            {
+                mConfigurationViewModel.mDeviceDriverListViewModel.Add(new DeviceDriverViewModel(lElement));
+            }
+
+            foreach (ThirdPartySoftware lElement in ConverStrToThirdPartySoftware(l3rdPartySW)) 
+            {
+                mConfigurationViewModel.mThirdPartySoftwareListViewModel.Add(new ThirdPartySoftwareViewModel(lElement));
+            }
         }
 
         private void CollectConfigurationFromFile(String aFileName) 

@@ -65,6 +65,11 @@ namespace ElectronicLogbook.ViewModel
             }
         }
 
+        public override Boolean Compare(ViewModel aViewModel)
+        {
+            throw new NotImplementedException();
+        }
+
         public SWConfigViewModel(SWConfig aSWConfig) 
         {
             mSWConfigIndex = aSWConfig.mSWConfigIndex;

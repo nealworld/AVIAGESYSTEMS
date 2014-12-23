@@ -37,26 +37,13 @@ namespace ElectronicLogbook.ViewModel
             } 
         }
 
-        private Visibility _IsComparing;
-        public Visibility mIsComparing
-        {
-            set
-            {
-                _IsComparing = value;
-                this.OnPropertyChanged("mIsComparing");
-            }
-            get
-            {
-                return _IsComparing;
-            }
-        }
-
         public ViewModel() 
         {
             this.mCompareResult = String.Empty;
             this.IsInEditMode = false;
-            this.mIsComparing = Visibility.Hidden;
         }
+
+        public abstract Boolean Compare(ViewModel aViewModel);
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
@@ -64,15 +51,5 @@ namespace ElectronicLogbook.ViewModel
             if (this.PropertyChanged != null)
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        /*[SecurityCritical]
-        public void GetObjectData(SerializationInfo info, StreamingContext ctxt) 
-        { 
-        }
-
-        //Deserialization constructor.
-        public ViewModel(SerializationInfo info, StreamingContext ctxt)
-        {
-        }*/
     }
 }

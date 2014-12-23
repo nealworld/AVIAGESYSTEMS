@@ -63,6 +63,11 @@ namespace ElectronicLogbook.ViewModel
             mLSAPDescription = aSWPart.mLSAPDescription;
         }
 
+        public override Boolean Compare(ViewModel aViewModel)
+        {
+            throw new NotImplementedException();
+        }
+
         [SecurityCritical]
         public void GetObjectData(SerializationInfo info, StreamingContext ctxt) 
         {

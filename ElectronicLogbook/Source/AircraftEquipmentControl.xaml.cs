@@ -26,12 +26,11 @@ namespace ElectronicLogbook
         {
             InitializeComponent();
             TopGrid.DataContext = ELBViewModel.mSingleton.mConfigurationViewModel;
-            //TestExpander.DataContext = ELBViewModel.mSingleton;
 
-            ThreadStart thr_start_func = new ThreadStart(First_Thread);
+           /* ThreadStart thr_start_func = new ThreadStart(First_Thread);
             Thread fThread = new Thread(thr_start_func) { IsBackground=true};
             fThread.Name = "first_thread";
-            fThread.Start(); //starting the thread
+            fThread.Start(); */ 
         }
 
         public void First_Thread()

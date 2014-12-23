@@ -49,7 +49,7 @@ namespace ElectronicLogbook.ViewModel
         {
             Initialize(aAirCraftEquipmentConfig);
             base.IsInEditMode = aIsInEditMode;
-
+            base.IsSelected = true;
         }
 
         [SecurityCritical]
@@ -89,29 +89,31 @@ namespace ElectronicLogbook.ViewModel
             return (this.mConfigName.Equals(aOther.mConfigName));
         }
 
-        public void Compare(AirCraftEquipmentConfigViewModel aTarget)
+        public override Boolean Compare(ViewModel aTarget)
         {
+            Boolean lIsChanged = false;
             foreach (SubEquipmentViewModel lSourceSubEquipment in this.mChildren) 
             {
-                if(aTarget.mChildren.Contains(lSourceSubEquipment)) {
-                    lSourceSubEquipment.Compare(
-                        aTarget.mChildren[aTarget.mChildren.IndexOf(lSourceSubEquipment)] 
-                        as SubEquipmentViewModel);
+                if((aTarget as AirCraftEquipmentConfigViewModel).mChildren.Contains(lSourceSubEquipment)) {
+                    lIsChanged |= lSourceSubEquipment.Compare(
+                        (aTarget as AirCraftEquipmentConfigViewModel).mChildren[(aTarget as AirCraftEquipmentConfigViewModel).mChildren.IndexOf(lSourceSubEquipment)]);
                 }
                 else
                 {
                     lSourceSubEquipment.mCompareResult = Utility.Deleted;
                     this.mCompareResult = Utility.Modified;
+                    lIsChanged = true;
                 }
             }
 
-            foreach (SubEquipmentViewModel lTargetSubEquipment in aTarget.mChildren) 
+            foreach (SubEquipmentViewModel lTargetSubEquipment in (aTarget as AirCraftEquipmentConfigViewModel).mChildren) 
             {
                 if (!this.mChildren.Contains(lTargetSubEquipment)) 
                 {
                     this.mCompareResult = Utility.Modified;
                     lTargetSubEquipment.mCompareResult = Utility.New;
                     this.mChildren.Add(lTargetSubEquipment);
+                    lIsChanged = true;
                 }
             }
 
@@ -119,31 +121,29 @@ namespace ElectronicLogbook.ViewModel
             foreach (SubEquipmentViewModel lElement in this.mChildren)
             {
                 lElement.mEquipmentID += lElement.mCompareResult;
+                setVisibility(lElement);
             }
+
+            return lIsChanged;
         }
 
         private void setVisibility(SubEquipmentViewModel aSubEquipment) 
         {
-            if (aSubEquipment.mCompareResult == Utility.Deleted || aSubEquipment.mCompareResult == Utility.New)
+            if (aSubEquipment.mCompareResult == Utility.Modified)
             {
                 foreach (HWPartViewModel lHWPart in aSubEquipment.mHWPartList)
                 {
-                    lHWPart.mIsComparing = Visibility.Hidden;
+                    if (lHWPart.mCompareResult != String.Empty) {
+                        aSubEquipment.mHWPartCompareResultColumnVisibility = Visibility.Visible;
+                        break;
+                    }
                 }
                 foreach (ConfigInfoViewModel lConfigInfo in aSubEquipment.mConfigInfoList)
                 {
-                    lConfigInfo.mIsComparing = Visibility.Hidden;
-                }
-            }
-            else 
-            {
-                foreach (HWPartViewModel lHWPart in aSubEquipment.mHWPartList)
-                {
-                    lHWPart.mIsComparing = Visibility.Visible;
-                }
-                foreach (ConfigInfoViewModel lConfigInfo in aSubEquipment.mConfigInfoList)
-                {
-                    lConfigInfo.mIsComparing = Visibility.Visible;
+                    if (lConfigInfo.mCompareResult != String.Empty) {
+                        aSubEquipment.mConfigInfoCompareResultColumnVisibility = Visibility.Visible;
+                        break;
+                    }
                 }
             }
         }

@@ -2,6 +2,7 @@
 using System.Runtime.Serialization;
 using ElectronicLogbookDataLib.AirCraftEquipment;
 using System.Security;
+using System.Windows;
 
 namespace ElectronicLogbook.ViewModel
 {
@@ -76,6 +77,11 @@ namespace ElectronicLogbook.ViewModel
             {
                 return _HWPartSerialNumber;
             }
+        }
+
+        public override Boolean Compare(ViewModel aViewModel)
+        {
+            throw new NotImplementedException();
         }
 
         public HWPartViewModel() {

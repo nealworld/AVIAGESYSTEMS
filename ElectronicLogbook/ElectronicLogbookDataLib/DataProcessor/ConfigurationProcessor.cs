@@ -21,8 +21,7 @@ namespace ElectronicLogbookDataLib.DataProcessor
 
         private class Nested
         {
-            // Explicit static constructor to tell C# compiler
-            // not to mark type as beforefieldinit
+
             static Nested()
             {
             }
@@ -33,7 +32,7 @@ namespace ElectronicLogbookDataLib.DataProcessor
         public static ConfigurationProcessor mSingleton { get { return Nested.instance; }}
 
         private ConfigurationProcessor() {
-            mELBParticipant = ELBParticipant.getInstance();
+            mELBParticipant = ELBParticipant.mSingleton;
             LoadELBConfig();
             ASN1_Decoder_ConfigReport.cASN1Format.BuildValueTree();
         }
@@ -188,6 +187,7 @@ namespace ElectronicLogbookDataLib.DataProcessor
                     });
                 }
             }
+            System.Diagnostics.Debug.WriteLine(lResult[0].mParticipantName + lResult[0].mParticipantPartNumber);
             return lResult;
         }
 

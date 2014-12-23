@@ -22,6 +22,8 @@ namespace ElectronicLogbook
         public ThirdPartySoftwareControl()
         {
             InitializeComponent();
+
+            ThirdPartySoftwarePanel.DataContext = ELBViewModel.mSingleton.mConfigurationViewModel;
         }
     }
 }

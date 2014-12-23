@@ -94,6 +94,48 @@ namespace ElectronicLogbook.ViewModel
             }
         }
 
+        private Visibility _VAISParticipantCompareResultColumnVisibility;
+        public Visibility mVAISParticipantCompareResultColumnVisibility
+        {
+            set
+            {
+                _VAISParticipantCompareResultColumnVisibility = value;
+                this.OnPropertyChanged("mVAISParticipantCompareResultColumnVisibility");
+            }
+            get
+            {
+                return _VAISParticipantCompareResultColumnVisibility;
+            }
+        }
+
+        private Visibility _DeviceDriverCompareResultColumnVisibility;
+        public Visibility mDeviceDriverCompareResultColumnVisibility
+        {
+            set
+            {
+                _DeviceDriverCompareResultColumnVisibility = value;
+                this.OnPropertyChanged("mDeviceDriverCompareResultColumnVisibility");
+            }
+            get
+            {
+                return _DeviceDriverCompareResultColumnVisibility;
+            }
+        }
+
+        private Visibility _ThirdPartySoftwareCompareResultColumnVisibility;
+        public Visibility mThirdPartySoftwareCompareResultColumnVisibility
+        {
+            set
+            {
+                _ThirdPartySoftwareCompareResultColumnVisibility = value;
+                this.OnPropertyChanged("mThirdPartySoftwareCompareResultColumnVisibility");
+            }
+            get
+            {
+                return _ThirdPartySoftwareCompareResultColumnVisibility;
+            }
+        }
+
         public ConfigurationViewModel() 
         {
             initialize();
@@ -103,6 +145,9 @@ namespace ElectronicLogbook.ViewModel
         {
             mIsEditable = false;
             mIsReadOnly = true;
+            mVAISParticipantCompareResultColumnVisibility = Visibility.Hidden;
+            mDeviceDriverCompareResultColumnVisibility = Visibility.Hidden;
+            mThirdPartySoftwareCompareResultColumnVisibility = Visibility.Hidden;
             mAirCraftEquipmentConfigViewModelList = new ObservableCollection<AirCraftEquipmentConfigViewModel>();
             mVAISParticipantListViewModel = new ObservableCollection<VAISParticipantViewModel>();
             mDeviceDriverListViewModel = new ObservableCollection<DeviceDriverViewModel>();
@@ -112,6 +157,9 @@ namespace ElectronicLogbook.ViewModel
         [SecurityCritical]
         public void GetObjectData(SerializationInfo info, StreamingContext ctxt) 
         {
+            info.AddValue("mVAISParticipantCompareResultColumnVisibility", mVAISParticipantCompareResultColumnVisibility);
+            info.AddValue("mDeviceDriverCompareResultColumnVisibility", mDeviceDriverCompareResultColumnVisibility);
+            info.AddValue("mThirdPartySoftwareCompareResultColumnVisibility", mThirdPartySoftwareCompareResultColumnVisibility);
             info.AddValue("mAirCraftEquipmentConfigViewModelList",mAirCraftEquipmentConfigViewModelList);
             info.AddValue("mVAISParticipantListViewModel",mVAISParticipantListViewModel);
             info.AddValue("mDeviceDriverListViewModel",mDeviceDriverListViewModel);
@@ -120,6 +168,9 @@ namespace ElectronicLogbook.ViewModel
 
         public ConfigurationViewModel(SerializationInfo info, StreamingContext ctxt)
         {
+            mVAISParticipantCompareResultColumnVisibility = (Visibility)info.GetValue("mVAISParticipantCompareResultColumnVisibility", typeof(Visibility));
+            mDeviceDriverCompareResultColumnVisibility = (Visibility)info.GetValue("mDeviceDriverCompareResultColumnVisibility", typeof(Visibility));
+            mThirdPartySoftwareCompareResultColumnVisibility = (Visibility)info.GetValue("mThirdPartySoftwareCompareResultColumnVisibility", typeof(Visibility));
             mAirCraftEquipmentConfigViewModelList = (ObservableCollection<AirCraftEquipmentConfigViewModel>)
                 info.GetValue("mAirCraftEquipmentConfigViewModelList", typeof(ObservableCollection<AirCraftEquipmentConfigViewModel>));
             mVAISParticipantListViewModel = (ObservableCollection<VAISParticipantViewModel>)
@@ -131,55 +182,72 @@ namespace ElectronicLogbook.ViewModel
 
         }
 
-
-        public void Compare(ConfigurationViewModel aTargetConfiguration)
+        public override Boolean Compare(ViewModel aTarget)
         {
-            CompareAirCraftEquipmentConfigList(this.mAirCraftEquipmentConfigViewModelList, aTargetConfiguration.mAirCraftEquipmentConfigViewModelList);
-            CompareVAISParticipant(this.mVAISParticipantListViewModel, aTargetConfiguration.mVAISParticipantListViewModel);
-            CompareThirdPartySoftware(this.mThirdPartySoftwareListViewModel, aTargetConfiguration.mThirdPartySoftwareListViewModel);
-            CompareDeviceDriver(this.mDeviceDriverListViewModel, aTargetConfiguration.mDeviceDriverListViewModel);
-        }
+            Boolean lIsAirCraftEquipmentConfigChanged = false;
+            Boolean lIsVAISParticipantChanged = false;
+            Boolean lIsThirdPartySoftwareChanged = false;
+            Boolean lIsDeviceDriverChanged = false;
 
-        private void CompareDeviceDriver(ObservableCollection<DeviceDriverViewModel> observableCollection1, ObservableCollection<DeviceDriverViewModel> observableCollection2)
-        {
-        }
+            lIsAirCraftEquipmentConfigChanged = Compare(this.mAirCraftEquipmentConfigViewModelList, (aTarget as ConfigurationViewModel).mAirCraftEquipmentConfigViewModelList);
+            lIsVAISParticipantChanged = Compare(this.mVAISParticipantListViewModel, (aTarget as ConfigurationViewModel).mVAISParticipantListViewModel);
+            lIsThirdPartySoftwareChanged = Compare(this.mThirdPartySoftwareListViewModel, (aTarget as ConfigurationViewModel).mThirdPartySoftwareListViewModel);
+            lIsDeviceDriverChanged = Compare(this.mDeviceDriverListViewModel, (aTarget as ConfigurationViewModel).mDeviceDriverListViewModel);
 
-        private void CompareThirdPartySoftware(ObservableCollection<ThirdPartySoftwareViewModel> observableCollection1, ObservableCollection<ThirdPartySoftwareViewModel> observableCollection2)
-        {
-        }
-
-        private void CompareVAISParticipant(ObservableCollection<VAISParticipantViewModel> observableCollection1, ObservableCollection<VAISParticipantViewModel> observableCollection2)
-        {
-        }
-
-        private void CompareAirCraftEquipmentConfigList(ObservableCollection<AirCraftEquipmentConfigViewModel> aSourceList,
-            ObservableCollection<AirCraftEquipmentConfigViewModel> aTargetList)
-        {
-            foreach (AirCraftEquipmentConfigViewModel lSourceRecord in aSourceList)
+            if (lIsVAISParticipantChanged) 
             {
-                if (aTargetList.Contains(lSourceRecord))
+                mVAISParticipantCompareResultColumnVisibility = Visibility.Visible;
+            }
+
+            if (lIsThirdPartySoftwareChanged) 
+            {
+                mThirdPartySoftwareCompareResultColumnVisibility = Visibility.Visible;
+            }
+
+            if (lIsDeviceDriverChanged) 
+            {
+                mDeviceDriverCompareResultColumnVisibility = Visibility.Visible;
+            }
+
+            return lIsAirCraftEquipmentConfigChanged | lIsVAISParticipantChanged | lIsThirdPartySoftwareChanged | lIsDeviceDriverChanged;
+        }
+
+        private Boolean Compare<T>(ObservableCollection<T> aSourceList, ObservableCollection<T> aTargetList) 
+        {
+            Boolean lIsChanged = false;
+
+            foreach (T lSourceElement in aSourceList)
+            {
+                if (aTargetList.Contains(lSourceElement))
                 {
-                    lSourceRecord.Compare(aTargetList[aTargetList.IndexOf(lSourceRecord)]);
+                    lIsChanged |= (lSourceElement as ViewModel).Compare(aTargetList[aTargetList.IndexOf(lSourceElement)] as ViewModel);
                 }
                 else
                 {
-                    lSourceRecord.mCompareResult = Utility.Deleted;
+                    (lSourceElement as ViewModel).mCompareResult = Utility.Deleted;
+                    lIsChanged = true;
                 }
             }
 
-            foreach (AirCraftEquipmentConfigViewModel lTargetRecord in aTargetList)
+            foreach (T lTargetElement in aTargetList)
             {
-                if (!aSourceList.Contains(lTargetRecord))
+                if (!aSourceList.Contains(lTargetElement))
                 {
-                    lTargetRecord.mCompareResult = Utility.New;
-                    aSourceList.Add(lTargetRecord);
+                    (lTargetElement as ViewModel).mCompareResult = Utility.New;
+                    aSourceList.Add(lTargetElement);
+                    lIsChanged = true;
                 }
             }
 
-            foreach (AirCraftEquipmentConfigViewModel lElement in aSourceList) 
+            if (aSourceList is ObservableCollection<AirCraftEquipmentConfigViewModel>) 
             {
-                lElement.mConfigName += lElement.mCompareResult;
+                foreach (AirCraftEquipmentConfigViewModel lElement in aSourceList as ObservableCollection<AirCraftEquipmentConfigViewModel>)
+                {
+                    lElement.mConfigName += lElement.mCompareResult;
+                }
             }
+
+            return lIsChanged;
         }
     }
 }

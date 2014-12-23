@@ -2,6 +2,7 @@
 using System.Runtime.Serialization;
 using ElectronicLogbookDataLib.AirCraftEquipment;
 using System.Security;
+using System.Windows;
 
 namespace ElectronicLogbook.ViewModel
 {
@@ -59,6 +60,11 @@ namespace ElectronicLogbook.ViewModel
             mCompareResult = (String)info.GetValue("mCompareResult", typeof(String));
             mItemIndex = (String)info.GetValue("mItemIndex", typeof(String));
             mItemInfo = (String)info.GetValue("mItemInfo", typeof(String));
+        }
+
+        public override Boolean Compare(ViewModel aViewModel)
+        {
+            throw new NotImplementedException();
         }
 
         public override bool Equals(object aobj)

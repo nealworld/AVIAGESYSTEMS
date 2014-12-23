@@ -39,6 +39,9 @@ namespace ElectronicLogbook.ViewModel
                 {
                     _isSelected = value;
                     this.OnPropertyChanged("IsSelected");
+                    if (value && this.mParent != null) {
+                        this.mParent.IsSelected = false;
+                    }
                 }
             }
         }
@@ -49,22 +52,9 @@ namespace ElectronicLogbook.ViewModel
             set { _parent = value; }
         }
 
-
-
-       /* [SecurityCritical]
-        public override void GetObjectData(SerializationInfo info, StreamingContext ctxt) 
+        public override Boolean Compare(ViewModel aViewModel)
         {
-            //info.AddValue("mChildren",mChildren);
-            //info.AddValue("mParent",mParent);
+            throw new NotImplementedException();
         }
-
-        //Deserialization constructor.
-        public TreeViewItemViewModel(SerializationInfo info, StreamingContext ctxt)
-        {
-            //Get the values from info and assign them to the appropriate properties
-            //mChildren = (ObservableCollection<TreeViewItemViewModel>)info.
-                //GetValue("mChildren", typeof(ObservableCollection<TreeViewItemViewModel>));
-            //mParent = (TreeViewItemViewModel)info.GetValue("mParent", typeof(TreeViewItemViewModel));
-        }*/
     }
 }
