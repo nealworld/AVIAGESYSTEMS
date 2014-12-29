@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<VaisParticipant xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.geaviation.com/vais/config">
+  <ParticipantVersionInfo SchemaVersion="7" FileVersion="27" VaisToolName="ConfigEditor.exe" VaisToolVersion="3.0.0.0" />
+  <Utility UtilityName="I-SIVB RMC" Description="AVIAGE" SWPartNumber="1" Version="1" StartupFilePath="D:\Sim\Product\I-SIVB-ReflectMemoryConverter\Source\I-SIVB-ReflectMemoryConverter\bin\Release\I-SIVB-ReflectMemoryConverter.exe" StartupParameters="D:\Sim\Product\I-SIVB-ReflectMemoryConverter\Configuration\I_SIVB_Config.xml" InitializationOrder="1" />
+</VaisParticipant>

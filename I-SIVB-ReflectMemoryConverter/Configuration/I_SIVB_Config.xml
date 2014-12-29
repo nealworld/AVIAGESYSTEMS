@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I-SIVBconfig>
+  <RefreshRate  value="20"/>
+  <RfmDevice  id= "0"  byteSwap="true" />
+  <SourceSelection firstSelection="IronBird">
+    <IronBirdData1>
+      <Data offset="B09000" end="B09FFF"/>
+    </IronBirdData1>
+    <FCSMiniRigData1>
+      <Data offset="B07000" end="B07FFF"/>
+    </FCSMiniRigData1>
+  </SourceSelection>
+  <Data4Message>
+    <Data4 offset="B0C000" end="B0CFFF"/>
+  </Data4Message>
+  <VaisConfigPath value="D:\\Sim\\Product\\I-SIVB-ReflectMemoryConverter\\Configuration\\VAIS_Config.icduser"/>
+  <I-SIVBParticipant name = "I-SIVB RMC" description = "AVIAGE" partNumber = "1" version = "1"/>
+</I-SIVBconfig>
+
+
+
+

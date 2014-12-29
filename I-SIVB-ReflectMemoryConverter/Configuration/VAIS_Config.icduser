@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<VaisIcd xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.geaviation.com/vais/config">
+  <IcdVersionInfo SchemaVersion="8" FileVersion="27" VaisToolName="ConfigEditor.exe" VaisToolVersion="3.0.0.0" />
+  <NonProtocolMessage MsgName="Data1" DisplayName="Data1" TransmissionPeriod="50">
+    <NonProtocolParam ParamName="Data1_1" DisplayName="Static Pressure" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_2" DisplayName="Altitude(29.92)" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_3" DisplayName="Mach" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_4" DisplayName="Pressure Altitude" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_5" DisplayName="Computed Airspeed(Vc)" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_6" DisplayName="True Airspeed" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_7" DisplayName="Total Air Temperature" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_8" DisplayName="Static Air Temperature" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_9" DisplayName="Total pressure" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_10" DisplayName="Impact Pressure" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_11" DisplayName="Magnetic Heading" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_12" DisplayName="Euler Pitch Rate" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_13" DisplayName="Euler Roll Rate" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_14" DisplayName="Euler Yaw Rate" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_15" DisplayName="Along Heading Acceleration" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_16" DisplayName="Cross Heading Acceleration" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_17" DisplayName="Present Position Latitude (IRS)" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_18" DisplayName="Present Position Longitude (IRS)" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_19" DisplayName="Ground Speed(IRS)" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_20" DisplayName="Track Angle, True (IRS)" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_21" DisplayName="True Heading (IRS)" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_22" DisplayName="Track Angle, Magnetic (IRS)" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_23" DisplayName="Magnetic Heading Flight Path Angle(IRS)" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_24" DisplayName="Flight Path Acceleration (IRS)" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_25" DisplayName="Pitch Angle" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_26" DisplayName="Roll Angle" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_27" DisplayName="PitchRate (Body)" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_28" DisplayName="Roll Rate (Body)" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_29" DisplayName="Yaw Rate (Body)" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_30" DisplayName="Longitudinal Acceleration (Body)" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_31" DisplayName="Lateral Acceleration (Body)" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_32" DisplayName="Normal Acceleration (Body)" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_33" DisplayName="Inertial Pitch Rate (IRS)" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_34" DisplayName="Inertial Roll Rate (IRS)" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_35" DisplayName="Along Track Acceleration (IRS)" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_36" DisplayName="Cross Track Acceleration (IRS)" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_37" DisplayName="Inertial Vertical Acceleration" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_38" DisplayName="Inertial Vertical Velocity" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_39" DisplayName="N-S Velocity (IRS)" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_40" DisplayName="E-W Velocity (IRS)" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_41" DisplayName="Ground Speed (DME)" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_42" DisplayName="Radio Height" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_43" DisplayName="WOW" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_44" DisplayName="AOA" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data1_45" DisplayName="Wheel Speed" DataFormatType="Double" />
+  </NonProtocolMessage>
+  <NonProtocolMessage MsgName="Data4" DisplayName="Data4" TransmissionPeriod="50">
+    <NonProtocolParam ParamName="Data4_1" DisplayName="Propulsion" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data4_2" DisplayName="Reverse propulsion status" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data4_3" DisplayName="Fuel consuming rate" DataFormatType="Double" />
+  </NonProtocolMessage>
+</VaisIcd>

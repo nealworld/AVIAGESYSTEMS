@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<VaisProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.geaviation.com/vais/config">
+  <ProjectVersionInfo SchemaVersion="2" FileVersion="1" VaisToolName="ConfigEditor.exe" VaisToolVersion="3.0.0.0" />
+  <VaisFile IcdImportFile="VAIS_Config.icdimport" IcdUserFile="VAIS_Config.icduser" ParticipantConfigurationFile="VAIS_Config.participant" ComputingResourceConfigurationFile="VAIS_Config.resource" SystemConfigurationFile="VAIS_Config.system" />
+  <SettingsDialogWidth>0</SettingsDialogWidth>
+  <SettingsDialogHeight>0</SettingsDialogHeight>
+</VaisProject>
