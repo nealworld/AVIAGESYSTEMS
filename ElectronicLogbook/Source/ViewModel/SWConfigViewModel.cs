@@ -121,5 +121,19 @@ namespace ElectronicLogbook.ViewModel
             return (this.mSWConfigIndex + this.mSWLocationID + this.mSWPartList.ToString()).
                 Equals(aOther.mSWConfigIndex + aOther.mSWLocationID + aOther.mSWPartList.ToString());
         }
+
+        private bool _isSelected;
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                if (value != _isSelected)
+                {
+                    _isSelected = value;
+                    this.OnPropertyChanged("IsSelected");
+                }
+            }
+        }
     }
 }

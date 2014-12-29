@@ -39,12 +39,28 @@ namespace ElectronicLogbook.ViewModel
                 {
                     _isSelected = value;
                     this.OnPropertyChanged("IsSelected");
-                    if (value && this.mParent != null) {
-                        this.mParent.IsSelected = false;
-                    }
                 }
             }
         }
+
+        private bool _isExpanded;
+        public bool IsExpanded
+        {
+            get { return _isExpanded; }
+            set
+            {
+                if (value != _isExpanded)
+                {
+                    _isExpanded = value;
+                    this.OnPropertyChanged("IsExpanded");
+                }
+
+                // Expand all the way up to the root.
+                if (_isExpanded && _parent != null)
+                    _parent.IsExpanded = true;
+            }
+        }
+
         private TreeViewItemViewModel _parent;
         public TreeViewItemViewModel mParent
         {

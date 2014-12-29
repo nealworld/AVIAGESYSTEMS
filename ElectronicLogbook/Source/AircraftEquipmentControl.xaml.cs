@@ -101,6 +101,7 @@ namespace ElectronicLogbook
         {
             ELBViewModel.mSingleton.mConfigurationViewModel.mAirCraftEquipmentConfigViewModelList.Add(
                 new AirCraftEquipmentConfigViewModel(new AirCraftEquipmentConfig("New Equipment",new List<SubEquipment>()),true));
+            EquipmentRoot.IsExpanded = true;
         }
 
         private void CreateNewSubEquipment(object sender, RoutedEventArgs e)
@@ -121,6 +122,8 @@ namespace ElectronicLogbook
                 lSWConfigViewModel.mSWConfigIndex = "New SWConfig Index";
                 lSubEquipmentViewModel.mSWConfigList.Add(lSWConfigViewModel);
                 lSWConfigViewModel.IsInEditMode = true;
+                lSWConfigViewModel.IsSelected = true;
+                SWConfigRoot.IsExpanded = true;
             }
         }
 

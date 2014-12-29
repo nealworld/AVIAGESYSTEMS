@@ -50,6 +50,7 @@ namespace ElectronicLogbook.ViewModel
             Initialize(aAirCraftEquipmentConfig);
             base.IsInEditMode = aIsInEditMode;
             base.IsSelected = true;
+            this.IsExpanded = true;
         }
 
         [SecurityCritical]

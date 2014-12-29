@@ -128,8 +128,9 @@ namespace ElectronicLogbook.ViewModel
             : base(aParent)
         {
             Initialize(aSubEquipment, aParent);
-            base.IsInEditMode = aIsInEditMode;
-            base.IsSelected = true;
+            this.IsInEditMode = aIsInEditMode;
+            this.IsSelected = true;
+            this.IsExpanded = true;
         }
 
         [SecurityCritical]
