@@ -34,6 +34,20 @@ namespace ElectronicLogbook.ViewModel
             }
         }
 
+        private String _Remarks;
+        public String mRemarks 
+        {
+            get
+            {
+                return _Remarks;
+            }
+            set
+            {
+                _Remarks = value;
+                this.OnPropertyChanged("mRemarks");
+            }
+        }
+
         public override Boolean Compare(ViewModel aViewModel)
         {
             throw new NotImplementedException();
@@ -43,6 +57,13 @@ namespace ElectronicLogbook.ViewModel
         {
             mConfigurationViewModel = new ConfigurationViewModel();
             CollectConfigurationFromSystem();
+            SetRemarks();
+        }
+
+        private void SetRemarks()
+        {
+            mRemarks = ConfigurationProcessor.getRemarks();
+            mRemarks += "\n" + System.DateTime.Now + "\n";
         }
 
         public void GetCurrentConfigration_Click(object sender, RoutedEventArgs e)
@@ -94,6 +115,21 @@ namespace ElectronicLogbook.ViewModel
             }
         }
 
+        public void remarkSave_Click(object sender, RoutedEventArgs e)
+        {
+            ConfigurationProcessor.SaveRemarks(mRemarks);
+            String messageBoxText = "Save Ok!";
+            String caption = "ELB";
+            MessageBoxButton button = MessageBoxButton.OKCancel;
+            MessageBoxImage icon = MessageBoxImage.Information;
+            MessageBox.Show(messageBoxText, caption, button, icon);
+        }
+
+        public void remarkCancel_Click(object sender, RoutedEventArgs e)
+        {
+            SetRemarks();
+        }
+
         public void CompareConfiguration_Click(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog lDlg = new Microsoft.Win32.OpenFileDialog();
@@ -133,15 +169,15 @@ namespace ElectronicLogbook.ViewModel
             mConfigurationViewModel.mIsEditable = false;
             mConfigurationViewModel.mIsReadOnly = true;
 
-            ConfigurationProcessor lConfigurationProcessor = ConfigurationProcessor.mSingleton;
+          //  ConfigurationProcessor lConfigurationProcessor = ConfigurationProcessor.mSingleton;
             foreach (AirCraftEquipmentConfig lAirCraftEquipmentConfig in
-                lConfigurationProcessor.GetAirCraftEquipmentConfigList() /*GetList()*/)
+               /* lConfigurationProcessor.GetAirCraftEquipmentConfigList()*/ GetList())
             {
                 mConfigurationViewModel.mAirCraftEquipmentConfigViewModelList.Add
                     (new AirCraftEquipmentConfigViewModel(lAirCraftEquipmentConfig));
             }
 
-            foreach (VAISParticipant lElement in lConfigurationProcessor.GetVAISParticipantList()) 
+           /* foreach (VAISParticipant lElement in lConfigurationProcessor.GetVAISParticipantList()) 
             {
                 mConfigurationViewModel.mVAISParticipantListViewModel.Add(new VAISParticipantViewModel(lElement));
             }
@@ -159,7 +195,7 @@ namespace ElectronicLogbook.ViewModel
             foreach (ThirdPartySoftware lElement in ConverStrToThirdPartySoftware(l3rdPartySW)) 
             {
                 mConfigurationViewModel.mThirdPartySoftwareListViewModel.Add(new ThirdPartySoftwareViewModel(lElement));
-            }
+            }*/
         }
 
         private void CollectConfigurationFromFile(String aFileName) 
@@ -575,5 +611,6 @@ namespace ElectronicLogbook.ViewModel
             }
             return lDeviceDriverList;
         }
+
     }
 }

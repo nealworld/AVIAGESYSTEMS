@@ -8,16 +8,17 @@
     <DockPanel>
         <Menu Background="White" Height="23"  FontSize="14" DockPanel.Dock="Top">
             <MenuItem Header="Configuration">
+                <MenuItem Header="Show Configuration..." Name="ShowConfiguration" Click="ShowConfiguration_click"/>
                 <MenuItem Header="New Configuration..." Name="NewConfiguration"/>
                 <MenuItem Header="Open Configuration..." Name="OpenConfiguration"/>
                 <MenuItem Header="Get Current Configuration" Name="GetCurrentConfigration"/>
                 <MenuItem Header="Save" Name="SaveConfiguration"/>
             </MenuItem>
             <MenuItem Header="Compare" Name="CompareConfiguration"/>
-            <MenuItem Header="Remark" >
+            <MenuItem Header="Remark" Name="Remark" Click="openRemark_Click">
             </MenuItem>
         </Menu>
-        <TabControl  SelectedIndex="0" TabStripPlacement="Left" >
+        <TabControl  Name="ConfigurationTab" Visibility="Visible" SelectedIndex="0" TabStripPlacement="Left" >
             <TabItem Height="30" Background="White" BorderBrush="Transparent">
                 <TabItem.Header>
                     <DockPanel>
@@ -51,5 +52,14 @@
                 <local:ThirdPartySoftwareControl/>
             </TabItem>
         </TabControl>
+        <DockPanel Width="Auto" DockPanel.Dock="Bottom" Name="RemarkPanel" Visibility="Collapsed">
+            <TextBox VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" 
+                     BorderBrush="Black" Name="remarkTextBox"  
+                     DockPanel.Dock="Top" Height="395" AcceptsTab="True" 
+                     AcceptsReturn="True" Margin="5,0,5,10"
+                     Text="{Binding mRemarks, Mode=TwoWay}"/>
+            <Button Name="remarkSave" Content="Save" Margin="70,0,100,50" Width="94"/>
+            <Button Name="remarkCancel" Content="Cancel" Width="94" Margin="170,0,50,50"/>
+        </DockPanel>
     </DockPanel>
 </Window>

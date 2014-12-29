@@ -15,6 +15,7 @@ namespace ElectronicLogbookDataLib.DataProcessor
     public class ConfigurationProcessor
     {
         private string mELBConfig = AppDomain.CurrentDomain.SetupInformation.ApplicationBase + "ElectronicLogbook_Config.txt";
+        private static string mRemarksFile = AppDomain.CurrentDomain.SetupInformation.ApplicationBase + "Remarks.txt";
         private List<A664ACRMessagePeriodicInput> mAllEquipmentMsgList = new List<A664ACRMessagePeriodicInput>();
         private ELBParticipant mELBParticipant;
         private List<string> m3rdPartySWCheckList = new List<string>();
@@ -68,10 +69,6 @@ namespace ElectronicLogbookDataLib.DataProcessor
                         else if (lContent.Equals("<EquipmentDefine>"))
                         {
                             lConfigType = 3;
-                        }
-                        else if (lContent.Equals("<BeyondComparePath>"))
-                        {
-                            lConfigType = 4;
                         }
                         else
                         {
@@ -189,6 +186,35 @@ namespace ElectronicLogbookDataLib.DataProcessor
             }
             System.Diagnostics.Debug.WriteLine(lResult[0].mParticipantName + lResult[0].mParticipantPartNumber);
             return lResult;
+        }
+
+        public static String getRemarks() 
+        {
+            String lremarks = String.Empty;
+            try
+            {
+                StreamReader lReader = new StreamReader(mRemarksFile);
+                lremarks = lReader.ReadToEnd();
+                lReader.Close();
+            }catch(Exception e){
+                MessageBox.Show(e.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            
+            return lremarks;
+        }
+
+        public static void SaveRemarks(String aRemarks) 
+        {
+            try
+            {
+                StreamWriter lWriter = new StreamWriter(mRemarksFile, false);
+                lWriter.Write(aRemarks);
+                lWriter.Close();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         public void GetDriverAnd3rdPartyConfig(out string aDriverConfig, out string a3rdPartySW)
