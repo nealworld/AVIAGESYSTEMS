@@ -35,7 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommonSimDotNet">
-      <HintPath>..\..\..\..\..\..\Vendor\VAIS\CommonSimDotNet.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\..\Sim\Product\I-SIVB-ReflectMemoryConverter - Copy\Source\I-SIVB-ReflectMemoryConverter\bin\Debug\CommonSimDotNet.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
