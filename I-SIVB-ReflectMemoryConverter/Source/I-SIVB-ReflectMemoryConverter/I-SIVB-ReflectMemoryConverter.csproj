@@ -34,8 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CommonSimDotNet">
-      <HintPath>..\..\..\..\..\..\..\Sim\Product\I-SIVB-ReflectMemoryConverter - Copy\Source\I-SIVB-ReflectMemoryConverter\bin\Debug\CommonSimDotNet.dll</HintPath>
+    <Reference Include="CommonSimDotNet, Version=558.167.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\CommonSimDotNet.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

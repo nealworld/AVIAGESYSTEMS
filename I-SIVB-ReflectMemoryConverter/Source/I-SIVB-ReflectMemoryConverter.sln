@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "I-SIVB-ReflectMemoryConverter", "I-SIVB-ReflectMemoryConverter\I-SIVB-ReflectMemoryConverter.csproj", "{C4BD09F8-4FC0-47C8-9F0A-2DB44017E536}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rfm2gDriverCsharp", "Library\Rfm2gDriver\Rfm2gDriverCsharp\Rfm2gDriverCsharp\Rfm2gDriverCsharp.csproj", "{2DD14F76-48F1-467F-B772-B06BDA72A112}"

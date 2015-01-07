@@ -14,15 +14,20 @@ namespace I_SIVB_ReflectMemoryConverter.src
     {
         static void Main( string[] args )
         {
+            System.Diagnostics.Debug.WriteLine("start to call Participant");
 #if Test
             ParticipantInformation lParticipantInfo = new ParticipantInformation();
             lParticipantInfo.Name = "Test_rfm_vais_ready in define Test Status";
             lParticipantInfo.Description = "a";
+            System.Diagnostics.Debug.WriteLine("start to call Participant");
 
             Participant msParticipant = new Participant( lParticipantInfo );
             msParticipant.ConnectToMesh();
-            Rfm2gDriverCsharp.Rfm2gDriverCsharp.CSharpRFM2gOpen(1);
-            Rfm2gDriverCsharp.Rfm2gDriverCsharp.CSharpRFM2gSetDMAByteSwap( true ) ;
+            System.Diagnostics.Debug.WriteLine("start to call CSharpRFM2gOpen");
+            System.Diagnostics.Debug.WriteLine(Rfm2gDriverCsharp.Rfm2gDriverCsharp.CSharpRFM2gOpen(1));
+            //Rfm2gDriverCsharp.Rfm2gDriverCsharp.CSharpRFM2gOpen(1);
+            System.Diagnostics.Debug.WriteLine(Rfm2gDriverCsharp.Rfm2gDriverCsharp.CSharpRFM2gSetDMAByteSwap(true));
+            //Rfm2gDriverCsharp.Rfm2gDriverCsharp.CSharpRFM2gSetDMAByteSwap( true ) ;
             
 #endif
             /// <args>

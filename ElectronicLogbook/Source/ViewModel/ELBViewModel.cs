@@ -169,15 +169,15 @@ namespace ElectronicLogbook.ViewModel
             mConfigurationViewModel.mIsEditable = false;
             mConfigurationViewModel.mIsReadOnly = true;
 
-          //  ConfigurationProcessor lConfigurationProcessor = ConfigurationProcessor.mSingleton;
+            ConfigurationProcessor lConfigurationProcessor = ConfigurationProcessor.mSingleton;
             foreach (AirCraftEquipmentConfig lAirCraftEquipmentConfig in
-               /* lConfigurationProcessor.GetAirCraftEquipmentConfigList()*/ GetList())
+                lConfigurationProcessor.GetAirCraftEquipmentConfigList()/* GetList()*/)
             {
                 mConfigurationViewModel.mAirCraftEquipmentConfigViewModelList.Add
                     (new AirCraftEquipmentConfigViewModel(lAirCraftEquipmentConfig));
             }
 
-           /* foreach (VAISParticipant lElement in lConfigurationProcessor.GetVAISParticipantList()) 
+            foreach (VAISParticipant lElement in lConfigurationProcessor.GetVAISParticipantList()) 
             {
                 mConfigurationViewModel.mVAISParticipantListViewModel.Add(new VAISParticipantViewModel(lElement));
             }
@@ -195,7 +195,7 @@ namespace ElectronicLogbook.ViewModel
             foreach (ThirdPartySoftware lElement in ConverStrToThirdPartySoftware(l3rdPartySW)) 
             {
                 mConfigurationViewModel.mThirdPartySoftwareListViewModel.Add(new ThirdPartySoftwareViewModel(lElement));
-            }*/
+            }
         }
 
         private void CollectConfigurationFromFile(String aFileName) 

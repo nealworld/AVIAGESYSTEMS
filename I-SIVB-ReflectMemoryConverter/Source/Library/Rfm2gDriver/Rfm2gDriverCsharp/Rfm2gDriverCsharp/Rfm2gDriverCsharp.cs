@@ -73,7 +73,7 @@ namespace Rfm2gDriverCsharp
 
     public class Rfm2gDriverCsharp
     {
-        const string gDllroot = @"D:\Sim\Product\I-SIVB-ReflectMemoryConverter\Source\Library\Release\ReflectMemoryCardDriverCpp.dll";
+        const string gDllroot = @"ReflectMemoryCardDriverCpp.dll";
         //const string gDllroot = @"ReflectMemoryCardDriverCpp.dll";
         public static RFM2G_STATUS_ENUM_EXPORT CSharpRFM2gReadSafe( UInt32 aOffset, ref byte[] aBuffer, UInt32 aByteLength )
         {
