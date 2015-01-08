@@ -58,12 +58,6 @@
     <ApplicationIcon>ELB_bar.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CommonSimDotNet">
-      <HintPath>..\CommonSimDotNet.dll</HintPath>
-    </Reference>
-    <Reference Include="CSharpWrapper_ASN1Decoder">
-      <HintPath>..\CSharpWrapper_ASN1Decoder.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Web.Extensions" />

@@ -83,7 +83,7 @@ namespace ElectronicLogbookDataLib.DataProcessor
                         lParticipantInfo.Name = String.Format("{0}{1}", aParticipantName,
                                                               lNextIdentifier);
                         lNextIdentifier++;
-
+                        lIsConnected = false;
                         if (lParticipant != null)
                         {
                             lParticipant.Dispose();
@@ -101,7 +101,6 @@ namespace ElectronicLogbookDataLib.DataProcessor
                 }
                 MessageBox.Show("Cannot connect to CSI mesh. Error message: " + e.Message,
                                 "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                Environment.Exit(0);
             }
             return lParticipant;
 

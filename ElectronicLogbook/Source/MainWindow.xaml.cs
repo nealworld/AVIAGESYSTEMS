@@ -23,14 +23,14 @@ namespace ElectronicLogbook
         {
             InitializeComponent();
             base.DataContext = ELBViewModel.mSingleton.mConfigurationViewModel;
-            RemarkPanel.DataContext = ELBViewModel.mSingleton;
+            //RemarkPanel.DataContext = ELBViewModel.mSingleton;
 
             GetCurrentConfigration.Click += new RoutedEventHandler(ELBViewModel.mSingleton.GetCurrentConfigration_Click);
             NewConfiguration.Click += new RoutedEventHandler(ELBViewModel.mSingleton.NewConfiguration_Click);
             OpenConfiguration.Click += new RoutedEventHandler(ELBViewModel.mSingleton.OpenConfiguration_Click);
             SaveConfiguration.Click += new RoutedEventHandler(ELBViewModel.mSingleton.SaveConfiguration_Click);
             CompareConfiguration.Click += new RoutedEventHandler(ELBViewModel.mSingleton.CompareConfiguration_Click);
-            remarkSave.Click += new RoutedEventHandler(ELBViewModel.mSingleton.remarkSave_Click);
+        /*    remarkSave.Click += new RoutedEventHandler(ELBViewModel.mSingleton.remarkSave_Click);
             remarkCancel.Click += new RoutedEventHandler(ELBViewModel.mSingleton.remarkCancel_Click);  
         }
 
@@ -43,7 +43,7 @@ namespace ElectronicLogbook
         private void ShowConfiguration_click(object sender, RoutedEventArgs e)
         {
             RemarkPanel.Visibility = Visibility.Collapsed;
-            ConfigurationTab.Visibility = Visibility.Visible;
+            ConfigurationTab.Visibility = Visibility.Visible;*/
         }
 
 

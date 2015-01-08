@@ -5,8 +5,6 @@ using System.Data;
 using System.Linq;
 using System.Windows;
 using System.Collections;
-using GEAviation.CommonSim;
-using CSharpWrapper_ASN1Decoder;
 
 namespace ElectronicLogbook
 {

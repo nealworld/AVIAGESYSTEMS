@@ -32,10 +32,12 @@
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CommonSimDotNet">
+    <Reference Include="CommonSimDotNet, Version=558.167.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\CommonSimDotNet.dll</HintPath>
     </Reference>
-    <Reference Include="CSharpWrapper_ASN1Decoder">
+    <Reference Include="CSharpWrapper_ASN1Decoder, Version=1.0.5260.37192, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\CSharpWrapper_ASN1Decoder.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />

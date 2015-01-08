@@ -84,11 +84,7 @@ namespace ElectronicLogbookDataLib.DataProcessor
                                 {
                                     A664ACRMessagePeriodicInput lACRMessage = new A664ACRMessagePeriodicInput(lSubStrings[0], lSubStrings[1]);
                                     Error lResult = lACRMessage.registerMessage(mELBParticipant.mUtilityParticipant);
-                                    if (lResult != Error.OK)
-                                    {
-                                        MessageBox.Show(lResult.mErrorInfo, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                                    }
-                                    else
+                                    if (lResult == Error.OK)
                                     {
                                         mAllEquipmentMsgList.Add(lACRMessage);
                                     }
@@ -169,6 +165,10 @@ namespace ElectronicLogbookDataLib.DataProcessor
         public List<VAISParticipant> GetVAISParticipantList()
         {
             List<VAISParticipant> lResult = new List<VAISParticipant>();
+            if (mELBParticipant.mUtilityParticipant == null) 
+            {
+                return lResult;
+            }
             foreach (GEAviation.CommonSim.Runtime lRuntime in mELBParticipant.mUtilityParticipant.Runtimes)
             {
                 string lLocation = lRuntime.Name;
@@ -221,8 +221,12 @@ namespace ElectronicLogbookDataLib.DataProcessor
         {
             List<bool> lMessageReceived = new List<bool>();
             List<GEAviation.CommonSim.Collection> lStationBusList = new List<GEAviation.CommonSim.Collection>();
-            aDriverConfig = "";
-            a3rdPartySW = "";
+            aDriverConfig = String.Empty;
+            a3rdPartySW = String.Empty;
+            if (mELBParticipant.mUtilityParticipant == null)
+            {
+                return;
+            }
             foreach (GEAviation.CommonSim.Runtime lRuntime in mELBParticipant.mUtilityParticipant.Runtimes)//all stations
             {
                 //the name should be same as the name used in "ElectronicLogbook_Slave"
@@ -420,25 +424,25 @@ namespace ElectronicLogbookDataLib.DataProcessor
             {
                 case "HW_Part":
                     HWPart lHWPart = new HWPart();
-                    lHWPart.mHWPartIndex = "HW_Part_" + aAirCraftEquipmentConfig.mSubEquipmentList[lCount].mHWPartList.Count;
+                    lHWPart.mHWPartIndex = "HW_Part_" + aAirCraftEquipmentConfig.mSubEquipmentList[lCount - 1].mHWPartList.Count;
                     aAirCraftEquipmentConfig.mSubEquipmentList[lCount - 1].mHWPartList.Add(lHWPart);
                     break;
                 case "SW_Config":
                     SWConfig lSWConfig = new SWConfig();
-                    lSWConfig.mSWConfigIndex = "SW_Config_" + aAirCraftEquipmentConfig.mSubEquipmentList[lCount].mSWConfigList.Count;
+                    lSWConfig.mSWConfigIndex = "SW_Config_" + aAirCraftEquipmentConfig.mSubEquipmentList[lCount - 1].mSWConfigList.Count;
                     aAirCraftEquipmentConfig.mSubEquipmentList[lCount - 1].mSWConfigList.Add(lSWConfig);
                     break;
                 case "SW_Part":
                     SWPart lSWPart = new SWPart();
-                    int lSWConfigCount = aAirCraftEquipmentConfig.mSubEquipmentList[lCount].mSWConfigList.Count;
-                    lSWPart.mSWPartIndex = "SW_Part_" + aAirCraftEquipmentConfig.mSubEquipmentList[lCount].mSWConfigList[lSWConfigCount].mSWPartList.Count;
+                    int lSWConfigCount = aAirCraftEquipmentConfig.mSubEquipmentList[lCount - 1].mSWConfigList.Count;
+                    lSWPart.mSWPartIndex = "SW_Part_" + aAirCraftEquipmentConfig.mSubEquipmentList[lCount - 1].mSWConfigList[lSWConfigCount].mSWPartList.Count;
                     aAirCraftEquipmentConfig.mSubEquipmentList[lCount - 1].mSWConfigList[lSWConfigCount - 1].mSWPartList.Add(lSWPart);
                     break;
                 case "Config_Info":
                     ConfigInfo lConfigInfo = new ConfigInfo();
-                    int lConfigInfoCount = aAirCraftEquipmentConfig.mSubEquipmentList[lCount].mConfigInfoList.Count;
+                    int lConfigInfoCount = aAirCraftEquipmentConfig.mSubEquipmentList[lCount - 1].mConfigInfoList.Count;
                     lConfigInfo.mItemIndex = "Config_Info_" + lConfigInfoCount;
-                    aAirCraftEquipmentConfig.mSubEquipmentList[lCount].mConfigInfoList.Add(lConfigInfo);
+                    aAirCraftEquipmentConfig.mSubEquipmentList[lCount - 1].mConfigInfoList.Add(lConfigInfo);
                     break;
             }
         }
