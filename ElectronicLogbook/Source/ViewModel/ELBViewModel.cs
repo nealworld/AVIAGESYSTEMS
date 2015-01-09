@@ -56,7 +56,7 @@ namespace ElectronicLogbook.ViewModel
         private ELBViewModel() 
         {
             mConfigurationViewModel = new ConfigurationViewModel();
-            CollectConfigurationFromSystem();
+            //CollectConfigurationFromSystem();
             SetRemarks();
         }
 

@@ -155,6 +155,7 @@ namespace ElectronicLogbookDataLib.DataProcessor
 
                 lTryTimes++;
 
+
                 if (lMessageBusCount != 0 && lTryTimes < 3)
                     Thread.Sleep(500);//sleep a while for others to send the messages out.
             }
@@ -378,71 +379,82 @@ namespace ElectronicLogbookDataLib.DataProcessor
 
         private void addPlainNodes(ref AirCraftEquipmentConfig aAirCraftEquipmentConfig, string aPlainNodeName, string aStrValue)
         {
-            int lCount = aAirCraftEquipmentConfig.mSubEquipmentList.Count;
-            int lHWPartListCount = aAirCraftEquipmentConfig.mSubEquipmentList[lCount - 1].mHWPartList.Count;
-            int lSWConfigListCount = aAirCraftEquipmentConfig.mSubEquipmentList[lCount-1].mSWConfigList.Count;
-            int lSWPartListCount = aAirCraftEquipmentConfig.mSubEquipmentList[lCount - 1].mSWConfigList[lSWConfigListCount - 1].mSWPartList.Count;
-            int lConfigInfoListCount = aAirCraftEquipmentConfig.mSubEquipmentList[lCount - 1].mConfigInfoList.Count;
+            int lSubEquipmentCount = aAirCraftEquipmentConfig.mSubEquipmentList.Count;
+            int lHWPartListCount;
+            int lSWConfigListCount;
+            int lSWPartListCount;
+            int lConfigInfoListCount;
             switch (aPlainNodeName)
             {
                 case "HW_Part_Number":
-                    aAirCraftEquipmentConfig.mSubEquipmentList[lCount - 1].mHWPartList[lHWPartListCount - 1].mHWPartNumber = aStrValue;
+                    lHWPartListCount = aAirCraftEquipmentConfig.mSubEquipmentList[lSubEquipmentCount - 1].mHWPartList.Count;
+                    aAirCraftEquipmentConfig.mSubEquipmentList[lSubEquipmentCount - 1].mHWPartList[lHWPartListCount - 1].mHWPartNumber = aStrValue;
                     break;
                 case "HW_Part_Description":
-                    aAirCraftEquipmentConfig.mSubEquipmentList[lCount - 1].mHWPartList[lHWPartListCount - 1].mHWPartDescription = aStrValue;
+                    lHWPartListCount = aAirCraftEquipmentConfig.mSubEquipmentList[lSubEquipmentCount - 1].mHWPartList.Count;
+                    aAirCraftEquipmentConfig.mSubEquipmentList[lSubEquipmentCount - 1].mHWPartList[lHWPartListCount - 1].mHWPartDescription = aStrValue;
                     break;
                 case "HW_Part_Status":
-                    aAirCraftEquipmentConfig.mSubEquipmentList[lCount - 1].mHWPartList[lHWPartListCount - 1].mHWPartStatus = aStrValue;
+                    lHWPartListCount = aAirCraftEquipmentConfig.mSubEquipmentList[lSubEquipmentCount - 1].mHWPartList.Count;
+                    aAirCraftEquipmentConfig.mSubEquipmentList[lSubEquipmentCount - 1].mHWPartList[lHWPartListCount - 1].mHWPartStatus = aStrValue;
                     break;
                 case "HW_Part_Serial_Number":
-                    aAirCraftEquipmentConfig.mSubEquipmentList[lCount - 1].mHWPartList[lHWPartListCount - 1].mHWPartSerialNumber = aStrValue;
+                    lHWPartListCount = aAirCraftEquipmentConfig.mSubEquipmentList[lSubEquipmentCount - 1].mHWPartList.Count;
+                    aAirCraftEquipmentConfig.mSubEquipmentList[lSubEquipmentCount - 1].mHWPartList[lHWPartListCount - 1].mHWPartSerialNumber = aStrValue;
                     break;
                 case "SW_Location_ID":
-                    aAirCraftEquipmentConfig.mSubEquipmentList[lCount - 1].mSWConfigList[lSWConfigListCount - 1].mSWLocationID = aStrValue;
+                    lSWConfigListCount = aAirCraftEquipmentConfig.mSubEquipmentList[lSubEquipmentCount - 1].mSWConfigList.Count;
+                    aAirCraftEquipmentConfig.mSubEquipmentList[lSubEquipmentCount - 1].mSWConfigList[lSWConfigListCount - 1].mSWLocationID = aStrValue;
                     break;
                 case "SW_Location_Description":
-                    aAirCraftEquipmentConfig.mSubEquipmentList[lCount - 1].mSWConfigList[lSWConfigListCount - 1].mSWLocationDescription = aStrValue;
+                    lSWConfigListCount = aAirCraftEquipmentConfig.mSubEquipmentList[lSubEquipmentCount - 1].mSWConfigList.Count;
+                    aAirCraftEquipmentConfig.mSubEquipmentList[lSubEquipmentCount - 1].mSWConfigList[lSWConfigListCount - 1].mSWLocationDescription = aStrValue;
                     break;
                 case "LSAP_Part_Number":
-                    aAirCraftEquipmentConfig.mSubEquipmentList[lCount - 1].mSWConfigList[lSWConfigListCount - 1].
-                        mSWPartList[lSWConfigListCount-1].mLSAPPartNumber = aStrValue;
+                    lSWConfigListCount = aAirCraftEquipmentConfig.mSubEquipmentList[lSubEquipmentCount - 1].mSWConfigList.Count;
+                    lSWPartListCount = aAirCraftEquipmentConfig.mSubEquipmentList[lSubEquipmentCount - 1].mSWConfigList[lSWConfigListCount - 1].mSWPartList.Count;
+                    aAirCraftEquipmentConfig.mSubEquipmentList[lSubEquipmentCount - 1].mSWConfigList[lSWConfigListCount - 1].
+                        mSWPartList[lSWPartListCount - 1].mLSAPPartNumber = aStrValue;
                     break;
                 case "LSAP_Description":
-                    aAirCraftEquipmentConfig.mSubEquipmentList[lCount - 1].mSWConfigList[lSWConfigListCount - 1].
-                        mSWPartList[lSWConfigListCount - 1].mLSAPDescription = aStrValue;
+                    lSWConfigListCount = aAirCraftEquipmentConfig.mSubEquipmentList[lSubEquipmentCount - 1].mSWConfigList.Count;
+                    lSWPartListCount = aAirCraftEquipmentConfig.mSubEquipmentList[lSubEquipmentCount - 1].mSWConfigList[lSWConfigListCount - 1].mSWPartList.Count;
+                    aAirCraftEquipmentConfig.mSubEquipmentList[lSubEquipmentCount - 1].mSWConfigList[lSWConfigListCount - 1].
+                        mSWPartList[lSWPartListCount - 1].mLSAPDescription = aStrValue;
                     break;
                 case "Config_Info":
-                    aAirCraftEquipmentConfig.mSubEquipmentList[lCount - 1].mConfigInfoList[lConfigInfoListCount - 1].mItemInfo = aStrValue;
+                    lConfigInfoListCount = aAirCraftEquipmentConfig.mSubEquipmentList[lSubEquipmentCount - 1].mConfigInfoList.Count;
+                    aAirCraftEquipmentConfig.mSubEquipmentList[lSubEquipmentCount - 1].mConfigInfoList[lConfigInfoListCount - 1].mItemInfo = aStrValue;
                     break;
             }
         }
 
         private void addNestedNodes(ref AirCraftEquipmentConfig aAirCraftEquipmentConfig, String aTagName)
         {
-            int lCount = aAirCraftEquipmentConfig.mSubEquipmentList.Count;
+            int lSubEquipmentCount = aAirCraftEquipmentConfig.mSubEquipmentList.Count;
             switch (aTagName)
             {
                 case "HW_Part":
                     HWPart lHWPart = new HWPart();
-                    lHWPart.mHWPartIndex = "HW_Part_" + aAirCraftEquipmentConfig.mSubEquipmentList[lCount - 1].mHWPartList.Count;
-                    aAirCraftEquipmentConfig.mSubEquipmentList[lCount - 1].mHWPartList.Add(lHWPart);
+                    aAirCraftEquipmentConfig.mSubEquipmentList[lSubEquipmentCount - 1].mHWPartList.Add(lHWPart);
+                    lHWPart.mHWPartIndex = "HW_Part_" + aAirCraftEquipmentConfig.mSubEquipmentList[lSubEquipmentCount - 1].mHWPartList.Count;
                     break;
                 case "SW_Config":
                     SWConfig lSWConfig = new SWConfig();
-                    lSWConfig.mSWConfigIndex = "SW_Config_" + aAirCraftEquipmentConfig.mSubEquipmentList[lCount - 1].mSWConfigList.Count;
-                    aAirCraftEquipmentConfig.mSubEquipmentList[lCount - 1].mSWConfigList.Add(lSWConfig);
+                    aAirCraftEquipmentConfig.mSubEquipmentList[lSubEquipmentCount - 1].mSWConfigList.Add(lSWConfig);
+                    lSWConfig.mSWConfigIndex = "SW_Config_" + aAirCraftEquipmentConfig.mSubEquipmentList[lSubEquipmentCount - 1].mSWConfigList.Count;
                     break;
                 case "SW_Part":
                     SWPart lSWPart = new SWPart();
-                    int lSWConfigCount = aAirCraftEquipmentConfig.mSubEquipmentList[lCount - 1].mSWConfigList.Count;
-                    lSWPart.mSWPartIndex = "SW_Part_" + aAirCraftEquipmentConfig.mSubEquipmentList[lCount - 1].mSWConfigList[lSWConfigCount].mSWPartList.Count;
-                    aAirCraftEquipmentConfig.mSubEquipmentList[lCount - 1].mSWConfigList[lSWConfigCount - 1].mSWPartList.Add(lSWPart);
+                    int lSWConfigCount = aAirCraftEquipmentConfig.mSubEquipmentList[lSubEquipmentCount - 1].mSWConfigList.Count;
+                    aAirCraftEquipmentConfig.mSubEquipmentList[lSubEquipmentCount - 1].mSWConfigList[lSWConfigCount - 1].mSWPartList.Add(lSWPart);
+                    lSWPart.mSWPartIndex = "SW_Part_" + aAirCraftEquipmentConfig.mSubEquipmentList[lSubEquipmentCount - 1].mSWConfigList[lSWConfigCount - 1].mSWPartList.Count;
                     break;
                 case "Config_Info":
                     ConfigInfo lConfigInfo = new ConfigInfo();
-                    int lConfigInfoCount = aAirCraftEquipmentConfig.mSubEquipmentList[lCount - 1].mConfigInfoList.Count;
+                    int lConfigInfoCount = aAirCraftEquipmentConfig.mSubEquipmentList[lSubEquipmentCount - 1].mConfigInfoList.Count;
+                    aAirCraftEquipmentConfig.mSubEquipmentList[lSubEquipmentCount - 1].mConfigInfoList.Add(lConfigInfo);
                     lConfigInfo.mItemIndex = "Config_Info_" + lConfigInfoCount;
-                    aAirCraftEquipmentConfig.mSubEquipmentList[lCount - 1].mConfigInfoList.Add(lConfigInfo);
                     break;
             }
         }
