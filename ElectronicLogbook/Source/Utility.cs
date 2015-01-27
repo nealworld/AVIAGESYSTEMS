@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace ElectronicLogbook
@@ -54,15 +55,15 @@ namespace ElectronicLogbook
         public static readonly String New = "(New)";
 
 
-        internal static bool SerializeToXML(ViewModel.ConfigurationViewModel mConfigurationViewModel, string lFileName)
+        internal static bool SerializeToXML(ViewModel.ConfigurationViewModel aConfigurationViewModel, string aFileName)
         {
             try
             {
                 var serializer = new XmlSerializer(typeof(ViewModel.ConfigurationViewModel));
 
-                using (var writer = new StreamWriter(lFileName))
+                using (var writer = new StreamWriter(aFileName))
                 {
-                    serializer.Serialize(writer, mConfigurationViewModel);
+                    serializer.Serialize(writer, aConfigurationViewModel);
                 }
             }
             catch (Exception ex)
@@ -74,9 +75,28 @@ namespace ElectronicLogbook
             return true;
         }
 
-        internal static bool DeSerializeFromXML(ref ViewModel.ConfigurationViewModel lConfigurationViewModel, string aFileName)
+        internal static bool DeSerializeFromXML(ref ViewModel.ConfigurationViewModel aConfigurationViewModel, string aFileName)
         {
-            throw new NotImplementedException();
+            try
+            {
+                XmlSerializer serializer = new
+                XmlSerializer(typeof(ViewModel.ConfigurationViewModel));
+
+                // A FileStream is needed to read the XML document.
+                FileStream lfilestream = new FileStream(aFileName, FileMode.Open);
+                XmlReader lxmlReader = XmlReader.Create(lfilestream);
+
+                // Use the Deserialize method to restore the object's state.
+                aConfigurationViewModel = (ViewModel.ConfigurationViewModel)serializer.Deserialize(lxmlReader);
+                lfilestream.Close();
+            }
+            catch (Exception ex) 
+            {
+                System.Diagnostics.Debug.WriteLine(ex.ToString());
+                return false;
+            }
+
+            return true;
         }
     }
 }
