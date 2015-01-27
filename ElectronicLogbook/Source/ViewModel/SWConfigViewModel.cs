@@ -3,13 +3,32 @@ using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using ElectronicLogbookDataLib.AirCraftEquipment;
 using System.Security;
+using System.Xml.Serialization;
 
 namespace ElectronicLogbook.ViewModel
 {
     [Serializable()]
     public class SWConfigViewModel : ViewModel, ISerializable, IEquatable<SWConfigViewModel>
     {
+        private bool _isSelected;
+
+        [XmlIgnore()]
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                if (value != _isSelected)
+                {
+                    _isSelected = value;
+                    this.OnPropertyChanged("IsSelected");
+                }
+            }
+        }
+
         private String _SWConfigIndex;
+
+        [XmlAttribute("SWConfigIndex")]
         public String mSWConfigIndex 
         {
             set 
@@ -24,6 +43,8 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private String _SWLocationID;
+
+        [XmlAttribute("SWLocationID")]
         public String mSWLocationID 
         {
             set
@@ -38,6 +59,8 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private String _SWLocationDescription;
+
+        [XmlAttribute("SWLocationDescription")]
         public String mSWLocationDescription 
         {
             set 
@@ -52,6 +75,9 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private ObservableCollection<SWPartViewModel> _SWPartList;
+
+        [XmlArrayItem("SWPart", typeof(SWPartViewModel))]
+        [XmlArray("SWPartList")]
         public ObservableCollection<SWPartViewModel> mSWPartList 
         {
             set 
@@ -69,6 +95,8 @@ namespace ElectronicLogbook.ViewModel
         {
             throw new NotImplementedException();
         }
+
+        public SWConfigViewModel() { }
 
         public SWConfigViewModel(SWConfig aSWConfig) 
         {
@@ -122,18 +150,6 @@ namespace ElectronicLogbook.ViewModel
                 Equals(aOther.mSWConfigIndex + aOther.mSWLocationID + aOther.mSWPartList.ToString());
         }
 
-        private bool _isSelected;
-        public bool IsSelected
-        {
-            get { return _isSelected; }
-            set
-            {
-                if (value != _isSelected)
-                {
-                    _isSelected = value;
-                    this.OnPropertyChanged("IsSelected");
-                }
-            }
-        }
+        
     }
 }

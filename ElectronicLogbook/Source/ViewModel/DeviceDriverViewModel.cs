@@ -2,13 +2,16 @@
 using System.Runtime.Serialization;
 using ElectronicLogbookDataLib;
 using System.Security;
+using System.Xml.Serialization;
 
 namespace ElectronicLogbook.ViewModel
 {
     [System.Serializable()]
     public class DeviceDriverViewModel : ViewModel, ISerializable, IEquatable<DeviceDriverViewModel>
     {
-        private String _DeviceName; 
+        private String _DeviceName;
+
+        [XmlAttribute("DeviceName")]
         public String mDeviceName 
         {
             set 
@@ -20,6 +23,8 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private String _DriverName;
+
+        [XmlAttribute("DriverName")]
         public String mDriverName 
         {
             set 
@@ -31,6 +36,8 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private String _DriverVersionNumber;
+
+        [XmlAttribute("DriverVersionNumber")]
         public String mDriverVersionNumber 
         {
             set 
@@ -42,6 +49,8 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private String _DriverLocation;
+
+        [XmlAttribute("DriverLocation")]
         public String mDriverLocation 
         {
             set 

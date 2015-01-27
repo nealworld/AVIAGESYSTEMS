@@ -2,6 +2,7 @@
 using System.Runtime.Serialization;
 using ElectronicLogbookDataLib;
 using System.Security;
+using System.Xml.Serialization;
 
 namespace ElectronicLogbook.ViewModel
 {
@@ -9,6 +10,8 @@ namespace ElectronicLogbook.ViewModel
     public class ThirdPartySoftwareViewModel : ViewModel, ISerializable, IEquatable<ThirdPartySoftwareViewModel>
     {
         private String _SoftwareName;
+
+        [XmlAttribute("SoftwareName")]
         public String mSoftwareName {
             set 
             {
@@ -19,6 +22,8 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private String _SoftwareVersionNumber;
+
+        [XmlAttribute("SoftwareVersionNumber")]
         public String mSoftwareVersionNumber 
         {
             set 
@@ -30,6 +35,8 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private String _SoftwareLocation;
+
+        [XmlAttribute("SoftwareLocation")]
         public String mSoftwareLocation 
         {
             set 

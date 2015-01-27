@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Xml.Serialization;
 
 namespace ElectronicLogbook
 {
@@ -51,5 +52,31 @@ namespace ElectronicLogbook
         public static readonly String Deleted = "(Deleted)";
         public static readonly String Modified = "(Modified)";
         public static readonly String New = "(New)";
+
+
+        internal static bool SerializeToXML(ViewModel.ConfigurationViewModel mConfigurationViewModel, string lFileName)
+        {
+            try
+            {
+                var serializer = new XmlSerializer(typeof(ViewModel.ConfigurationViewModel));
+
+                using (var writer = new StreamWriter(lFileName))
+                {
+                    serializer.Serialize(writer, mConfigurationViewModel);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.ToString());
+                return false;
+            }
+
+            return true;
+        }
+
+        internal static bool DeSerializeFromXML(ref ViewModel.ConfigurationViewModel lConfigurationViewModel, string aFileName)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -9,6 +9,7 @@ using ElectronicLogbookDataLib.DataProcessor;
 using System.Collections.ObjectModel;
 using System.Security;
 using System.Windows;
+using System.Xml.Serialization;
 
 namespace ElectronicLogbook.ViewModel
 {
@@ -18,6 +19,8 @@ namespace ElectronicLogbook.ViewModel
 
     {
         private String _ConfigName;
+
+        [XmlAttribute("ConfigName")]
         public String mConfigName{
             set
             {
@@ -38,6 +41,10 @@ namespace ElectronicLogbook.ViewModel
                 mChildren.Add(new SubEquipmentViewModel(lSubEquipment, this));
             }
         }
+
+        public AirCraftEquipmentConfigViewModel() { }
+
+
         public AirCraftEquipmentConfigViewModel(AirCraftEquipmentConfig aAirCraftEquipmentConfig)
             :base(null)
         {

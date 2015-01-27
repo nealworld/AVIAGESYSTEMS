@@ -2,6 +2,7 @@
 using System.Runtime.Serialization;
 using ElectronicLogbookDataLib.AirCraftEquipment;
 using System.Security;
+using System.Xml.Serialization;
 
 namespace ElectronicLogbook.ViewModel
 {
@@ -9,6 +10,8 @@ namespace ElectronicLogbook.ViewModel
     public class SWPartViewModel : ViewModel, ISerializable
     {
         private String _SWPartIndex;
+
+        [XmlAttribute("SWPartIndex")]
         public String mSWPartIndex {
             get 
             {
@@ -22,6 +25,8 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private String _LSAPPartNumber;
+
+        [XmlAttribute("LSAPPartNumber")]
         public String mLSAPPartNumber 
         {
             get 
@@ -36,6 +41,8 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private String _LSAPDescription;
+
+        [XmlAttribute("LSAPDescription")]
         public String mLSAPDescription 
         {
             get 

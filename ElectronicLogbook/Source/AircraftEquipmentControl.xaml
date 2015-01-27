@@ -8,7 +8,7 @@
     <Grid Name="TopGrid">
         <Grid.Resources>
             <Style x:Key="GridSplitterStyle">
-                <Setter Property="GridSplitter.Background" Value="Transparent"/>
+                <!--Setter Property="GridSplitter.Background" Value="Transparent"/-->
                 <Style.Triggers>
                     <Trigger Property="GridSplitter.IsMouseOver" Value="True">
                         <Setter Property="GridSplitter.Background" Value="#FF294E38"/>
@@ -24,7 +24,7 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <TreeView BorderBrush="Transparent" Grid.Column="0" Name="AircraftEquipmentConfigTreeView" Padding="-5,0,20,0">
+        <TreeView Grid.Column="0" Name="AircraftEquipmentConfigTreeView" Padding="-5,0,20,0">
             <TreeViewItem Name="EquipmentRoot" Header="Equipment List" BorderBrush="Transparent" 
                           ItemsSource="{Binding Path=mAirCraftEquipmentConfigViewModelList, Mode=TwoWay}"
                           KeyDown="AircraftEquipmentConfigTreeView_KeyDown">
@@ -83,14 +83,14 @@
                 </TreeViewItem.Resources>
             </TreeViewItem>
         </TreeView>
-        <GridSplitter Width="2.5" Grid.Column="0" Style="{StaticResource GridSplitterStyle}"/>
+        <GridSplitter Width="2.5" Grid.Column="0" Style="{StaticResource GridSplitterStyle}" />
         <Grid Grid.Column="1" Background="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Expander Header="HW Part" MinHeight="50" Name="TestExpander" IsExpanded="True">
+            <Expander Header="HW Part" MinHeight="100" Name="TestExpander" IsExpanded="True">
                 <DataGrid ItemsSource="{Binding ElementName=AircraftEquipmentConfigTreeView, Path=SelectedItem.mHWPartList, Mode=TwoWay}" CanUserReorderColumns="True"
                             CanUserResizeColumns="True" CanUserResizeRows="True" CanUserSortColumns="True"
                             SelectionMode="Extended" SelectionUnit="FullRow" AutoGenerateColumns="False"
@@ -106,9 +106,9 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </Expander>
-           <!-- <GridSplitter Height="2" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Style="{StaticResource GridSplitterStyle}"/>
--->
-            <Expander Header="SW_Config" Grid.Row="1"  MinHeight="100" IsExpanded="True">
+            <GridSplitter Height="2" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Style="{StaticResource GridSplitterStyle}"/>
+
+            <Expander Header="SW_Config" Grid.Row="1"  MinHeight="200" IsExpanded="True">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
@@ -197,9 +197,9 @@
                     
             </Expander>
 
-            <!--<GridSplitter Height="2" Grid.Row="1" HorizontalAlignment="Stretch" 
-                          VerticalAlignment="Bottom" Style="{StaticResource GridSplitterStyle}"/>-->
-            <Expander Header="Config info" Grid.Row="2"  MinHeight="50" IsExpanded="True">
+            <GridSplitter Height="2" Grid.Row="1" HorizontalAlignment="Stretch" 
+                          VerticalAlignment="Bottom" Style="{StaticResource GridSplitterStyle}"/>
+            <Expander Header="Config info" Grid.Row="2"  MinHeight="100" IsExpanded="True">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition/>

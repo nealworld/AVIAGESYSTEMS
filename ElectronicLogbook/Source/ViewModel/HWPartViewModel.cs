@@ -3,6 +3,7 @@ using System.Runtime.Serialization;
 using ElectronicLogbookDataLib.AirCraftEquipment;
 using System.Security;
 using System.Windows;
+using System.Xml.Serialization;
 
 namespace ElectronicLogbook.ViewModel
 {
@@ -10,6 +11,8 @@ namespace ElectronicLogbook.ViewModel
     public class HWPartViewModel : ViewModel, ISerializable, IEquatable<HWPartViewModel> 
     {
         private String _HWPartIndex;
+
+        [XmlAttribute("HWPartIndex")]
         public String mHWPartIndex 
         { 
             set
@@ -24,6 +27,8 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private String _HWPartNumber;
+
+        [XmlAttribute("HWPartNumber")]
         public String mHWPartNumber 
         {
             set 
@@ -38,6 +43,8 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private String _HWPartDescription;
+
+        [XmlAttribute("HWPartDescription")]
         public String mHWPartDescription 
         {
             set 
@@ -52,6 +59,8 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private String _HWPartStatus;
+
+        [XmlAttribute("HWPartStatus")]
         public String mHWPartStatus 
         {
             set 
@@ -66,6 +75,8 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private String _HWPartSerialNumber;
+
+        [XmlAttribute("HWPartSerialNumber")]
         public String mHWPartSerialNumber 
         {
             set 

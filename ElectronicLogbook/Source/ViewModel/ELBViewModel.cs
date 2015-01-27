@@ -83,12 +83,17 @@ namespace ElectronicLogbook.ViewModel
             Microsoft.Win32.OpenFileDialog lDlg = new Microsoft.Win32.OpenFileDialog();
             lDlg.FileName = "Configuration"; 
             lDlg.DefaultExt = ".cnf";
-            lDlg.Filter = "Configuration files (.cnf)|*.cnf";
+            lDlg.Filter = "Configuration files(*.cnf)|*.cnf|XML Files(*.xml)|*.xml";
             Nullable<bool> lResult = lDlg.ShowDialog();
             if (lResult == true)
             {
                 String lFileName = lDlg.FileName;
-                CollectConfigurationFromFile(lFileName);
+                if (lFileName.Contains(".xml")) {
+                    CollectConfigurationFromXMLFile(lFileName);
+                }
+                else if (lFileName.Contains(".cnf")) {
+                    CollectConfigurationFromFile(lFileName);
+                }
                 mConfigurationViewModel.mIsEditable = true;
                 mConfigurationViewModel.mIsReadOnly = false;
             }
@@ -99,18 +104,31 @@ namespace ElectronicLogbook.ViewModel
             Microsoft.Win32.SaveFileDialog lDlg = new Microsoft.Win32.SaveFileDialog();
             lDlg.FileName = "Configuration";
             lDlg.DefaultExt = ".cnf";
-            lDlg.Filter = "Configuration files (.cnf)|*.cnf";
-            Nullable<bool> result = lDlg.ShowDialog();
-            if (result == true)
+            lDlg.Filter = "Configuration files(*.cnf)|*.cnf|XML Files(*.xml)|*.xml";
+            Nullable<bool> lResult = lDlg.ShowDialog();
+            if (lResult == true)
             {
                 String lFileName = lDlg.FileName;
-                if(!Utility.Serialize(mConfigurationViewModel,lFileName))
+                if (lFileName.Contains(".cnf"))
                 {
-                    String messageBoxText = "Save failed!";
-                    String caption = "ELB";
-                    MessageBoxButton button = MessageBoxButton.OKCancel;
-                    MessageBoxImage icon = MessageBoxImage.Warning;
-                    MessageBox.Show(messageBoxText, caption, button, icon);
+                    if (!Utility.Serialize(mConfigurationViewModel, lFileName))
+                    {
+                        String messageBoxText = "Save failed!";
+                        String caption = "ELB";
+                        MessageBoxButton button = MessageBoxButton.OKCancel;
+                        MessageBoxImage icon = MessageBoxImage.Warning;
+                        MessageBox.Show(messageBoxText, caption, button, icon);
+                    }
+                }
+                else if (lFileName.Contains(".xml")) {
+                    if (!Utility.SerializeToXML(mConfigurationViewModel, lFileName))
+                    {
+                        String messageBoxText = "Save failed!";
+                        String caption = "ELB";
+                        MessageBoxButton button = MessageBoxButton.OKCancel;
+                        MessageBoxImage icon = MessageBoxImage.Warning;
+                        MessageBox.Show(messageBoxText, caption, button, icon);
+                    }
                 }
             }
         }
@@ -199,6 +217,26 @@ namespace ElectronicLogbook.ViewModel
             }
         }
 
+        private void CollectConfigurationFromXMLFile(string aFileName)
+        {
+            ConfigurationViewModel lConfigurationViewModel = new ConfigurationViewModel();
+            if (Utility.DeSerializeFromXML(ref lConfigurationViewModel, aFileName))
+            {
+                mConfigurationViewModel.mAirCraftEquipmentConfigViewModelList = lConfigurationViewModel.mAirCraftEquipmentConfigViewModelList;
+                mConfigurationViewModel.mDeviceDriverListViewModel = lConfigurationViewModel.mDeviceDriverListViewModel;
+                mConfigurationViewModel.mThirdPartySoftwareListViewModel = lConfigurationViewModel.mThirdPartySoftwareListViewModel;
+                mConfigurationViewModel.mVAISParticipantListViewModel = lConfigurationViewModel.mVAISParticipantListViewModel;
+            }
+            else
+            {
+                String messageBoxText = "Open failed!";
+                String caption = "ELB";
+                MessageBoxButton button = MessageBoxButton.OKCancel;
+                MessageBoxImage icon = MessageBoxImage.Warning;
+                MessageBox.Show(messageBoxText, caption, button, icon);
+            }
+        }
+
         private void CollectConfigurationFromFile(String aFileName) 
         {
             ConfigurationViewModel lConfigurationViewModel = new ConfigurationViewModel();
@@ -217,7 +255,6 @@ namespace ElectronicLogbook.ViewModel
                 MessageBoxImage icon = MessageBoxImage.Warning;
                 MessageBox.Show(messageBoxText, caption, button, icon);
             }
-
         }
 
         private List<AirCraftEquipmentConfig> GetList()

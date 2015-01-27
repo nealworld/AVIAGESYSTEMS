@@ -4,13 +4,17 @@ using ElectronicLogbookDataLib;
 using System.Security;
 using System;
 using System.Windows;
+using System.Xml.Serialization;
 
 namespace ElectronicLogbook.ViewModel
 {
     [System.Serializable()]
+    [XmlRoot("SystemConfiguration")]
     public class ConfigurationViewModel : ViewModel, ISerializable
     {
         private bool _IsEditable;
+
+        [XmlIgnore()]
         public bool mIsEditable
         {
             set
@@ -25,6 +29,8 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private bool _isReadOnly;
+
+        [XmlIgnore()]
         public bool mIsReadOnly
         {
             set
@@ -39,6 +45,9 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private ObservableCollection<AirCraftEquipmentConfigViewModel> _AirCraftEquipmentConfigList;
+
+        [XmlArrayItem("AirCraftEquipmentConfig", typeof(AirCraftEquipmentConfigViewModel))]
+        [XmlArray("AirCraftEquipmentConfigList")]
         public ObservableCollection<AirCraftEquipmentConfigViewModel> mAirCraftEquipmentConfigViewModelList
         {
             set
@@ -53,6 +62,9 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private ObservableCollection<VAISParticipantViewModel> _VAISParticipantList;
+
+        [XmlArrayItem("VAISParticipant", typeof(VAISParticipantViewModel))]
+        [XmlArray("VAISParticipantList")]
         public ObservableCollection<VAISParticipantViewModel> mVAISParticipantListViewModel
         {
             set
@@ -67,6 +79,9 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private ObservableCollection<DeviceDriverViewModel> _DeviceDriverList;
+
+        [XmlArrayItem("DeviceDriver", typeof(DeviceDriverViewModel))]
+        [XmlArray("DeviceDriverList")]
         public ObservableCollection<DeviceDriverViewModel> mDeviceDriverListViewModel
         {
             set
@@ -81,6 +96,9 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private ObservableCollection<ThirdPartySoftwareViewModel> _ThirdPartySoftwareList;
+
+        [XmlArrayItem("ThirdPartySoftware", typeof(ThirdPartySoftwareViewModel))]
+        [XmlArray("ThirdPartySoftwareList")]
         public ObservableCollection<ThirdPartySoftwareViewModel> mThirdPartySoftwareListViewModel
         {
             set
@@ -95,6 +113,8 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private Visibility _VAISParticipantCompareResultColumnVisibility;
+
+        [XmlIgnore()]
         public Visibility mVAISParticipantCompareResultColumnVisibility
         {
             set
@@ -109,6 +129,8 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private Visibility _DeviceDriverCompareResultColumnVisibility;
+
+        [XmlIgnore()]
         public Visibility mDeviceDriverCompareResultColumnVisibility
         {
             set
@@ -123,6 +145,8 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private Visibility _ThirdPartySoftwareCompareResultColumnVisibility;
+
+        [XmlIgnore()]
         public Visibility mThirdPartySoftwareCompareResultColumnVisibility
         {
             set

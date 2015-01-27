@@ -3,6 +3,7 @@ using System.Runtime.Serialization;
 using ElectronicLogbookDataLib;
 using System.Security;
 using System.Windows;
+using System.Xml.Serialization;
 
 namespace ElectronicLogbook.ViewModel
 {
@@ -10,6 +11,8 @@ namespace ElectronicLogbook.ViewModel
     public class VAISParticipantViewModel : ViewModel, ISerializable, IEquatable<VAISParticipantViewModel>
     {
         private String _ParticipantName;
+
+        [XmlAttribute("ParticipantName")]
         public String mParticipantName 
         {
             set 
@@ -21,6 +24,8 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private String _ParticipantPartNumber;
+
+        [XmlAttribute("ParticipantPartNumber")]
         public String mParticipantPartNumber 
         {
             set 
@@ -32,6 +37,8 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private String _ParticipantVersionNumber;
+
+        [XmlAttribute("ParticipantVersionNumber")]
         public String mParticipantVersionNumber
         { 
             set 
@@ -43,6 +50,8 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private String _ParticipantDescription;
+
+        [XmlAttribute("ParticipantDescription")]
         public String mParticipantDescription 
         {
             set 
@@ -54,6 +63,8 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private String _ParticipantLocation;
+
+        [XmlAttribute("ParticipantLocation")]
         public String mParticipantLocation 
         {
             set 

@@ -83,11 +83,17 @@
       <DependentUpon>AircraftEquipmentControl.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ConfigurationPanel.xaml.cs">
+      <DependentUpon>ConfigurationPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DeviceDriverControl.xaml.cs">
       <DependentUpon>DeviceDriverControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="EditableTextBlock.xaml.cs">
       <DependentUpon>EditableTextBlock.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RemarkPanel.xaml.cs">
+      <DependentUpon>RemarkPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="ThirdPartySoftwareControl.xaml.cs">
       <DependentUpon>ThirdPartySoftwareControl.xaml</DependentUpon>
@@ -119,6 +125,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ConfigurationPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DeviceDriverControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -135,6 +145,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="RemarkPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ThirdPartySoftwareControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -4,6 +4,7 @@ using System.Runtime.Serialization;
 using ElectronicLogbookDataLib.AirCraftEquipment;
 using System.Security;
 using System.Windows;
+using System.Xml.Serialization;
 
 namespace ElectronicLogbook.ViewModel
 {
@@ -12,6 +13,8 @@ namespace ElectronicLogbook.ViewModel
         IEquatable<SubEquipmentViewModel>
     {
         private Visibility _HWPartCompareResultColumnVisibility;
+
+        [XmlIgnore()]
         public Visibility mHWPartCompareResultColumnVisibility
         {
             set
@@ -26,6 +29,8 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private Visibility _ConfigInfoCompareResultColumnVisibility;
+
+        [XmlIgnore()]
         public Visibility mConfigInfoCompareResultColumnVisibility
         {
             set
@@ -40,6 +45,8 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private String _EquipmentID;
+
+        [XmlAttribute("EquipmentID")]
         public String mEquipmentID 
         {
             set 
@@ -54,6 +61,9 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private ObservableCollection<HWPartViewModel> _HWPartList;
+
+        [XmlArrayItem("HWPart", typeof(HWPartViewModel))]
+        [XmlArray("HWPartList")]
         public ObservableCollection<HWPartViewModel> mHWPartList 
         {
             set 
@@ -68,6 +78,9 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private ObservableCollection<SWConfigViewModel> _SWConfigList;
+
+        [XmlArrayItem("SWConfig", typeof(SWConfigViewModel))]
+        [XmlArray("SWConfigList")]
         public ObservableCollection<SWConfigViewModel> mSWConfigList 
         {
             set 
@@ -82,6 +95,9 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private ObservableCollection<ConfigInfoViewModel> _ConfigInfoList;
+
+        [XmlArrayItem("ConfigInfo", typeof(ConfigInfoViewModel))]
+        [XmlArray("ConfigInfoList")]
         public ObservableCollection<ConfigInfoViewModel> mConfigInfoList 
         {
             set
@@ -119,6 +135,9 @@ namespace ElectronicLogbook.ViewModel
                 mConfigInfoList.Add(new ConfigInfoViewModel(lConfigInfo));
             }
         }
+
+        public SubEquipmentViewModel() { }
+
         public SubEquipmentViewModel(SubEquipment aSubEquipment, TreeViewItemViewModel aParent)
         : base(aParent)
         {

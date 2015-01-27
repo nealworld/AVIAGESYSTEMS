@@ -2,23 +2,31 @@
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using System.Security;
+using System.Xml.Serialization;
 namespace ElectronicLogbook.ViewModel
 {
     [Serializable()]
+    [XmlInclude(typeof(AirCraftEquipmentConfigViewModel))]
+    [XmlInclude(typeof(SubEquipmentViewModel))]
     public class TreeViewItemViewModel : ViewModel
     {
         public TreeViewItemViewModel(TreeViewItemViewModel parent)
         {
             _parent = parent;
             _children = new ObservableCollection<TreeViewItemViewModel>();
+            IsExpanded = true;
         }
 
         public TreeViewItemViewModel()
         {
+            IsExpanded = true;
         }
 
 
         private ObservableCollection<TreeViewItemViewModel> _children;
+
+        [XmlArrayItem("Child", typeof(TreeViewItemViewModel))]
+        [XmlArray("Children")]
         public ObservableCollection<TreeViewItemViewModel> mChildren
         {
             get { return _children; }
@@ -30,6 +38,8 @@ namespace ElectronicLogbook.ViewModel
 
 
         private bool _isSelected;
+
+        [XmlIgnore()]
         public bool IsSelected
         {
             get { return _isSelected; }
@@ -44,6 +54,8 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private bool _isExpanded;
+
+        [XmlIgnore()]
         public bool IsExpanded
         {
             get { return _isExpanded; }
@@ -62,6 +74,8 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private TreeViewItemViewModel _parent;
+
+       [XmlIgnore()]
         public TreeViewItemViewModel mParent
         {
             get { return _parent; }

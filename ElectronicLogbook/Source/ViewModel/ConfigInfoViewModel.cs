@@ -3,6 +3,7 @@ using System.Runtime.Serialization;
 using ElectronicLogbookDataLib.AirCraftEquipment;
 using System.Security;
 using System.Windows;
+using System.Xml.Serialization;
 
 namespace ElectronicLogbook.ViewModel
 {
@@ -10,6 +11,8 @@ namespace ElectronicLogbook.ViewModel
     public class ConfigInfoViewModel : ViewModel, ISerializable, IEquatable<ConfigInfoViewModel>
     {
         private String _ItemIndex;
+
+        [XmlAttribute("ItemIndex")]
         public String mItemIndex 
         {
             set 
@@ -24,6 +27,8 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private String _ItemInfo;
+
+        [XmlAttribute("ItemInfo")]
         public String mItemInfo 
         {
             set 
@@ -41,6 +46,7 @@ namespace ElectronicLogbook.ViewModel
             mItemIndex = String.Empty;
             mItemInfo = String.Empty;
         }
+
         public ConfigInfoViewModel(ConfigInfo aConfigInfo)
         {
             mItemIndex = aConfigInfo.mItemIndex;

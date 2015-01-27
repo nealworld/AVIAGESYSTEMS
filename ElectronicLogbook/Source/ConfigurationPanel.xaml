@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="ElectronicLogbook.ConfigurationPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:ElectronicLogbook"
+             >
+    <DockPanel>
+        <TabControl  Name="ConfigurationTab" Visibility="Visible" SelectedIndex="0" TabStripPlacement="Left" >
+            <TabItem Height="30" Background="White" BorderBrush="Transparent">
+                <TabItem.Header>
+                    <DockPanel>
+                        <TextBlock Text="Aircraft equipment" FontFamily="Arial" TextAlignment="Center" Width="150" Height="22" />
+                    </DockPanel>
+                </TabItem.Header>
+                <local:AircraftEquipmentControl/>
+            </TabItem>
+            <TabItem Height="30" Background="White" BorderBrush="Transparent">
+                <TabItem.Header>
+                    <DockPanel>
+                        <TextBlock Text="VAIS participant" FontFamily="Arial" Width="150" Height="22" TextAlignment="Center" />
+                    </DockPanel>
+                </TabItem.Header>
+                <local:VAISParticipantControl/>
+            </TabItem>
+            <TabItem Height="30" Background="White" BorderBrush="Transparent">
+                <TabItem.Header>
+                    <DockPanel>
+                        <TextBlock Text="Device drivers" FontFamily="Arial" Width="150" Height="22" TextAlignment="Center" />
+                    </DockPanel>
+                </TabItem.Header>
+                <local:DeviceDriverControl/>
+            </TabItem>
+            <TabItem Height="30" Background="White" BorderBrush="Transparent">
+                <TabItem.Header>
+                    <DockPanel>
+                        <TextBlock Text="Third party softeware" FontFamily="Arial" Width="150" Height="22" TextAlignment="Center" />
+                    </DockPanel>
+                </TabItem.Header>
+                <local:ThirdPartySoftwareControl/>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</UserControl>

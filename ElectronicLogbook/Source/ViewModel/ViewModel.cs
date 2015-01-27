@@ -3,13 +3,27 @@ using System.ComponentModel;
 using System.Runtime.Serialization;
 using System.Security;
 using System.Windows;
+using System.Xml.Serialization;
 
 namespace ElectronicLogbook.ViewModel
 {
     [System.Serializable()]
+    [XmlInclude(typeof(AirCraftEquipmentConfigViewModel))]
+    [XmlInclude(typeof(ConfigInfoViewModel))]
+    [XmlInclude(typeof(ConfigurationViewModel))]
+    [XmlInclude(typeof(DeviceDriverViewModel))]
+    [XmlInclude(typeof(ELBViewModel))]
+    [XmlInclude(typeof(HWPartViewModel))]
+    [XmlInclude(typeof(SWConfigViewModel))]
+    [XmlInclude(typeof(SWPartViewModel))]
+    [XmlInclude(typeof(ThirdPartySoftwareViewModel))]
+    [XmlInclude(typeof(TreeViewItemViewModel))]
+    [XmlInclude(typeof(VAISParticipantViewModel ))]
     public abstract class ViewModel : INotifyPropertyChanged
     {
         private bool _isInEditMode;
+
+        [XmlIgnore()]
         public bool IsInEditMode
         {
             get { return _isInEditMode; }
@@ -24,6 +38,8 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private String _CompareResult;
+
+        [XmlAttribute("CompareResult")]
         public String mCompareResult 
         { 
             set
