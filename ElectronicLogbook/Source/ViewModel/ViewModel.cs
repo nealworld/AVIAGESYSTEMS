@@ -39,7 +39,7 @@ namespace ElectronicLogbook.ViewModel
 
         private String _CompareResult;
 
-        [XmlAttribute("CompareResult")]
+        [XmlIgnore()]
         public String mCompareResult 
         { 
             set

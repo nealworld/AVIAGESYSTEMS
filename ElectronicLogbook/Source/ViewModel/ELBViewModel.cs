@@ -226,6 +226,12 @@ namespace ElectronicLogbook.ViewModel
                 mConfigurationViewModel.mDeviceDriverListViewModel = lConfigurationViewModel.mDeviceDriverListViewModel;
                 mConfigurationViewModel.mThirdPartySoftwareListViewModel = lConfigurationViewModel.mThirdPartySoftwareListViewModel;
                 mConfigurationViewModel.mVAISParticipantListViewModel = lConfigurationViewModel.mVAISParticipantListViewModel;
+
+                foreach (AirCraftEquipmentConfigViewModel lelement in mConfigurationViewModel.mAirCraftEquipmentConfigViewModelList) {
+                    foreach (SubEquipmentViewModel lsubelement in lelement.mChildren) {
+                        lsubelement.mParent = lelement;
+                    }
+                }
             }
             else
             {

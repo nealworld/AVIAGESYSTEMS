@@ -136,7 +136,10 @@ namespace ElectronicLogbook.ViewModel
             }
         }
 
-        public SubEquipmentViewModel() { }
+        public SubEquipmentViewModel() {
+            mHWPartCompareResultColumnVisibility = Visibility.Hidden;
+            mConfigInfoCompareResultColumnVisibility = Visibility.Hidden;
+        }
 
         public SubEquipmentViewModel(SubEquipment aSubEquipment, TreeViewItemViewModel aParent)
         : base(aParent)
