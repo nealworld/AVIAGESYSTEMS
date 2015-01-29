@@ -222,7 +222,7 @@ namespace ElectronicLogbook.ViewModel
 
                 if (!aTargetList.Contains(lSourceElement))
                 {
-                    (lSourceElement as ViewModel).mCompareResult = Utility.Deleted;
+                    (lSourceElement as ViewModel).mCompareResult = Utility.Missing;
                     this.mCompareResult = Utility.Modified;
                     this.mParent.mCompareResult = Utility.Modified;
                     lIsChanged = true;

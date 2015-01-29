@@ -248,7 +248,7 @@ namespace ElectronicLogbook.ViewModel
                 }
                 else
                 {
-                    (lSourceElement as ViewModel).mCompareResult = Utility.Deleted;
+                    (lSourceElement as ViewModel).mCompareResult = Utility.Missing;
                     lIsChanged = true;
                 }
             }

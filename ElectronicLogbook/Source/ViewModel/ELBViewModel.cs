@@ -48,6 +48,32 @@ namespace ElectronicLogbook.ViewModel
             }
         }
 
+        private String _CurrentFile;
+        public String mCurrentFile {
+            get
+            {
+                return _CurrentFile;
+            }
+            set
+            {
+                _CurrentFile = value;
+                this.OnPropertyChanged("mCurrentFile");
+            }
+        }
+
+        private String _ComparingFile;
+        public String mComparingFile {
+            get
+            {
+                return _ComparingFile;
+            }
+            set
+            {
+                _ComparingFile = value;
+                this.OnPropertyChanged("mComparingFile");
+            }
+        }
+
         public override Boolean Compare(ViewModel aViewModel)
         {
             throw new NotImplementedException();
@@ -55,6 +81,8 @@ namespace ElectronicLogbook.ViewModel
 
         private ELBViewModel() 
         {
+            mCurrentFile = String.Empty;
+            mComparingFile = String.Empty;
             mConfigurationViewModel = new ConfigurationViewModel();
             //CollectConfigurationFromSystem();
             SetRemarks();
@@ -69,6 +97,8 @@ namespace ElectronicLogbook.ViewModel
         public void GetCurrentConfigration_Click(object sender, RoutedEventArgs e)
         {
             CollectConfigurationFromSystem();
+            mCurrentFile = String.Empty;
+            mComparingFile = String.Empty;
         }
 
         public void NewConfiguration_Click(object sender, RoutedEventArgs e)
@@ -76,6 +106,8 @@ namespace ElectronicLogbook.ViewModel
             mConfigurationViewModel.initialize();
             mConfigurationViewModel.mIsReadOnly = false;
             mConfigurationViewModel.mIsEditable = true;
+            mCurrentFile = String.Empty;
+            mComparingFile = String.Empty;
         }
 
         public void OpenConfiguration_Click(object sender, RoutedEventArgs e)
@@ -96,6 +128,7 @@ namespace ElectronicLogbook.ViewModel
                 }
                 mConfigurationViewModel.mIsEditable = true;
                 mConfigurationViewModel.mIsReadOnly = false;
+                mCurrentFile = lFileName;
             }
         }
 
@@ -153,26 +186,52 @@ namespace ElectronicLogbook.ViewModel
             Microsoft.Win32.OpenFileDialog lDlg = new Microsoft.Win32.OpenFileDialog();
             lDlg.FileName = "Configuration";
             lDlg.DefaultExt = ".cnf";
-            lDlg.Filter = "Configuration files (.cnf)|*.cnf";
+            lDlg.Filter = "Configuration files(*.cnf)|*.cnf|XML Files(*.xml)|*.xml";
             Nullable<bool> lResult = lDlg.ShowDialog();
             if (lResult == true)
             {
                 String lFileName = lDlg.FileName;
                 ConfigurationViewModel lConfigurationViewModel = new ConfigurationViewModel();
-                if (Utility.DeSerialize(ref lConfigurationViewModel, lFileName))
+
+                if (lFileName.Contains(".cnf"))
                 {
-                    performCompare(mConfigurationViewModel, lConfigurationViewModel);
-                    mConfigurationViewModel.mIsEditable = false;
-                    mConfigurationViewModel.mIsReadOnly = true;
+                    if (!Utility.DeSerialize(ref lConfigurationViewModel, lFileName))
+                    {
+                        String messageBoxText = "Open failed!";
+                        String caption = "ELB";
+                        MessageBoxButton button = MessageBoxButton.OKCancel;
+                        MessageBoxImage icon = MessageBoxImage.Warning;
+                        MessageBox.Show(messageBoxText, caption, button, icon);
+
+                        return;
+                    }
                 }
-                else 
-                {
-                    String messageBoxText = "Open failed!";
-                    String caption = "ELB";
-                    MessageBoxButton button = MessageBoxButton.OKCancel;
-                    MessageBoxImage icon = MessageBoxImage.Warning;
-                    MessageBox.Show(messageBoxText, caption, button, icon);
+                else if(lFileName.Contains(".xml")) {
+                    if (!Utility.DeSerializeFromXML(ref lConfigurationViewModel, lFileName))
+                    {
+                        String messageBoxText = "Open failed!";
+                        String caption = "ELB";
+                        MessageBoxButton button = MessageBoxButton.OKCancel;
+                        MessageBoxImage icon = MessageBoxImage.Warning;
+                        MessageBox.Show(messageBoxText, caption, button, icon);
+
+                        return;
+                    }
+
+                    foreach (AirCraftEquipmentConfigViewModel lelement in lConfigurationViewModel.mAirCraftEquipmentConfigViewModelList)
+                    {
+                        foreach (SubEquipmentViewModel lsubelement in lelement.mChildren)
+                        {
+                            lsubelement.mParent = lelement;
+                        }
+                    }
                 }
+
+                performCompare(mConfigurationViewModel, lConfigurationViewModel);
+                mConfigurationViewModel.mIsEditable = false;
+                mConfigurationViewModel.mIsReadOnly = true;
+                mComparingFile = lFileName;
+      
             }
         }
 

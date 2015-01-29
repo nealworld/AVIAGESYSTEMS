@@ -5,9 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:ElectronicLogbook"
              >
-    <DockPanel>
-        <TabControl  Name="ConfigurationTab" Visibility="Visible" SelectedIndex="0" TabStripPlacement="Left" >
-            <TabItem Height="30" Background="White" BorderBrush="Transparent">
+        <TabControl VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="Gray"  Name="ConfigurationTab" Visibility="Visible" SelectedIndex="0" TabStripPlacement="Left" DockPanel.Dock="top">
+            <TabItem Height="30" Background="White">
                 <TabItem.Header>
                     <DockPanel>
                         <TextBlock Text="Aircraft equipment" FontFamily="Arial" TextAlignment="Center" Width="150" Height="22" />
@@ -15,7 +14,7 @@
                 </TabItem.Header>
                 <local:AircraftEquipmentControl/>
             </TabItem>
-            <TabItem Height="30" Background="White" BorderBrush="Transparent">
+            <TabItem Height="30" Background="White" >
                 <TabItem.Header>
                     <DockPanel>
                         <TextBlock Text="VAIS participant" FontFamily="Arial" Width="150" Height="22" TextAlignment="Center" />
@@ -23,7 +22,7 @@
                 </TabItem.Header>
                 <local:VAISParticipantControl/>
             </TabItem>
-            <TabItem Height="30" Background="White" BorderBrush="Transparent">
+            <TabItem Height="30" Background="White">
                 <TabItem.Header>
                     <DockPanel>
                         <TextBlock Text="Device drivers" FontFamily="Arial" Width="150" Height="22" TextAlignment="Center" />
@@ -31,7 +30,7 @@
                 </TabItem.Header>
                 <local:DeviceDriverControl/>
             </TabItem>
-            <TabItem Height="30" Background="White" BorderBrush="Transparent">
+            <TabItem Height="30" Background="White">
                 <TabItem.Header>
                     <DockPanel>
                         <TextBlock Text="Third party softeware" FontFamily="Arial" Width="150" Height="22" TextAlignment="Center" />
@@ -40,5 +39,4 @@
                 <local:ThirdPartySoftwareControl/>
             </TabItem>
         </TabControl>
-    </DockPanel>
 </UserControl>

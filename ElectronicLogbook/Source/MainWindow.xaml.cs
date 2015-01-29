@@ -25,8 +25,7 @@ namespace ElectronicLogbook
         public MainWindow()
         {
             InitializeComponent();
-          //  base.DataContext = ELBViewModel.mSingleton.mConfigurationViewModel;
-
+            base.DataContext = ELBViewModel.mSingleton;
             GetCurrentConfigration.Click += new RoutedEventHandler(ELBViewModel.mSingleton.GetCurrentConfigration_Click);
             NewConfiguration.Click += new RoutedEventHandler(ELBViewModel.mSingleton.NewConfiguration_Click);
             OpenConfiguration.Click += new RoutedEventHandler(ELBViewModel.mSingleton.OpenConfiguration_Click);
@@ -36,6 +35,8 @@ namespace ElectronicLogbook
             mConfigurationPanel = new ConfigurationPanel();
             mRemarkPanel = new RemarkPanel();
 
+
+            this.ContentControl.Content = mConfigurationPanel;
         }
 
         private void openRemark_Click(object sender, RoutedEventArgs e)

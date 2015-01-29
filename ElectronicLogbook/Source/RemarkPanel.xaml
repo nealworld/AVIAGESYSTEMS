@@ -12,5 +12,6 @@
                      Text="{Binding mRemarks, Mode=TwoWay}"/>
         <Button Name="remarkSave" Content="Save" Margin="70,0,100,50" Width="94" />
         <Button Name="remarkCancel" Content="Cancel" Width="94" Margin="170,0,50,50"/>
+        <Calendar Height="170" Name="calendar1" Width="180" />
     </DockPanel>
 </UserControl>

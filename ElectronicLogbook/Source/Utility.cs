@@ -50,10 +50,9 @@ namespace ElectronicLogbook
             }
         }
 
-        public static readonly String Deleted = "(Deleted)";
         public static readonly String Modified = "(Modified)";
-        public static readonly String New = "(New)";
-
+        public static readonly String New = "(New in Current)";
+        public static readonly String Missing = "(Missing in Previous)";
 
         internal static bool SerializeToXML(ViewModel.ConfigurationViewModel aConfigurationViewModel, string aFileName)
         {

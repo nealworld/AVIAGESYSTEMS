@@ -108,7 +108,7 @@ namespace ElectronicLogbook.ViewModel
                 }
                 else
                 {
-                    lSourceSubEquipment.mCompareResult = Utility.Deleted;
+                    lSourceSubEquipment.mCompareResult = Utility.Missing;
                     this.mCompareResult = Utility.Modified;
                     lIsChanged = true;
                 }

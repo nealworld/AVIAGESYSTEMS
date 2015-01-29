@@ -7,7 +7,7 @@
         WindowStartupLocation="CenterScreen"
         Name="ELBWindow">
     <DockPanel>
-        <Menu DockPanel.Dock="Top" Background="White" Height="23"  FontSize="14" BorderBrush="Black">
+        <Menu  Height="26"  FontSize="15" DockPanel.Dock="Top">
             <MenuItem Header="Configuration">
                 <MenuItem Header="Show Configuration..." Name="ShowConfiguration" Click="ShowConfiguration_click"/>
                 <MenuItem Header="New Configuration..." Name="NewConfiguration"/>
@@ -19,6 +19,43 @@
             <MenuItem Header="Remark" Name="Remark" Click="openRemark_Click"> 
             </MenuItem>
         </Menu>
-        <ContentControl Name="ContentControl"  BorderBrush="Aqua"/>
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+            <StatusBarItem>
+                <TextBlock Foreground="red">Current:</TextBlock>
+            </StatusBarItem>
+            <StatusBarItem Grid.Column="1" HorizontalAlignment="Left">
+                <TextBlock Text="{Binding mCurrentFile}"  HorizontalAlignment="Left">
+                    <TextBlock.ToolTip>
+                        <TextBlock Text="{Binding mCurrentFile}" TextWrapping="Wrap"/>
+                    </TextBlock.ToolTip>
+                </TextBlock>
+            </StatusBarItem>
+            <StatusBarItem Grid.Column="2">
+                <TextBlock Foreground="red">Previous:</TextBlock>
+            </StatusBarItem>
+            <StatusBarItem Grid.Column="3" HorizontalAlignment="Left">
+                <TextBlock Text="{Binding mComparingFile}"  HorizontalAlignment="Left">
+                    <TextBlock.ToolTip>
+                        <TextBlock Text="{Binding mComparingFile}" TextWrapping="Wrap"/>
+                    </TextBlock.ToolTip>
+                </TextBlock>
+            </StatusBarItem>
+        </StatusBar>
+        <ContentControl Name="ContentControl"/>
     </DockPanel>
 </Window>
