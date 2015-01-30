@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:ElectronicLogbook"
+             FontSize="15"
              >
         <TabControl VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="Gray"  Name="ConfigurationTab" Visibility="Visible" SelectedIndex="0" TabStripPlacement="Left" DockPanel.Dock="top">
             <TabItem Height="30" Background="White">
