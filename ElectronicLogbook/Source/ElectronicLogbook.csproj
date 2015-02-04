@@ -86,11 +86,18 @@
     <Compile Include="ConfigurationPanel.xaml.cs">
       <DependentUpon>ConfigurationPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DateTreeView.xaml.cs">
+      <DependentUpon>DateTreeView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DeviceDriverControl.xaml.cs">
       <DependentUpon>DeviceDriverControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="EditableTextBlock.xaml.cs">
       <DependentUpon>EditableTextBlock.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PartialEditableTextBox.cs" />
+    <Compile Include="RemarkExpander.xaml.cs">
+      <DependentUpon>RemarkExpander.xaml</DependentUpon>
     </Compile>
     <Compile Include="RemarkPanel.xaml.cs">
       <DependentUpon>RemarkPanel.xaml</DependentUpon>
@@ -104,6 +111,8 @@
     </Compile>
     <Compile Include="ViewModel\ConfigInfoViewModel.cs" />
     <Compile Include="ViewModel\ConfigurationViewModel.cs" />
+    <Compile Include="ViewModel\DailyRemark.cs" />
+    <Compile Include="ViewModel\DateViewModel.cs" />
     <Compile Include="ViewModel\DeviceDriverViewModel.cs" />
     <Compile Include="ViewModel\ELBViewModel.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -129,6 +138,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="DateTreeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DeviceDriverControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -145,6 +158,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="RemarkExpander.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="RemarkPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
