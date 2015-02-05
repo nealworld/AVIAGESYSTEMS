@@ -159,6 +159,6 @@ namespace I_SIVB_ReflectMemoryConverter.src
     /// </summary>
     class LogGlobalManager
     {
-        public static LogManager LogMgr = new LogManager( "D:\\log.txt" );
+        public static LogManager LogMgr = new LogManager( "I-ReflectMemory_log.txt" );
     }
 }
