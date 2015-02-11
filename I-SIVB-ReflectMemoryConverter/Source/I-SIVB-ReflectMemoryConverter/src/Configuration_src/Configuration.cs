@@ -208,8 +208,8 @@ namespace I_SIVB_ReflectMemoryConverter.src.Configuration_src
     }
     enum DataSourceStatus
     {
-        Ready,
-        Shutdown,
-        Pause,//OTHER STATUS FOR EXAMPLE PAUSE / NOT CORRECT BUT UPDATING...
+        DataInWorking,
+        NoData
+
     }
 }

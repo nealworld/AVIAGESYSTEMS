@@ -74,38 +74,42 @@ namespace I_SIVB_ReflectMemoryConverter.src.Operation_src
             bool lReady = false;
             return ( lReady );
         }
-        private void SetData4Ready()
-        {
-            mRfmOpr.RfmSetData4Status( DataSourceStatus.Ready );
-            // DataSourceStatus.Ready;
-        }
-        private void SetData4Paused()
-        {
-            mRfmOpr.RfmSetData4Status( DataSourceStatus.Pause );
-            // DataSourceStatus.Pause;
-        }
-        private void SetData4Shutdown()
-        {
-            mRfmOpr.RfmSetData4Status( DataSourceStatus.Shutdown );
-            // DataSourceStatus.Shutdown;
-        }
+       
         private void Process()
         {
-            if ( mRfmOpr.RfmRead() == true )
+            DataSourceStatus lDataStatus = DataSourceStatus.NoData;
+            if (mRfmOpr.RfmGetData1Status(ref lDataStatus))
             {
-                byte[] lBytes = mRfmOpr.Data1ReadIn;
-                byte[] lBytesConverted = RfmVaisDataConvert.RfmToVaisbytes( lBytes, mDataSwap );
-                mVaisOpr.VaisSendData1( lBytesConverted );
+                if (lDataStatus == DataSourceStatus.DataInWorking)
+                {
+                    if (mRfmOpr.RfmRead() == true)
+                    {
+                        byte[] lBytes = mRfmOpr.Data1ReadIn;
+                        byte[] lBytesConverted = RfmVaisDataConvert.RfmToVaisbytes(lBytes, mDataSwap);
+                        mVaisOpr.VaisSendData1(lBytesConverted);
+                    }
+                    else
+                    {
+                        LogGlobalManager.LogMgr.PrintLine("Can not read data1 Through VMIC");
+                        LogGlobalManager.LogMgr.PrintLine("VAIS May not Send messages");
+                    }
+                }
+                else
+                {
+                    LogGlobalManager.LogMgr.PrintLine("No data");
+                }
             }
-            else
+            else 
             {
-                LogGlobalManager.LogMgr.PrintLine( "Can not read data1 Through VMIC" );
-                LogGlobalManager.LogMgr.PrintLine( "VAIS May not Send messages" );
+                LogGlobalManager.LogMgr.PrintLine("Fail to get data status");
             }
+
             if ( mVaisOpr.VaisReadData4() == true )
             {
                 byte[] lBytes = mVaisOpr.Data4ReadIn;
                 mRfmOpr.Data4ToWrite = RfmVaisDataConvert.VaisToRfmbytes( lBytes, mDataSwap );
+
+                mRfmOpr.RfmSetData4Status(DataSourceStatus.DataInWorking);
                 if ( mRfmOpr.RfmWrite() != true )
                 {
                     LogGlobalManager.LogMgr.PrintLine( "Can not write data to VMIC" );
@@ -130,18 +134,14 @@ namespace I_SIVB_ReflectMemoryConverter.src.Operation_src
             switch ( aStatus )
             {
                 case CommonSimTypes.Status.Running:
-                    if ( GetData1Ready() )
-                    {
-                        Process();
-                        SetData4Ready();
-                    };
+                    Process();
                     break;
                 case CommonSimTypes.Status.Paused:
-                    SetData4Paused();
+                    mRfmOpr.RfmSetData4Status(DataSourceStatus.NoData);
                     break;
                 case CommonSimTypes.Status.Shutdown:
                     lResult = false;
-                    SetData4Shutdown();
+                    mRfmOpr.RfmSetData4Status(DataSourceStatus.NoData);
                     DeleteProcess();
                     break;
 

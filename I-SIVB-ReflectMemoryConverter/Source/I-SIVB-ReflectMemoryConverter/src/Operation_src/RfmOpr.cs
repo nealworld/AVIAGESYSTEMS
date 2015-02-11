@@ -183,45 +183,27 @@ namespace I_SIVB_ReflectMemoryConverter.src.Operation_src
 
                 mSourceSelection = SourceSelection.FCSMiniRig;
             }
-            else
-            {
-                mSourceSelection = SourceSelection.IrionBird;
-                LogGlobalManager.LogMgr.PrintLine( "SourceSelection firstSelection defined a NON-MEANING name ,use the IronBird For default...." );
-            }
-            int lVaisToRfmData1Length = RfmVaisDataConvert.getRfmlength( mMessgaconfig.MessageConfigs[0] );
-            mData1Read = new byte[lVaisToRfmData1Length];
 
             mOffsetData1IronBirdStatus = Convert.ToUInt32( mRfmConfig.DataBlocks.data1IronBirdAddress.offset, 16 );
             mOffsetData1IronBird = mOffsetData1IronBirdStatus + 8;
-
+            uint lEndIrionBirdData1 = Convert.ToUInt32(mRfmConfig.DataBlocks.data1IronBirdAddress.end, 16);
 
             mOffsetData1FCSMiniRigStatus = Convert.ToUInt32( mRfmConfig.DataBlocks.data1FCSMiniRIGAddress.offset, 16 );
-            mOffsetData1FCSMiniRig = mOffsetData1FCSMiniRig + 8;
-
-            uint lEndIrionBirdData1 = Convert.ToUInt32( mRfmConfig.DataBlocks.data1IronBirdAddress.end, 16 );
+            mOffsetData1FCSMiniRig = mOffsetData1FCSMiniRigStatus + 8;
             uint lEndFCSData1 = Convert.ToUInt32( mRfmConfig.DataBlocks.data1FCSMiniRIGAddress.end, 16 );
-            if ( lEndIrionBirdData1 - mOffsetData1IronBird < lVaisToRfmData1Length )
-            {
-                lResult = false;
-                LogGlobalManager.LogMgr.PrintForQuit( "The IronBird Data1 memory length exceeded the maximum address assigned" );
-            }
-            if ( lEndFCSData1 - mOffsetData1FCSMiniRig < lVaisToRfmData1Length )
-            {
-                lResult = false;
-                LogGlobalManager.LogMgr.PrintForQuit( "The FCS-MiniRig Data1 memory length exceeded the maximum address assigned" );
-            }
 
+            if (mSourceSelection == SourceSelection.IrionBird)
+            {
+                mData1Read = new byte[lEndIrionBirdData1 - mOffsetData1IronBird + 1];
+            }
+            else {
+                mData1Read = new byte[lEndIrionBirdData1 - mOffsetData1IronBird + 1];
+            }
+            
             int lVaisToRfmData4Length = RfmVaisDataConvert.getRfmlength( mMessgaconfig.MessageConfigs[1] );
             mData4Write = new byte[lVaisToRfmData4Length];
             mOffsetData4Status = Convert.ToUInt32( mRfmConfig.DataBlocks.data4Address.offset, 16 );
             mOffsetData4 = mOffsetData4Status + 8;
-            uint lEndData4 = Convert.ToUInt32( mRfmConfig.DataBlocks.data4Address.end, 16 );
-            if ( lEndData4 - mOffsetData4 < lVaisToRfmData4Length )
-            {
-                lResult = false;
-                LogGlobalManager.LogMgr.PrintForQuit( "The Data4 memory length exceeded the maximum address assigned" );
-            }
-
 
             lResult = RfmOpen( mDeviceID );
             return ( lResult );
@@ -292,6 +274,7 @@ namespace I_SIVB_ReflectMemoryConverter.src.Operation_src
         {
             bool lResult = false;
             uint lDataOffSet = 0;
+
             SourceSelection lSource = mSourceSelection;
             switch ( lSource )
             {
@@ -325,13 +308,13 @@ namespace I_SIVB_ReflectMemoryConverter.src.Operation_src
             byte[] lStatusByte = new byte[8];
             switch ( aStatus )
             {
-                case DataSourceStatus.Shutdown:
+                case DataSourceStatus.NoData:
                     for ( int i = 0; i < lStatusByte.Length; i++ )
                     {
                         lStatusByte[i] = 0x00;
                     }
                     break;
-                case DataSourceStatus.Ready:
+                case DataSourceStatus.DataInWorking:
                     for ( int i = 0; i < lStatusByte.Length; i++ )
                     {
                         lStatusByte[i] = 0xff;
@@ -340,7 +323,7 @@ namespace I_SIVB_ReflectMemoryConverter.src.Operation_src
                 default:
                     for ( int i = 0; i < lStatusByte.Length; i++ )
                     {
-                        lStatusByte[i] = 0x0f;
+                        lStatusByte[i] = 0x00;
                     }
                     break;
             }
@@ -349,31 +332,25 @@ namespace I_SIVB_ReflectMemoryConverter.src.Operation_src
         }
         private DataSourceStatus GetStatus( byte[] abyte, int aLength )
         {
-            DataSourceStatus lRerurnStatus = DataSourceStatus.Shutdown;
-            DataSourceStatus lStatus = DataSourceStatus.Shutdown;
+            DataSourceStatus lRerurnStatus = DataSourceStatus.NoData;
             byte[] lVal = abyte;
 
-            int lIndex = 0;
-            for ( ; lIndex < aLength; lIndex++ )
+            Byte lDataInWorking = 0xFF;
+            Byte lNoData = 0x00;
+
+            for (int lIndex = 0 ; lIndex < aLength; lIndex++ )
             {
-                if ( lVal[lIndex] == 0x00 )
-                {
-                    lStatus = DataSourceStatus.Shutdown;
-                }
-                else if ( lVal[lIndex] == 0xFF )
-                {
-                    lStatus = DataSourceStatus.Ready;
-                }
-                else
-                {
-                    lStatus = DataSourceStatus.Pause;
-                    break;
-                }
+                lDataInWorking &= lVal[lIndex];
+                lNoData |= lVal[lIndex];
             }
-            if ( lIndex == aLength - 1 )
-            {
-                lRerurnStatus = lStatus;
+
+            if (lDataInWorking == 0xFF) {
+                lRerurnStatus = DataSourceStatus.DataInWorking;
             }
+            else if (lNoData == 0x00) {
+                lRerurnStatus = DataSourceStatus.NoData;
+            }
+
             return ( lRerurnStatus );
         }
         /// <summary>
@@ -439,7 +416,7 @@ namespace I_SIVB_ReflectMemoryConverter.src.Operation_src
             Rfm2gDriverCsharp.RFM2G_STATUS_ENUM_EXPORT lCardStatus = Rfm2gDriverCsharp.RFM2G_STATUS_ENUM_EXPORT.STATUS_SUCCESS;
             byte[] lBytes = new byte[8];
             lBytes = SetStatus( aStatus );
-            lCardStatus = Rfm2gDriverCsharp.Rfm2gDriverCsharp.CSharpRFM2gWrite( mOffsetData4Status, lBytes, 1 );
+            lCardStatus = Rfm2gDriverCsharp.Rfm2gDriverCsharp.CSharpRFM2gWrite( mOffsetData4Status, lBytes, 8 );
             if ( lCardStatus == Rfm2gDriverCsharp.RFM2G_STATUS_ENUM_EXPORT.STATUS_SUCCESS )
             {
                 lResult = true;

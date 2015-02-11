@@ -332,9 +332,9 @@ namespace I_SIVB_ReflectMemoryConverter.src.Operation_src
         {
             int lIndex = 0;
             bool lResult = false;
-            while ( ( lResult = mData1Bus.Receive() ) )
+            while ( ( lResult = mData4Bus.Receive() ) )
             {
-                foreach ( Parameter lParam in mData1Bus.Parameters )
+                foreach ( Parameter lParam in mData4Bus.Parameters )
                 {
                     lIndex = GetVal( lParam, lIndex );
                 }

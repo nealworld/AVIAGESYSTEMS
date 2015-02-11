@@ -49,8 +49,8 @@
     <NonProtocolParam ParamName="Data1_45" DisplayName="Wheel Speed" DataFormatType="Double" />
   </NonProtocolMessage>
   <NonProtocolMessage MsgName="Data4" DisplayName="Data4" TransmissionPeriod="50">
-    <NonProtocolParam ParamName="Data4_1" DisplayName="Propulsion" DataFormatType="Double" />
-    <NonProtocolParam ParamName="Data4_2" DisplayName="Reverse propulsion status" DataFormatType="Double" />
-    <NonProtocolParam ParamName="Data4_3" DisplayName="Fuel consuming rate" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data4_1" DisplayName="ECS Bleed Configuration" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data4_2" DisplayName="WAI Bleed Configuration" DataFormatType="Double" />
+    <NonProtocolParam ParamName="Data4_3" DisplayName="Calibrated Air Speed" DataFormatType="Double" />
   </NonProtocolMessage>
 </VaisIcd>
