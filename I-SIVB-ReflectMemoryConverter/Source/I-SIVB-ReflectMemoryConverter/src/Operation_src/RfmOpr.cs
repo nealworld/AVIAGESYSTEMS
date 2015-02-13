@@ -478,5 +478,27 @@ namespace I_SIVB_ReflectMemoryConverter.src.Operation_src
             Rfm2gDriverCsharp.Rfm2gDriverCsharp.CSharpRFM2gClose();
             Rfm2gDriverCsharp.Rfm2gDriverCsharp.CSharpDeleteRFMDevice();
         }
+
+        public byte[] ParseVAISMessage(byte[] aBytes) {
+            uint lDataoffset;
+            byte[] lVAISMessages = new byte[mData1Read.Length];
+            List<ParameterAddress> lparaAddress;
+            if (mSourceSelection == SourceSelection.IrionBird)
+            {
+                lDataoffset = mOffsetData1IronBird;
+                lparaAddress = mRfmConfig.DataBlocks.IronBirdParametersAddress;
+            }
+            else {
+                lDataoffset = mOffsetData1FCSMiniRig;
+                lparaAddress = mRfmConfig.DataBlocks.FCSMiniRIGParametersAddress;
+            }
+
+            int lDestIndex = 0;
+            foreach (ParameterAddress lAddr in lparaAddress) 
+            {
+                Array.Copy(aBytes, lAddr.from - lDataoffset, lVAISMessages, lDestIndex, lAddr.to - lAddr.from + 1);
+
+            }
+        }
     }
 }

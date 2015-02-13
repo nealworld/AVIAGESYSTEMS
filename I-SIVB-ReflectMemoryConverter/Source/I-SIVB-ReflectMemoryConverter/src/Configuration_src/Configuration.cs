@@ -126,6 +126,16 @@ namespace I_SIVB_ReflectMemoryConverter.src.Configuration_src
         /// DataAddress data4Address is to define the data4 message property.
         /// </summary>
         public DataAddress data4Address;
+
+        /// <summary>
+        /// ParameterAddress IronBirdParametersAddress is to define the parameters address.
+        /// </summary>
+        public List<ParameterAddress> IronBirdParametersAddress;
+
+        /// <summary>
+        /// ParameterAddress FCSMiniRIGParametersAddress is to define the parameters address.
+        /// </summary>
+        public List<ParameterAddress> FCSMiniRIGParametersAddress;
     };
 
     /// <summary>
@@ -211,5 +221,30 @@ namespace I_SIVB_ReflectMemoryConverter.src.Configuration_src
         DataInWorking,
         NoData
 
+    }
+
+    struct ParameterAddress
+    {
+        /// <summary>
+        /// parameter name.
+        /// </summary>
+        public String name;
+
+        /// <summary>
+        /// start address.
+        /// </summary>
+        public UInt64 from;
+
+        /// <summary>
+        /// end address.
+        /// </summary>
+        public UInt64 to;
+
+        public ParameterAddress(string aName, UInt64 aFrom, UInt64 aTo)
+        {
+            this.name = aName;
+            this.from = aFrom;
+            this.to = aTo;
+        }
     }
 }
