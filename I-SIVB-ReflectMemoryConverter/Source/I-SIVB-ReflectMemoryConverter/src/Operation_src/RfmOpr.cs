@@ -479,7 +479,7 @@ namespace I_SIVB_ReflectMemoryConverter.src.Operation_src
             Rfm2gDriverCsharp.Rfm2gDriverCsharp.CSharpDeleteRFMDevice();
         }
 
-        public byte[] ParseVAISMessage(byte[] aBytes) {
+        public byte[] ParseRawBytes(byte[] aBytes) {
             uint lDataoffset;
             byte[] lVAISMessages = new byte[mData1Read.Length];
             List<ParameterAddress> lparaAddress;
@@ -493,12 +493,15 @@ namespace I_SIVB_ReflectMemoryConverter.src.Operation_src
                 lparaAddress = mRfmConfig.DataBlocks.FCSMiniRIGParametersAddress;
             }
 
-            int lDestIndex = 0;
+            UInt32 lDestIndex = 0;
             foreach (ParameterAddress lAddr in lparaAddress) 
             {
-                Array.Copy(aBytes, lAddr.from - lDataoffset, lVAISMessages, lDestIndex, lAddr.to - lAddr.from + 1);
-
+                Array.Copy(aBytes, (long)(lAddr.from - lDataoffset), lVAISMessages, 
+                    (long)lDestIndex, (long)(lAddr.to - lAddr.from + 1));
+                lDestIndex += (lAddr.to - lAddr.from + 1);
             }
+
+            return lVAISMessages;
         }
     }
 }

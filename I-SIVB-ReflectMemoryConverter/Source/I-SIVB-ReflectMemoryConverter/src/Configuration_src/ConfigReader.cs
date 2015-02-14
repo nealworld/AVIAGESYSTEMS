@@ -203,14 +203,14 @@ namespace I_SIVB_ReflectMemoryConverter.src.Configuration_src
 
                 foreach (XmlNode lnode in lData1FCSSourceNode.ChildNodes[1].ChildNodes) {
                     lDatablocks.FCSMiniRIGParametersAddress.Add(new ParameterAddress(lnode.Attributes["name"].Value,
-                        UInt64.Parse(lnode.Attributes["from"].Value.Substring(2), System.Globalization.NumberStyles.HexNumber),
-                        UInt64.Parse(lnode.Attributes["to"].Value.Substring(2),System.Globalization.NumberStyles.HexNumber)));
+                        UInt32.Parse(lnode.Attributes["from"].Value.Substring(2), System.Globalization.NumberStyles.HexNumber),
+                        UInt32.Parse(lnode.Attributes["to"].Value.Substring(2),System.Globalization.NumberStyles.HexNumber)));
                 }
 
                 foreach (XmlNode lnode in lData1IBSourceNode.ChildNodes[1].ChildNodes) {
                     lDatablocks.IronBirdParametersAddress.Add(new ParameterAddress(lnode.Attributes["name"].Value,
-                        UInt64.Parse(lnode.Attributes["from"].Value.Substring(2), System.Globalization.NumberStyles.HexNumber),
-                        UInt64.Parse(lnode.Attributes["to"].Value.Substring(2),System.Globalization.NumberStyles.HexNumber)));
+                        UInt32.Parse(lnode.Attributes["from"].Value.Substring(2), System.Globalization.NumberStyles.HexNumber),
+                        UInt32.Parse(lnode.Attributes["to"].Value.Substring(2),System.Globalization.NumberStyles.HexNumber)));
                 }
 
                 lDatablocks.data4Address = new DataAddress();

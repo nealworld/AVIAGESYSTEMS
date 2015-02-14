@@ -233,14 +233,14 @@ namespace I_SIVB_ReflectMemoryConverter.src.Configuration_src
         /// <summary>
         /// start address.
         /// </summary>
-        public UInt64 from;
+        public UInt32 from;
 
         /// <summary>
         /// end address.
         /// </summary>
-        public UInt64 to;
+        public UInt32 to;
 
-        public ParameterAddress(string aName, UInt64 aFrom, UInt64 aTo)
+        public ParameterAddress(string aName, UInt32 aFrom, UInt32 aTo)
         {
             this.name = aName;
             this.from = aFrom;

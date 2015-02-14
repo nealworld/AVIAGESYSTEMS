@@ -84,7 +84,7 @@ namespace I_SIVB_ReflectMemoryConverter.src.Operation_src
                 {
                     if (mRfmOpr.RfmRead() == true)
                     {
-                        byte[] lBytes = mRfmOpr.Data1ReadIn;
+                        byte[] lBytes = mRfmOpr.ParseRawBytes(mRfmOpr.Data1ReadIn);
                         byte[] lBytesConverted = RfmVaisDataConvert.RfmToVaisbytes(lBytes, mDataSwap);
                         mVaisOpr.VaisSendData1(lBytesConverted);
                     }
@@ -119,8 +119,6 @@ namespace I_SIVB_ReflectMemoryConverter.src.Operation_src
             {
                 LogGlobalManager.LogMgr.PrintLine( "Can not read data4 from VAIS" );
             }
-
-
         }
 
         private void DeleteProcess()
