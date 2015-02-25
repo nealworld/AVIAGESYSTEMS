@@ -71,7 +71,7 @@ namespace ElectronicLogbook.ViewModel
             }
         }
 
-
+        private List<DailyRemark> DeletedRemarkDates; 
         private String _CurrentFile;
         public String mCurrentFile {
             get
@@ -138,16 +138,18 @@ namespace ElectronicLogbook.ViewModel
             char[] lsplit = { '-', ',' };
             foreach (String line in File.ReadLines("RemarkDates.txt")) {
                 String[] tokens = line.Split(lsplit);
-                if (tokens[0] != lyear) {
-                    lDate_year = new DateViewModel(null,tokens[0]);
-                    lDate_month = new DateViewModel(lDate_year,tokens[1]);
-                    lDate_day = new DateViewModel(lDate_month,tokens[2]);
+                if (tokens[0] != lyear)
+                {
+                    lDate_year = new DateViewModel(null, tokens[0]);
+                    lDate_month = new DateViewModel(lDate_year, tokens[1]);
+                    lDate_day = new DateViewModel(lDate_month, tokens[2]);
                     lDate_year.mChildren.Add(lDate_month);
                     lDate_month.mChildren.Add(lDate_day);
                     lDate_day.mFileName.Add(tokens[3]);
                     mRemarkDates.Add(lDate_year);
                 }
-                else if (tokens[1] != lmonth) {
+                else if (tokens[1] != lmonth)
+                {
                     lDate_year = mRemarkDates[mRemarkDates.Count - 1];
                     lDate_month = new DateViewModel(lDate_year, tokens[1]);
                     lDate_day = new DateViewModel(lDate_month, tokens[2]);
@@ -163,7 +165,8 @@ namespace ElectronicLogbook.ViewModel
                     lDate_month.mChildren.Add(lDate_day);
                     lDate_day.mFileName.Add(tokens[3]);
                 }
-                else {
+                else
+                {
                     lDate_year = mRemarkDates[mRemarkDates.Count - 1];
                     lDate_month = lDate_year.mChildren[lDate_year.mChildren.Count - 1] as DateViewModel;
                     lDate_day = lDate_month.mChildren[lDate_month.mChildren.Count - 1] as DateViewModel;

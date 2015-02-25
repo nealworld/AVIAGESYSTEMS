@@ -16,9 +16,7 @@
         </StackPanel>
 
         <Grid Name="parentGrid" Grid.IsSharedSizeScope="True">
-
             <Grid Name="layer0">
-
                 <!-- Define two columns: -->
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -53,9 +51,7 @@
                         </Button>
                         <TextBlock Padding="8" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" DockPanel.Dock="Left">Dates</TextBlock>
                     </DockPanel>
-                    
                     <usercontrol:DateTreeView Grid.Row="1"/>
-                    
                 </Grid>
                 <GridSplitter Width="5" Grid.Column="0" HorizontalAlignment="right"/>
                 

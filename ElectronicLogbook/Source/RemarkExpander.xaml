@@ -6,7 +6,7 @@
              xmlns:usercontrol="clr-namespace:ElectronicLogbook">
     <Expander  Header="{Binding mTestName}"  
                Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" 
-               Foreground="Black" BorderBrush="#FF2837E2">
+               Foreground="Black" BorderBrush="#FF2837E2" KeyDown="show_message">
         <Grid>
             <Grid.Resources>
                 <Style x:Key="TextBoxStytle">
@@ -31,7 +31,8 @@
             </Grid.RowDefinitions>
 
             <Label HorizontalContentAlignment="Right" Grid.Row="0" Grid.Column="0">Time</Label>
-            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding mTime}" Style="{StaticResource TextBoxStytle}"/>
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding mTime}" 
+                    IsReadOnly="True" Style="{StaticResource TextBoxStytle}"/>
             <Label HorizontalContentAlignment="Right" Grid.Row="0" Grid.Column="2">Location</Label>
             <TextBox Grid.Row="0" Grid.Column="3" Style="{StaticResource TextBoxStytle}"/>
             <Label HorizontalContentAlignment="Right" Grid.Row="0" Grid.Column="4">Team</Label>
