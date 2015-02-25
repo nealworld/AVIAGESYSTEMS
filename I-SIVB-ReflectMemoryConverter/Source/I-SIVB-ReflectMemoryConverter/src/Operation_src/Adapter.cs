@@ -80,7 +80,7 @@ namespace I_SIVB_ReflectMemoryConverter.src.Operation_src
             DataSourceStatus lDataStatus = DataSourceStatus.NoData;
             if (mRfmOpr.RfmGetData1Status(ref lDataStatus))
             {
-                if (lDataStatus == DataSourceStatus.DataInWorking)
+                if (lDataStatus == DataSourceStatus.NoData)
                 {
                     if (mRfmOpr.RfmRead() == true)
                     {
@@ -96,7 +96,7 @@ namespace I_SIVB_ReflectMemoryConverter.src.Operation_src
                 }
                 else
                 {
-                    LogGlobalManager.LogMgr.PrintLine("No data");
+                    LogGlobalManager.LogMgr.PrintLine("Data in working");
                 }
             }
             else 
@@ -114,6 +114,7 @@ namespace I_SIVB_ReflectMemoryConverter.src.Operation_src
                 {
                     LogGlobalManager.LogMgr.PrintLine( "Can not write data to VMIC" );
                 }
+                mRfmOpr.RfmSetData4Status(DataSourceStatus.NoData);
             }
             else
             {

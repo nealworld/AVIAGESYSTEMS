@@ -37,7 +37,7 @@ namespace I_SIVB_ReflectMemoryConverter.src.Operation_src
 
         private List<Parameter> mData1Messages = null;
 
-        private Participant mParticipant = null;
+        private UtilityParticipant mParticipant = null;
 
         /// <summary>
         /// get the mParticipant which was set by createParticipant  
@@ -45,7 +45,7 @@ namespace I_SIVB_ReflectMemoryConverter.src.Operation_src
         /// <returns>
         /// Participant
         /// </returns>
-        public Participant Participant
+        public UtilityParticipant Participant
         {
             get
             {
@@ -95,8 +95,9 @@ namespace I_SIVB_ReflectMemoryConverter.src.Operation_src
             lParticipantInfo.Description = mParticipantConfig.Description;
             lParticipantInfo.PartNumber = mParticipantConfig.PartNumber;
             lParticipantInfo.Version = mParticipantConfig.Version;
-            mParticipant = new Participant( lParticipantInfo );
+            mParticipant = new UtilityParticipant( lParticipantInfo );
             mParticipant.ConnectToMesh();
+            
             return;
         }
 
@@ -113,6 +114,7 @@ namespace I_SIVB_ReflectMemoryConverter.src.Operation_src
         {
             bool lResult = false;
             CreateParticipant();
+            
             lResult = InitVaisHandles( mMessgaconfig.MessageConfigs[0], true );
             if ( lResult == true )
             {
@@ -126,6 +128,15 @@ namespace I_SIVB_ReflectMemoryConverter.src.Operation_src
             bool lResult = true;
             VaisMessageConfig lVaisMessageConfig = aVaisConfig;
             Collection lCollection = mParticipant.GetCollection( lVaisMessageConfig.name );
+
+            if (aDirection)
+            {
+                lCollection.Publish();
+            }
+            else {
+                lCollection.Subscribe(GEAviation.CommonSim.CommonSimTypes.QueueType.Snapshot);
+            }
+
             List<Parameter> lparameters = new List<Parameter>();
             if ( lCollection != null )
             {

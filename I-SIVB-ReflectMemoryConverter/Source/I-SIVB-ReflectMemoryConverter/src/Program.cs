@@ -21,7 +21,7 @@ namespace I_SIVB_ReflectMemoryConverter.src
             lParticipantInfo.Description = "a";
             System.Diagnostics.Debug.WriteLine("start to call Participant");
 
-            Participant msParticipant = new Participant( lParticipantInfo );
+            UtilityParticipant msParticipant = new UtilityParticipant(lParticipantInfo);
             msParticipant.ConnectToMesh();
             System.Diagnostics.Debug.WriteLine("start to call CSharpRFM2gOpen");
             System.Diagnostics.Debug.WriteLine(Rfm2gDriverCsharp.Rfm2gDriverCsharp.CSharpRFM2gOpen(1));

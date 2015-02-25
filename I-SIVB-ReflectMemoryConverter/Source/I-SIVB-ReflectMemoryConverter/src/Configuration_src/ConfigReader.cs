@@ -183,6 +183,7 @@ namespace I_SIVB_ReflectMemoryConverter.src.Configuration_src
                 #region mRfmConfig initialization
                 mRfmConfig = new RfmConfig();
                 RfmDatablockAddresses lDatablocks = new RfmDatablockAddresses();
+
                 lDatablocks.Value = lAppconfig.SelectSingleNode( @"I-SIVBconfig/SourceSelection" ).Attributes["firstSelection"].Value;
 
 
@@ -201,12 +202,14 @@ namespace I_SIVB_ReflectMemoryConverter.src.Configuration_src
                 lDatablocks.data1FCSMiniRIGAddress.offset = lData1FCSSourceNode.ChildNodes[0].Attributes["offset"].Value;
                 lDatablocks.data1FCSMiniRIGAddress.end = lData1FCSSourceNode.ChildNodes[0].Attributes["end"].Value;
 
+                lDatablocks.FCSMiniRIGParametersAddress = new List<ParameterAddress>();
                 foreach (XmlNode lnode in lData1FCSSourceNode.ChildNodes[1].ChildNodes) {
                     lDatablocks.FCSMiniRIGParametersAddress.Add(new ParameterAddress(lnode.Attributes["name"].Value,
                         UInt32.Parse(lnode.Attributes["from"].Value.Substring(2), System.Globalization.NumberStyles.HexNumber),
                         UInt32.Parse(lnode.Attributes["to"].Value.Substring(2),System.Globalization.NumberStyles.HexNumber)));
                 }
 
+                lDatablocks.IronBirdParametersAddress = new List<ParameterAddress>();
                 foreach (XmlNode lnode in lData1IBSourceNode.ChildNodes[1].ChildNodes) {
                     lDatablocks.IronBirdParametersAddress.Add(new ParameterAddress(lnode.Attributes["name"].Value,
                         UInt32.Parse(lnode.Attributes["from"].Value.Substring(2), System.Globalization.NumberStyles.HexNumber),
@@ -239,6 +242,7 @@ namespace I_SIVB_ReflectMemoryConverter.src.Configuration_src
             }
             catch ( Exception e )
             {
+                System.Diagnostics.Debug.WriteLine("exception:" + e.Message);
                 LogGlobalManager.LogMgr.PrintLine( e.Message );
                 lConfigResult = false;
             }
