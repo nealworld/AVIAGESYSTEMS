@@ -63,7 +63,6 @@ namespace ElectronicLogbook
             pane1Button.Visibility = Visibility.Collapsed;
             pane1PinImage.Source = new BitmapImage(new Uri("pin.gif", UriKind.Relative));
 
-
             parentGrid.Children.Remove(layer1);
             layer0.Children.Add(layer1);
             Grid.SetColumn(layer1,0);

@@ -86,6 +86,7 @@
     <Compile Include="ConfigurationPanel.xaml.cs">
       <DependentUpon>ConfigurationPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DailyRemakrHandler.cs" />
     <Compile Include="DateTreeView.xaml.cs">
       <DependentUpon>DateTreeView.xaml</DependentUpon>
     </Compile>
@@ -240,6 +241,12 @@
   <ItemGroup>
     <Resource Include="pin.gif" />
     <Resource Include="pinHorizontal.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Expander_save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Date_pin.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

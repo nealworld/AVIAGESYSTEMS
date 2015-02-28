@@ -26,10 +26,7 @@ namespace ElectronicLogbook
 
         void show_message(object sender, KeyEventArgs e)
         {
-            if (e.KeyData == (Keys.A | Keys.Control))
-            {
-                // Be happy
-            }
+
         }
     }
 }

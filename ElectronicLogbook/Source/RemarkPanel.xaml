@@ -22,15 +22,17 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="1" >
-                    <ItemsControl ItemsSource="{Binding mDailyRemarks}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <usercontrol:RemarkExpander/>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </StackPanel>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="1">
+                    <StackPanel >
+                        <ItemsControl ItemsSource="{Binding Path=mDailyRemarkHandler.mDailyRemarks}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <usercontrol:RemarkExpander/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </ScrollViewer>
             </Grid>
 
             <Grid Name="layer1" Visibility="Collapsed" MouseLeave="layer1_MouseLeave">
@@ -46,8 +48,9 @@
                     </Grid.RowDefinitions>
 
                     <DockPanel Grid.Row="0">
-                        <Button Width="26" Name="pane1Pin" DockPanel.Dock="Right" Click="pane1Pin_Click" Background="White">
-                            <Image Name="pane1PinImage" Source="pinHorizontal.gif"/>
+                        <Button Width="26" Name="pane1Pin" DockPanel.Dock="Right" 
+                                Click="pane1Pin_Click" Background="White" BorderBrush="Transparent">
+                            <Image Name="pane1PinImage" Source="Date_pin.png"/>
                         </Button>
                         <TextBlock Padding="8" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" DockPanel.Dock="Left">Dates</TextBlock>
                     </DockPanel>
