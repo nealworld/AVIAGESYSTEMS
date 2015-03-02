@@ -6,11 +6,14 @@ using System.Collections.ObjectModel;
 using ElectronicLogbook.ViewModel;
 using System.ComponentModel;
 using System.IO;
+using System.Windows.Forms;
 
 namespace ElectronicLogbook
 {
     public class DailyRemakrHandler : INotifyPropertyChanged
     {
+
+        private const String dirName = "ELBRemark";
         private ObservableCollection<DateViewModel> _RemarkDates;
         public ObservableCollection<DateViewModel> mRemarkDates
         {
@@ -22,8 +25,8 @@ namespace ElectronicLogbook
             }
         }
 
-        private ObservableCollection<DailyRemark> _DailyRemark;
-        public ObservableCollection<DailyRemark> mDailyRemarks
+        private ObservableCollection<DailyRemarkViewModel> _DailyRemark;
+        public ObservableCollection<DailyRemarkViewModel> mDailyRemarks
         {
             get { return _DailyRemark; }
             set
@@ -98,20 +101,76 @@ namespace ElectronicLogbook
 
         public DailyRemakrHandler() 
         {
+            MakeTopDir();
             mRemarkDates = new ObservableCollection<DateViewModel>();
-            mDailyRemarks = new ObservableCollection<DailyRemark>();
+            mDailyRemarks = new ObservableCollection<DailyRemarkViewModel>();
             GetAllRemarkDates();
-            DailyRemark TEMP = new DailyRemark("Test1");
-            TEMP.mTime = "2015-01-30";
-            mDailyRemarks.Add(TEMP);
+            createTodayRemark();
+        }
 
-            TEMP = new DailyRemark("Test2");
-            TEMP.mTime = "2015-02-23";
-            mDailyRemarks.Add(TEMP);
+        private void createTodayRemark()
+        {
+            String lYear = String.Empty;
+            String lMonth = String.Empty;
+            String lDay = String.Empty;
+            
+            parseDate(ref lYear, ref lMonth, ref lDay);
+            MakeDateDir(lYear,lMonth,lDay);
 
-            TEMP = new DailyRemark("Test3");
-            TEMP.mTime = "2015-02-24";
-            mDailyRemarks.Add(TEMP);
+            DailyRemarkViewModel lTodayRemark = new DailyRemarkViewModel("New Remark");
+            lTodayRemark.mTime = DateTime.UtcNow.ToLocalTime().ToString();
+            mDailyRemarks.Add(lTodayRemark);
+
+        }
+
+        private void MakeDateDir(string lYear, string lMonth, string lDay)
+        {
+            if (!Directory.Exists(dirName + "\\" + lYear + "\\" + lMonth + "\\" + lDay)) {
+                Directory.CreateDirectory(dirName + "\\" + lYear + "\\" + lMonth + "\\" + lDay);
+            }
+        }
+
+        private void parseDate(ref string aYear, ref string aMonth, ref string aDay)
+        {
+            String lToday = DateTime.Today.ToShortDateString();
+            String[] lDate = lToday.Split('/');
+            aYear = lDate[2];
+            aMonth = lDate[0];
+            aDay = lDate[1];
+        }
+
+        private void MakeTopDir()
+        {
+            try
+            {
+                if (!Directory.Exists(dirName))
+                {
+                    Directory.CreateDirectory(dirName);
+                }
+            }
+            catch(Exception e) {
+                MessageBox.Show("Can not create remark dirctory!", "Error", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Error);
+            }
+        }
+
+
+
+        internal void addNewRemark(object sender, System.Windows.RoutedEventArgs e)
+        {
+            createTodayRemark();
+        }
+
+        internal void deleteRemark(object sender, System.Windows.RoutedEventArgs e)
+        {
+            RemarkExpander temp = (RemarkExpander)((sender as Button).Parent as UserControl);
+            if (temp != null) {
+                System.Diagnostics.Debug.WriteLine(temp.TemplatedParent.GetType().ToString());
+            }
+        }
+
+        internal void saveRemark(object sender, System.Windows.RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }

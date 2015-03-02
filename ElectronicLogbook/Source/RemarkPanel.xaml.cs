@@ -61,7 +61,7 @@ namespace ElectronicLogbook
         public void DockPane(int paneNumber)
         {
             pane1Button.Visibility = Visibility.Collapsed;
-            pane1PinImage.Source = new BitmapImage(new Uri("pin.gif", UriKind.Relative));
+            pane1PinImage.Source = new BitmapImage(new Uri("resources/pin.gif", UriKind.Relative));
 
             parentGrid.Children.Remove(layer1);
             layer0.Children.Add(layer1);

@@ -37,7 +37,7 @@
 
             <Grid Name="layer1" Visibility="Collapsed" MouseLeave="layer1_MouseLeave">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="110"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
 
@@ -50,7 +50,7 @@
                     <DockPanel Grid.Row="0">
                         <Button Width="26" Name="pane1Pin" DockPanel.Dock="Right" 
                                 Click="pane1Pin_Click" Background="White" BorderBrush="Transparent">
-                            <Image Name="pane1PinImage" Source="Date_pin.png"/>
+                            <Image Name="pane1PinImage" Source="resources/pinHorizontal.gif"/>
                         </Button>
                         <TextBlock Padding="8" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" DockPanel.Dock="Left">Dates</TextBlock>
                     </DockPanel>

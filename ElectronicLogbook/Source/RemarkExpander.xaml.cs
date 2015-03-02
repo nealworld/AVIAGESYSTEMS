@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ElectronicLogbook.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,11 +23,14 @@ namespace ElectronicLogbook
         public RemarkExpander()
         {
             InitializeComponent();
+
+            addButton.Click += new RoutedEventHandler(
+                ELBViewModel.mSingleton.mDailyRemarkHandler.addNewRemark);
+            deleteButton.Click += new RoutedEventHandler(
+                ELBViewModel.mSingleton.mDailyRemarkHandler.deleteRemark);
+            saveButton.Click += new RoutedEventHandler(
+                ELBViewModel.mSingleton.mDailyRemarkHandler.saveRemark);
         }
 
-        void show_message(object sender, KeyEventArgs e)
-        {
-
-        }
     }
 }

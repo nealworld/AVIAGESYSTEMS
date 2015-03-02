@@ -55,7 +55,7 @@
     <StartupObject />
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>ELB_bar.ico</ApplicationIcon>
+    <ApplicationIcon>resources\ELB_bar.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -112,7 +112,7 @@
     </Compile>
     <Compile Include="ViewModel\ConfigInfoViewModel.cs" />
     <Compile Include="ViewModel\ConfigurationViewModel.cs" />
-    <Compile Include="ViewModel\DailyRemark.cs" />
+    <Compile Include="ViewModel\DailyRemarkViewModel.cs" />
     <Compile Include="ViewModel\DateViewModel.cs" />
     <Compile Include="ViewModel\DeviceDriverViewModel.cs" />
     <Compile Include="ViewModel\ELBViewModel.cs" />
@@ -230,23 +230,26 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <SplashScreen Include="splashcreen.png" />
+    <SplashScreen Include="resources\splashcreen.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ELB_bar.ico" />
+    <Resource Include="resources\ELB_bar.ico" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ModalDialog\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="pin.gif" />
-    <Resource Include="pinHorizontal.gif" />
+    <Resource Include="resources\pin.gif" />
+    <Resource Include="resources\pinHorizontal.gif" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Expander_save.png" />
+    <Resource Include="resources\Expander_save.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Date_pin.png" />
+    <Resource Include="resources\Expander_delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\Expander_add.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ElectronicLogbook.ViewModel
 {
-    public class DailyRemark : ViewModel
+    public class DailyRemarkViewModel : ViewModel
     {
         public override Boolean Compare(ViewModel aViewModel)
         {
@@ -223,8 +223,21 @@ namespace ElectronicLogbook.ViewModel
             }
         }
 
-        public DailyRemark(string aTestName) {
+        private String _IsModified;
+        public String mIsModified {
+            set
+            {
+                _IsModified = value;
+                this.OnPropertyChanged("mIsModified");
+            }
+            get
+            {
+                return _IsModified;
+            }
+        }
+        public DailyRemarkViewModel(string aTestName) {
             mTestName = aTestName;
+            mIsModified = "*";
         }
     }
 }
