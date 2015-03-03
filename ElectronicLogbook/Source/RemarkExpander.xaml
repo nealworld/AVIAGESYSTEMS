@@ -48,7 +48,7 @@
             </Grid.RowDefinitions>
 
             <Label HorizontalContentAlignment="Right" Grid.Row="0" Grid.Column="0">Time</Label>
-            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding mTime}" 
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding mTime}" Name="TimeTextBox"
                     IsReadOnly="True" Style="{StaticResource TextBoxStytle}"/>
             <Label HorizontalContentAlignment="Right" Grid.Row="0" Grid.Column="2">Location</Label>
             <TextBox Grid.Row="0" Grid.Column="3" 

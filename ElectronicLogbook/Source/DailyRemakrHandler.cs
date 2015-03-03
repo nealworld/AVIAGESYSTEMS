@@ -7,6 +7,8 @@ using ElectronicLogbook.ViewModel;
 using System.ComponentModel;
 using System.IO;
 using System.Windows.Forms;
+using System.Windows.Controls;
+using System.Windows;
 
 namespace ElectronicLogbook
 {
@@ -99,27 +101,18 @@ namespace ElectronicLogbook
             }
         }
 
-        public DailyRemakrHandler() 
-        {
-            MakeTopDir();
-            mRemarkDates = new ObservableCollection<DateViewModel>();
-            mDailyRemarks = new ObservableCollection<DailyRemarkViewModel>();
-            GetAllRemarkDates();
-            createTodayRemark();
-        }
-
         private void createTodayRemark()
         {
             String lYear = String.Empty;
             String lMonth = String.Empty;
             String lDay = String.Empty;
             
-            parseDate(ref lYear, ref lMonth, ref lDay);
-            MakeDateDir(lYear,lMonth,lDay);
-
             DailyRemarkViewModel lTodayRemark = new DailyRemarkViewModel("New Remark");
             lTodayRemark.mTime = DateTime.UtcNow.ToLocalTime().ToString();
             mDailyRemarks.Add(lTodayRemark);
+
+            parseDate(ref lYear, ref lMonth, ref lDay, lTodayRemark.mTime);
+            MakeDateDir(lYear,lMonth,lDay);
 
         }
 
@@ -130,11 +123,10 @@ namespace ElectronicLogbook
             }
         }
 
-        private void parseDate(ref string aYear, ref string aMonth, ref string aDay)
+        private void parseDate(ref string aYear, ref string aMonth, ref string aDay, String aDate)
         {
-            String lToday = DateTime.Today.ToShortDateString();
-            String[] lDate = lToday.Split('/');
-            aYear = lDate[2];
+            String[] lDate = aDate.Split('/');
+            aYear = (lDate[2].Split(' '))[0];
             aMonth = lDate[0];
             aDay = lDate[1];
         }
@@ -149,11 +141,102 @@ namespace ElectronicLogbook
                 }
             }
             catch(Exception e) {
-                MessageBox.Show("Can not create remark dirctory!", "Error", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Error);
+                System.Windows.Forms.MessageBox.Show("Can not create remark dirctory!", "Error", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Error);
             }
         }
 
+        private RemarkExpander GetRemarkExpanderInstance(object asender)
+        {
+            DockPanel dp = LogicalTreeHelper.GetParent(asender as DependencyObject) as DockPanel;
+            Expander lexpander = (Expander)LogicalTreeHelper.GetParent(dp);
+            RemarkExpander lremarkExpander = LogicalTreeHelper.GetParent(lexpander) as RemarkExpander;
+            return lremarkExpander;
+        }
 
+        private void deleteRemarkFile(DailyRemarkViewModel aDailyRemark)
+        {
+            String lYear = String.Empty;
+            String lMonth = String.Empty;
+            String lDay = String.Empty;
+            parseDate(ref lYear, ref lMonth, ref lDay, aDailyRemark.mTime);
+
+            String lfile = dirName + "\\" + lYear + "\\" + lMonth + "\\" + lDay + "\\" + aDailyRemark.mTestName;
+            try
+            {
+                if (File.Exists(lfile))
+                {
+                    File.Delete(lfile);
+                    String lDayDir = dirName + "\\" + lYear + "\\" + lMonth + "\\" + lDay;
+                    String lMonthDir = dirName + "\\" + lYear + "\\" + lMonth;
+                    String lYearDir = dirName + "\\" + lYear;
+                    DeleteEmptyDirs(lDayDir, lMonthDir, lYearDir);
+                }
+            }
+            catch (Exception e) {
+                System.Windows.Forms.MessageBox.Show("Delete file failed!", "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+            }
+        }
+
+        private void deleteRecordFromDateTree(DailyRemarkViewModel aDailyRemark)
+        {
+            String lYear = String.Empty;
+            String lMonth = String.Empty;
+            String lDay = String.Empty;
+            parseDate(ref lYear, ref lMonth, ref lDay, aDailyRemark.mTime);
+
+            String lfile = dirName + "\\" + lYear + "\\" + lMonth + "\\" + lDay + "\\" + aDailyRemark.mTestName;
+
+            if (File.Exists(lfile)) {
+                foreach (DateViewModel lYearDate in mRemarkDates) {
+                    if (lYearDate.mTime == lYear)
+                    {
+                        foreach (DateViewModel lMonthDate in lYearDate.mChildren) {
+                            if (lMonthDate.mTime == lMonth) {
+                                foreach (DateViewModel lDayDate in lMonthDate.mChildren) {
+                                    if (lDayDate.mTime == lDay) {
+                                        lDayDate.mFileName.Remove(aDailyRemark.mTestName);
+                                        if (lDayDate.mFileName.Count == 0) {
+                                            lMonthDate.mChildren.Remove(lDayDate);
+                                            if (lMonthDate.mChildren.Count == 0) {
+                                                lYearDate.mChildren.Remove(lMonthDate);
+                                                if (lYearDate.mChildren.Count == 0) {
+                                                    mRemarkDates.Remove(lYearDate);
+                                                }
+                                            }
+                                        }
+                                        break;
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+
+        private void DeleteEmptyDirs(string aDayDir, string aMonthDir, string aYearDir)
+        {
+            if (Directory.GetFiles(aDayDir).Length == 0) {
+                Directory.Delete(aDayDir);
+                if (Directory.GetDirectories(aMonthDir).Length == 0) {
+                    Directory.Delete(aMonthDir);
+                    if (Directory.GetDirectories(aYearDir).Length == 0) {
+                        Directory.Delete(aYearDir);
+                    }
+                }
+            }
+        }
+
+        public DailyRemakrHandler()
+        {
+            MakeTopDir();
+            mRemarkDates = new ObservableCollection<DateViewModel>();
+            mDailyRemarks = new ObservableCollection<DailyRemarkViewModel>();
+            GetAllRemarkDates();
+            createTodayRemark();
+        }
 
         internal void addNewRemark(object sender, System.Windows.RoutedEventArgs e)
         {
@@ -162,10 +245,23 @@ namespace ElectronicLogbook
 
         internal void deleteRemark(object sender, System.Windows.RoutedEventArgs e)
         {
-            RemarkExpander temp = (RemarkExpander)((sender as Button).Parent as UserControl);
-            if (temp != null) {
-                System.Diagnostics.Debug.WriteLine(temp.TemplatedParent.GetType().ToString());
+
+            RemarkExpander lremarkExpander = GetRemarkExpanderInstance(sender);
+
+            if (lremarkExpander != null)
+            {
+                foreach (DailyRemarkViewModel ltemp in mDailyRemarks)
+                {
+                    if (lremarkExpander.GetTime() == ltemp.mTime)
+                    {
+                        mDailyRemarks.Remove(ltemp);
+                        deleteRemarkFile(ltemp);
+                        deleteRecordFromDateTree(ltemp);
+                        break;
+                    }
+                }
             }
+
         }
 
         internal void saveRemark(object sender, System.Windows.RoutedEventArgs e)
