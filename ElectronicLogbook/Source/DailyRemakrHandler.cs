@@ -108,35 +108,42 @@ namespace ElectronicLogbook
             }
         }
 
-        private void createTodayRemark()
+        private void CreateTodayRemark()
         {
-            String lYear = String.Empty;
-            String lMonth = String.Empty;
-            String lDay = String.Empty;
-            
             DailyRemarkViewModel lTodayRemark = new DailyRemarkViewModel("New Remark");
             lTodayRemark.mTime = DateTime.UtcNow.ToLocalTime().ToString();
             mDailyRemarks.Add(lTodayRemark);
 
-            parseDate(ref lYear, ref lMonth, ref lDay, lTodayRemark.mTime);
-            MakeDateDir(lYear,lMonth,lDay);
+            MakeDateDir(mDirName+"\\"+lTodayRemark.mRemarkFileDir);
 
         }
 
-        private void MakeDateDir(string lYear, string lMonth, string lDay)
+        private void MakeDateDir(String aDir)
         {
-            if (!Directory.Exists(mDirName + "\\" + lYear + "\\" + lMonth + "\\" + lDay))
+            if (!Directory.Exists(aDir))
             {
-                Directory.CreateDirectory(mDirName + "\\" + lYear + "\\" + lMonth + "\\" + lDay);
+                Directory.CreateDirectory(aDir);
             }
         }
 
-        private void parseDate(ref string aYear, ref string aMonth, ref string aDay, String aDate)
+        private bool isFileExist(DailyRemarkViewModel aRemak)
         {
-            String[] lDate = aDate.Split('/');
-            aYear = (lDate[2].Split(' '))[0];
-            aMonth = lDate[0];
-            aDay = lDate[1];
+            if (Directory.Exists(mDirName+"\\"+aRemak.mRemarkFileDir))
+            {
+                String[] lFiles = Directory.GetFiles(mDirName + "\\" + aRemak.mRemarkFileDir);
+                foreach (String lFileName in lFiles) {
+                    DailyRemarkViewModel ltemp = new DailyRemarkViewModel();
+                    Utility.DeSerializeFromXML(ref ltemp,lFileName);
+                    if (ltemp.mTime == aRemak.mTime)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            else {
+                return false;
+            }
         }
 
         /*
@@ -202,20 +209,16 @@ namespace ElectronicLogbook
 
         private void deleteRemarkFile(DailyRemarkViewModel aDailyRemark)
         {
-            String lYear = String.Empty;
-            String lMonth = String.Empty;
-            String lDay = String.Empty;
-            parseDate(ref lYear, ref lMonth, ref lDay, aDailyRemark.mTime);
-
-            String lfile = mDirName + "\\" + lYear + "\\" + lMonth + "\\" + lDay + "\\" + aDailyRemark.mTestName;
+            String lfile = mDirName+"\\"+aDailyRemark.mRemarkFileDir + "\\" + aDailyRemark.mTestName;
+            String[] lDateStr = (aDailyRemark.mRemarkFileDir).Split('\\');
             try
             {
                 if (File.Exists(lfile))
                 {
                     File.Delete(lfile);
-                    String lDayDir = mDirName + "\\" + lYear + "\\" + lMonth + "\\" + lDay;
-                    String lMonthDir = mDirName + "\\" + lYear + "\\" + lMonth;
-                    String lYearDir = mDirName + "\\" + lYear;
+                    String lDayDir = mDirName + "\\" + lDateStr[0] + "\\" + lDateStr[1] + "\\" + lDateStr[2];
+                    String lMonthDir = mDirName + "\\" + lDateStr[0] + "\\" + lDateStr[1];
+                    String lYearDir = mDirName + "\\" + lDateStr[0];
                     DeleteEmptyDirs(lDayDir, lMonthDir, lYearDir);
                 }
             }
@@ -226,10 +229,10 @@ namespace ElectronicLogbook
 
         private void deleteRemarkDate(DailyRemarkViewModel aDailyRemark)
         {
-            String lYear = String.Empty;
-            String lMonth = String.Empty;
-            String lDay = String.Empty;
-            parseDate(ref lYear, ref lMonth, ref lDay, aDailyRemark.mTime);
+            String[] lDateStr = (aDailyRemark.mRemarkFileDir).Split('\\');
+            String lYear = lDateStr[0];
+            String lMonth = lDateStr[1];
+            String lDay = lDateStr[2];
 
             foreach (DateViewModel lYearDate in mRemarkDates) {
                 if (lYearDate.mTime == lYear)
@@ -267,19 +270,13 @@ namespace ElectronicLogbook
 
         private bool SaveRemarkFile(DailyRemarkViewModel aDailyRemark)
         {
-            String lYear = String.Empty;
-            String lMonth = String.Empty;
-            String lDay = String.Empty;
-            parseDate(ref lYear, ref lMonth, ref lDay, aDailyRemark.mTime);
 
-            String lfile = mDirName + "\\" + lYear + "\\" + lMonth + "\\" + lDay + "\\" + aDailyRemark.mTestName;
-
-            if (!Directory.Exists(mDirName + "\\" + lYear + "\\" + lMonth + "\\" + lDay))
+            if (!Directory.Exists(mDirName + "\\" + aDailyRemark.mRemarkFileDir))
             {
-                Directory.CreateDirectory(mDirName + "\\" + lYear + "\\" + lMonth + "\\" + lDay);
+                Directory.CreateDirectory(mDirName + "\\" + aDailyRemark.mRemarkFileDir);
             }
 
-            if (Utility.SerializeToXML(aDailyRemark, lfile))
+            if (Utility.SerializeToXML(aDailyRemark, mDirName + "\\" + aDailyRemark.mRemarkFileDir + "\\" + aDailyRemark.mTestName))
             {
                 aDailyRemark.mIsModified = String.Empty;
                 return true;
@@ -296,10 +293,10 @@ namespace ElectronicLogbook
          */
         private bool SaveRemarkDate(DailyRemarkViewModel aDailyRemark)
         {
-            String lYear = String.Empty;
-            String lMonth = String.Empty;
-            String lDay = String.Empty;
-            parseDate(ref lYear, ref lMonth, ref lDay, aDailyRemark.mTime);
+            String[] lDateStr = (aDailyRemark.mRemarkFileDir).Split('\\');
+            String lYear = lDateStr[0];
+            String lMonth = lDateStr[1];
+            String lDay = lDateStr[2];
 
             DateViewModel lYearFound = null;
             DateViewModel lMonthFound = null;
@@ -392,15 +389,29 @@ namespace ElectronicLogbook
             }
         }
 
+        public bool isAnyUnsavedReamrk() {
+            bool lresult = false;
+
+            foreach (DailyRemarkViewModel ltemp in mDailyRemarks)
+            {
+                if (ltemp.mIsModified != String.Empty)
+                {
+                    lresult = true;
+                    break;
+                }
+            }
+
+            return lresult;
+        }
+
         private bool ClearCurrentDailyRemarks()
         {
             bool lClear = true;
-            foreach (DailyRemarkViewModel ltemp in mDailyRemarks) {
-                if (ltemp.mIsModified != String.Empty) {
-                    if (System.Windows.Forms.MessageBox.Show("This action will clear all unsaved remarks", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.Cancel)
-                    {
-                        lClear = false;
-                    }
+            if (isAnyUnsavedReamrk())
+            {
+                if (System.Windows.Forms.MessageBox.Show("Are you sure to dump unsaved remark files?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.No)
+                {
+                    lClear = false;
                 }
             }
 
@@ -418,12 +429,12 @@ namespace ElectronicLogbook
             mRemarkDates = new ObservableCollection<DateViewModel>();
             mDailyRemarks = new ObservableCollection<DailyRemarkViewModel>();
             GetAllRemarkDates();
-            createTodayRemark();
+            CreateTodayRemark();
         }
 
         internal void addNewRemarkExpander(object sender, System.Windows.RoutedEventArgs e)
         {
-            createTodayRemark();
+            CreateTodayRemark();
         }
 
         internal void deleteRemarkExpander(object sender, System.Windows.RoutedEventArgs e)
@@ -445,6 +456,9 @@ namespace ElectronicLogbook
                 }
             }
 
+            if (mDailyRemarks.Count == 0) {
+                CreateTodayRemark();
+            }
         }
 
         internal void saveRemarkExpander(object sender, System.Windows.RoutedEventArgs e)
@@ -456,18 +470,47 @@ namespace ElectronicLogbook
                 {
                     if (lremarkExpander.GetTime() == ltemp.mTime)
                     {
-                        if (lremarkExpander.GetTestName() == "New Remark")
+                        if (!isFileExist(ltemp))
                         {
-                            string value = "Document 1";
-                            if (Utility.InputBox("New document", "New document name:", ref value)== DialogResult.OK)
+                            String value = "New Remark";
+                            while (Utility.InputBox("New document", "New document name:", ref value) == DialogResult.OK)
                             {
-                                ltemp.mTestName = value;
+                                String[] lfiles = Directory.GetFiles(mDirName + "\\" + ltemp.mRemarkFileDir);
+                                bool lfound = false;
+                                foreach (String lfile in lfiles)
+                                {
+                                    if (lfile.Split('\\')[4] == value)
+                                    {
+                                        lfound = true;
+                                        break;
+                                    }
+                                }
+                                if (lfound)
+                                {
+                                    System.Windows.Forms.MessageBox.Show("File already exist", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                                }
+                                else
+                                {
+                                    ltemp.mTestName = value;
+                                    if (SaveRemarkFile(ltemp))
+                                    {
+                                        if (!SaveRemarkDate(ltemp))
+                                        {
+                                            SaveRemarkDatesToFile();
+                                        }
+                                    }
+                                    break;
+                                }
                             }
-
                         }
-                        if (SaveRemarkFile(ltemp)) {
-                            if (!SaveRemarkDate(ltemp)) {
-                                SaveRemarkDatesToFile();
+                        else
+                        {
+                            if (SaveRemarkFile(ltemp))
+                            {
+                                if (!SaveRemarkDate(ltemp))
+                                {
+                                    SaveRemarkDatesToFile();
+                                }
                             }
                         }
                         break;
@@ -497,13 +540,9 @@ namespace ElectronicLogbook
                         DailyRemarkViewModel lremark = new DailyRemarkViewModel();
                         if (Utility.DeSerializeFromXML(ref lremark, lDir + "\\" + lfile))
                         {
+                            lremark.mIsModified = String.Empty;
                             mDailyRemarks.Add(lremark);
                         }
-                    }
-
-                    foreach (DailyRemarkViewModel ltemp in mDailyRemarks)
-                    {
-                        ltemp.mIsModified = String.Empty;
                     }
                 }
             }

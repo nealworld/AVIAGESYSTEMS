@@ -7,7 +7,7 @@
     <Expander Name="remarkExpander" Foreground="Black" BorderBrush="#FF2837E2">
         <Expander.Header>
             <DockPanel Width="{Binding ElementName=remarkExpander, Path=ActualWidth}">
-                <TextBlock Name="TestNameBlock" Text="{Binding mTestName}"/>
+                <TextBlock Name="TestNameBlock" Text="{Binding mTestName,Mode=TwoWay}"/>
                 <TextBlock Name="ModifyStatus_TextBlock" DockPanel.Dock="Left" 
                            Margin="2,0,0,0" Text="{Binding mIsModified, Mode=TwoWay}" Foreground="Red"/>
                 <Button Name="saveButton" ToolTip="Save" Width="26" Background="White" 
@@ -52,36 +52,36 @@
             </Grid.RowDefinitions>
 
             <Label HorizontalContentAlignment="Right" Grid.Row="0" Grid.Column="0">Time</Label>
-            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding mTime}" Name="TimeTextBox"
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding mTime,Mode=TwoWay}" Name="TimeTextBox"
                     IsReadOnly="True" Style="{StaticResource TextBoxStytle}" />
             <Label HorizontalContentAlignment="Right" Grid.Row="0" Grid.Column="2">Location</Label>
-            <TextBox Grid.Row="0" Grid.Column="3" TextChanged="TextBox_TextChanged"
-                    Text="{Binding mLocation}" Style="{StaticResource TextBoxStytle}"/>
+            <TextBox Grid.Row="0" Grid.Column="3" 
+                    Text="{Binding mLocation,Mode=TwoWay}" Style="{StaticResource TextBoxStytle}"/>
             <Label HorizontalContentAlignment="Right" Grid.Row="0" Grid.Column="4">Team</Label>
-            <TextBox Grid.Row="0" Grid.Column="5" TextChanged="TextBox_TextChanged"
-                    Text="{Binding mTestTeam}" Style="{StaticResource TextBoxStytle}"/>
+            <TextBox Grid.Row="0" Grid.Column="5" 
+                    Text="{Binding mTestTeam,Mode=TwoWay}" Style="{StaticResource TextBoxStytle}"/>
             <Label HorizontalContentAlignment="Right" Grid.Row="1" Grid.Column="0">Test Number</Label>
-            <TextBox Grid.Row="1" Grid.Column="1" TextChanged="TextBox_TextChanged"
-                    Text="{Binding mTestPurposeNumber}" Style="{StaticResource TextBoxStytle}"/>
+            <TextBox Grid.Row="1" Grid.Column="1" 
+                    Text="{Binding mTestPurposeNumber,Mode=TwoWay}" Style="{StaticResource TextBoxStytle}"/>
             <Label HorizontalContentAlignment="Right" Grid.Row="1" Grid.Column="2">Test Title</Label>
-            <TextBox Grid.Row="1" Grid.Column="3" TextChanged="TextBox_TextChanged"
-                    Text="{Binding mTestTitle}" Style="{StaticResource TextBoxStytle}"/>
+            <TextBox Grid.Row="1" Grid.Column="3" 
+                    Text="{Binding mTestTitle,Mode=TwoWay}" Style="{StaticResource TextBoxStytle}"/>
             <Label HorizontalContentAlignment="Right" Grid.Row="1" Grid.Column="4">Test Environment</Label>
-            <TextBox Grid.Row="1" Grid.Column="5" TextChanged="TextBox_TextChanged"
-                    Text="{Binding mTestEnvironemnt}" Style="{StaticResource TextBoxStytle}"/>
+            <TextBox Grid.Row="1" Grid.Column="5" 
+                    Text="{Binding mTestEnvironment, Mode=TwoWay}" Style="{StaticResource TextBoxStytle}"/>
             <Label HorizontalContentAlignment="Right" Grid.Row="2" Grid.Column="0">Test Leader</Label>
-            <TextBox Grid.Row="2" Grid.Column="1" TextChanged="TextBox_TextChanged"
-                    Text="{Binding mTestLeader}" Style="{StaticResource TextBoxStytle}"/>
+            <TextBox Grid.Row="2" Grid.Column="1" 
+                    Text="{Binding mTestLeader,Mode=TwoWay}" Style="{StaticResource TextBoxStytle}"/>
             <Label HorizontalContentAlignment="Right" Grid.Row="2" Grid.Column="2">Others</Label>
-            <TextBox Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" TextChanged="TextBox_TextChanged"
-                    Text="{Binding mOtherParticipants}" Style="{StaticResource TextBoxStytle}"/>
+            <TextBox Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" 
+                    Text="{Binding mOtherParticipants,Mode=TwoWay}" Style="{StaticResource TextBoxStytle}"/>
             
             <GroupBox Header="TestRecord" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="6">
                 <TextBox AcceptsReturn="True" 
                          VerticalScrollBarVisibility="Auto" 
                          HorizontalScrollBarVisibility="Auto" 
-                         Height="300" TextChanged="TextBox_TextChanged"
-                         Text="{Binding mTestRecords}" Style="{StaticResource TextBoxStytle}"/>
+                         Height="300" 
+                         Text="{Binding mTestRecords,Mode=TwoWay}" Style="{StaticResource TextBoxStytle}"/>
             </GroupBox>
 
             <GroupBox Header="Issues" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3">
@@ -102,14 +102,14 @@
                          VerticalScrollBarVisibility="Auto" 
                          HorizontalScrollBarVisibility="Auto" 
                          Height="150"
-                         Text="{Binding mExistQuestion}" TextChanged="TextBox_TextChanged"
+                         Text="{Binding mExistQuestion,Mode=TwoWay}" 
                          Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" Margin="0,0,5,0"/>
                     <Label HorizontalContentAlignment="Right" Grid.Row="1" Grid.Column="0">Recorder</Label>
-                    <TextBox Grid.Row="1" Grid.Column="1" TextChanged="TextBox_TextChanged"
-                            Text="{Binding mQuestionRecorder}" Style="{StaticResource TextBoxStytle}"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" 
+                            Text="{Binding mQuestionRecorder,Mode=TwoWay}" Style="{StaticResource TextBoxStytle}"/>
                     <Label HorizontalContentAlignment="Right" Grid.Row="1" Grid.Column="2">Verifier</Label>
-                    <TextBox Grid.Row="1" Grid.Column="3" TextChanged="TextBox_TextChanged"
-                            Text="{Binding mQuestionVerifier}" Style="{StaticResource TextBoxStytle}"/>
+                    <TextBox Grid.Row="1" Grid.Column="3" 
+                            Text="{Binding mQuestionVerifier,Mode=TwoWay}" Style="{StaticResource TextBoxStytle}"/>
                 </Grid>
             </GroupBox>
 
@@ -134,11 +134,11 @@
                          Text="{Binding mSolution}"
                          Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" Margin="0,0,5,0"/>
                     <Label HorizontalContentAlignment="Right" Grid.Row="1" Grid.Column="0">Solver</Label>
-                    <TextBox Grid.Row="1" Grid.Column="1" TextChanged="TextBox_TextChanged"
-                            Text="{Binding mSolver}" Style="{StaticResource TextBoxStytle}"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" 
+                            Text="{Binding mSolver,Mode=TwoWay}" Style="{StaticResource TextBoxStytle}"/>
                     <Label HorizontalContentAlignment="Right" Grid.Row="1" Grid.Column="2">Verifier</Label>
-                    <TextBox Grid.Row="1" Grid.Column="3" TextChanged="TextBox_TextChanged"
-                            Text="{Binding mSolutionVerifier}" Style="{StaticResource TextBoxStytle}"/>
+                    <TextBox Grid.Row="1" Grid.Column="3" 
+                            Text="{Binding mSolutionVerifier,Mode=TwoWay}" Style="{StaticResource TextBoxStytle}"/>
                 </Grid>
             </GroupBox>
         </Grid>

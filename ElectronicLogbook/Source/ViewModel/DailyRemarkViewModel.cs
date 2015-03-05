@@ -34,6 +34,7 @@ namespace ElectronicLogbook.ViewModel
         public String mLocation {
             set
             {
+                mIsModified = "*";
                 _location = value;
                 this.OnPropertyChanged("mLocation");
             }
@@ -48,6 +49,7 @@ namespace ElectronicLogbook.ViewModel
         public String mTestTeam {
             set
             {
+                mIsModified = "*";
                 _TestTeam = value;
                 this.OnPropertyChanged("mTestTeam");
             }
@@ -62,6 +64,7 @@ namespace ElectronicLogbook.ViewModel
         public String mTestPurposeNumber{
             set
             {
+                mIsModified = "*";
                 _TestPurposeNumber = value;
                 this.OnPropertyChanged("mTestPurposeNumber");
             }
@@ -76,6 +79,7 @@ namespace ElectronicLogbook.ViewModel
         public String mTestTitle {
             set
             {
+                mIsModified = "*";
                 _TestTitle = value;
                 this.OnPropertyChanged("mTestTitle");
             }
@@ -87,11 +91,12 @@ namespace ElectronicLogbook.ViewModel
 
         private String _TestEnvironment;
         [XmlAttribute("TestEnvironment")]
-        public String mTestEnvironemnt {
+        public String mTestEnvironment {
             set
             {
+                mIsModified = "*";
                 _TestEnvironment = value;
-                this.OnPropertyChanged("mTestEnvironemnt");
+                this.OnPropertyChanged("mTestEnvironment");
             }
             get
             {
@@ -104,6 +109,7 @@ namespace ElectronicLogbook.ViewModel
         public String mTestLeader {
             set
             {
+                mIsModified = "*";
                 _TestLeader = value;
                 this.OnPropertyChanged("mTestLeader");
             }
@@ -118,6 +124,7 @@ namespace ElectronicLogbook.ViewModel
         public String mOtherParticipants {
             set
             {
+                mIsModified = "*";
                 _OtherParticipants = value;
                 this.OnPropertyChanged("mOtherParticipants");
             }
@@ -132,6 +139,7 @@ namespace ElectronicLogbook.ViewModel
         public String mTestRecords {
             set
             {
+                mIsModified = "*";
                 _TestRecords = value;
                 this.OnPropertyChanged("mTestRecords");
             }
@@ -146,6 +154,7 @@ namespace ElectronicLogbook.ViewModel
         public String mExistQuestion {
             set
             {
+                mIsModified = "*";
                 _ExistQuestion = value;
                 this.OnPropertyChanged("mExistQuestion");
             }
@@ -160,6 +169,7 @@ namespace ElectronicLogbook.ViewModel
         public String mQuestionRecorder {
             set
             {
+                mIsModified = "*";
                 _QuestionRecorder = value;
                 this.OnPropertyChanged("mQuestionRecorder");
             }
@@ -175,6 +185,7 @@ namespace ElectronicLogbook.ViewModel
         {
             set
             {
+                mIsModified = "*";
                 _QuestionVerifier = value;
                 this.OnPropertyChanged("mQuestionVerifier");
             }
@@ -189,6 +200,7 @@ namespace ElectronicLogbook.ViewModel
         public String mSolution {
             set
             {
+                mIsModified = "*";
                 _Solution = value;
                 this.OnPropertyChanged("mSolution");
             }
@@ -204,6 +216,7 @@ namespace ElectronicLogbook.ViewModel
         {
             set
             {
+                mIsModified = "*";
                 _Solver = value;
                 this.OnPropertyChanged("mSolver");
             }
@@ -219,6 +232,7 @@ namespace ElectronicLogbook.ViewModel
         {
             set
             {
+                mIsModified = "*";
                 _SolutionVerifier = value;
                 this.OnPropertyChanged("mSolutionVerifier");
             }
@@ -233,6 +247,7 @@ namespace ElectronicLogbook.ViewModel
         public String mTestName {
             set
             {
+                mIsModified = "*";
                 _TestName = value;
                 this.OnPropertyChanged("mTestName");
             }
@@ -254,6 +269,28 @@ namespace ElectronicLogbook.ViewModel
             {
                 return _IsModified;
             }
+        }
+
+        [XmlIgnore()]
+        public String mRemarkFileDir {
+            get
+            {
+                String lYear = String.Empty;
+                String lMonth = String.Empty;
+                String lDay = String.Empty;
+                parseDate(ref lYear, ref lMonth, ref lDay, mTime);
+
+                String lDir = lYear + "\\" + lMonth + "\\" + lDay;
+                return lDir;
+            }
+        }
+
+        private void parseDate(ref string aYear, ref string aMonth, ref string aDay, String aDate)
+        {
+            String[] lDate = aDate.Split('/');
+            aYear = (lDate[2].Split(' '))[0];
+            aMonth = lDate[0];
+            aDay = lDate[1];
         }
 
         public DailyRemarkViewModel(string aTestName) 

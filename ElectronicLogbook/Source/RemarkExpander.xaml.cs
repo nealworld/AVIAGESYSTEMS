@@ -37,16 +37,9 @@ namespace ElectronicLogbook
             return TimeTextBox.Text;
         }
 
-        public String GetTestName()
-        {
-            return TestNameBlock.Text;
-        }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void TextBox_TextInput(object sender, TextCompositionEventArgs e)
         {
             ModifyStatus_TextBlock.Text = "*";
         }
-
-
     }
 }

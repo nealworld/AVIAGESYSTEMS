@@ -22,7 +22,7 @@
         <TreeView.ItemTemplate>
             <HierarchicalDataTemplate DataType="{x:Type local:DateViewModel}"
                                       ItemsSource="{Binding mChildren}">
-                <TextBlock Text="{Binding mTime}" MouseLeftButtonDown="TextBlock_MouseDown"/>
+                <TextBlock Width="50" Text="{Binding mTime}" MouseLeftButtonUp="TextBlock_MouseDown"/>
             </HierarchicalDataTemplate>
         </TreeView.ItemTemplate>
     </TreeView>

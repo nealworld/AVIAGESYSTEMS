@@ -107,6 +107,7 @@
     <Compile Include="ThirdPartySoftwareControl.xaml.cs">
       <DependentUpon>ThirdPartySoftwareControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserSeesionHandler.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="ViewModel\AirCraftEquipmentConfigViewModel.cs">
       <SubType>Code</SubType>
@@ -130,6 +131,7 @@
     <Compile Include="ViewModel\SWPartViewModel.cs" />
     <Compile Include="ViewModel\ThirdPartySoftwareViewModel.cs" />
     <Compile Include="ViewModel\TreeViewItemViewModel.cs" />
+    <Compile Include="ViewModel\UserSessionViewModel.cs" />
     <Compile Include="ViewModel\VAISParticipantViewModel.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />
     <Page Include="AircraftEquipmentControl.xaml">

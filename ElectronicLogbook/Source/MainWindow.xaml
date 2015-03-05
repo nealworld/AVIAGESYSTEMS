@@ -4,6 +4,7 @@
         xmlns:local="clr-namespace:ElectronicLogbook"
         Title="ELB" Height="Auto" Width="Auto"
         WindowStartupLocation="CenterScreen"
+        
         Name="ELBWindow">
     <DockPanel>
         <Menu  Height="26" DockPanel.Dock="Top">
