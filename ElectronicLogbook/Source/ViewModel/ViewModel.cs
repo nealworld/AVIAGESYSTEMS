@@ -12,13 +12,13 @@ namespace ElectronicLogbook.ViewModel
     [XmlInclude(typeof(ConfigInfoViewModel))]
     [XmlInclude(typeof(ConfigurationViewModel))]
     [XmlInclude(typeof(DeviceDriverViewModel))]
-    [XmlInclude(typeof(ELBViewModel))]
     [XmlInclude(typeof(HWPartViewModel))]
     [XmlInclude(typeof(SWConfigViewModel))]
     [XmlInclude(typeof(SWPartViewModel))]
     [XmlInclude(typeof(ThirdPartySoftwareViewModel))]
     [XmlInclude(typeof(TreeViewItemViewModel))]
     [XmlInclude(typeof(VAISParticipantViewModel ))]
+    [XmlInclude(typeof(DailyRemarkViewModel))]
     public abstract class ViewModel : INotifyPropertyChanged
     {
         private bool _isInEditMode;

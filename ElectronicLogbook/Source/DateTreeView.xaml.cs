@@ -11,7 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using ElectronicLogbook.ViewModel;
 namespace ElectronicLogbook
 {
     /// <summary>
@@ -23,7 +23,12 @@ namespace ElectronicLogbook
         {
             InitializeComponent();
 
-            base.DataContext = ElectronicLogbook.ViewModel.ELBViewModel.mSingleton;
+            base.DataContext = ELBViewModel.mSingleton;
+        }
+
+        private void TextBlock_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            ELBViewModel.mSingleton.mDailyRemarkHandler.ShowRemarksOfSelectedDay(mDateTreeView);
         }
     }
 }

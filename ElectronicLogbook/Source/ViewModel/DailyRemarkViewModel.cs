@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace ElectronicLogbook.ViewModel
 {
+    [XmlRoot("DailyRemark")]
     public class DailyRemarkViewModel : ViewModel
     {
         public override Boolean Compare(ViewModel aViewModel)
@@ -13,6 +15,8 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private String _time;
+
+        [XmlAttribute("Time")]
         public String mTime {
             set
             {
@@ -26,6 +30,7 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private String _location;
+        [XmlAttribute("Location")]
         public String mLocation {
             set
             {
@@ -39,6 +44,7 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private String _TestTeam;
+        [XmlAttribute("TestTeam")]
         public String mTestTeam {
             set
             {
@@ -52,6 +58,7 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private String _TestPurposeNumber;
+        [XmlAttribute("TestPurposeNumber")]
         public String mTestPurposeNumber{
             set
             {
@@ -65,6 +72,7 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private String _TestTitle;
+        [XmlAttribute("TestTitle")]
         public String mTestTitle {
             set
             {
@@ -78,6 +86,7 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private String _TestEnvironment;
+        [XmlAttribute("TestEnvironment")]
         public String mTestEnvironemnt {
             set
             {
@@ -91,6 +100,7 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private String _TestLeader;
+        [XmlAttribute("TestLeader")]
         public String mTestLeader {
             set
             {
@@ -104,6 +114,7 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private String _OtherParticipants;
+        [XmlAttribute("OtherParticipants")]
         public String mOtherParticipants {
             set
             {
@@ -117,6 +128,7 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private String _TestRecords;
+        [XmlAttribute("TestRecords")]
         public String mTestRecords {
             set
             {
@@ -130,6 +142,7 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private String _ExistQuestion;
+        [XmlAttribute("ExistQuestion")]
         public String mExistQuestion {
             set
             {
@@ -143,6 +156,7 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private String _QuestionRecorder;
+        [XmlAttribute("QuestionRecorder")]
         public String mQuestionRecorder {
             set
             {
@@ -156,6 +170,7 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private String _QuestionVerifier;
+        [XmlAttribute("QuestionVerifier")]
         public String mQuestionVerifier
         {
             set
@@ -170,6 +185,7 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private String _Solution;
+        [XmlAttribute("Solution")]
         public String mSolution {
             set
             {
@@ -183,6 +199,7 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private String _Solver;
+        [XmlAttribute("Solver")]
         public String mSolver
         {
             set
@@ -197,6 +214,7 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private String _SolutionVerifier;
+        [XmlAttribute("SolutionVerifier")]
         public String mSolutionVerifier
         {
             set
@@ -211,6 +229,7 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private String _TestName;
+        [XmlAttribute("TestName")]
         public String mTestName {
             set
             {
@@ -224,6 +243,7 @@ namespace ElectronicLogbook.ViewModel
         }
 
         private String _IsModified;
+        [XmlIgnore()]
         public String mIsModified {
             set
             {
@@ -235,9 +255,16 @@ namespace ElectronicLogbook.ViewModel
                 return _IsModified;
             }
         }
-        public DailyRemarkViewModel(string aTestName) {
+
+        public DailyRemarkViewModel(string aTestName) 
+        {
             mTestName = aTestName;
             mIsModified = "*";
+        }
+
+        public DailyRemarkViewModel()
+        {
+            mIsModified = String.Empty;
         }
     }
 }

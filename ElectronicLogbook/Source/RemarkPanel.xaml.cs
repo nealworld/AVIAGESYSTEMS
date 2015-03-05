@@ -75,7 +75,7 @@ namespace ElectronicLogbook
             parentGrid.Children.Add(layer1);
             layer1.Visibility = Visibility.Collapsed;
             pane1Button.Visibility = Visibility.Visible;
-            pane1PinImage.Source = new BitmapImage(new Uri("pinHorizontal.gif", UriKind.Relative));
+            pane1PinImage.Source = new BitmapImage(new Uri("resources/pinHorizontal.gif", UriKind.Relative));
         }
     }
 }

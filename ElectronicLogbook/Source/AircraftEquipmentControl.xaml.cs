@@ -26,69 +26,6 @@ namespace ElectronicLogbook
         {
             InitializeComponent();
             TopGrid.DataContext = ELBViewModel.mSingleton.mConfigurationViewModel;
-
-           /* ThreadStart thr_start_func = new ThreadStart(First_Thread);
-            Thread fThread = new Thread(thr_start_func) { IsBackground=true};
-            fThread.Name = "first_thread";
-            fThread.Start(); */ 
-        }
-
-        public void First_Thread()
-        {
-            
-            while (true)
-            {
-                Thread.Sleep(15000);
-                //ELBViewModel.mSingleton.mConfigurationViewModel.mIsEditable = true;
-                //ELBViewModel.mSingleton.mConfigurationViewModel.mIsReadOnly = false;
-                foreach (AirCraftEquipmentConfigViewModel lAirCraftEquipmentConfigViewModel in
-                ELBViewModel.mSingleton.mConfigurationViewModel.mAirCraftEquipmentConfigViewModelList)
-                {
-                    System.Diagnostics.Debug.WriteLine(lAirCraftEquipmentConfigViewModel.mConfigName + "    " +lAirCraftEquipmentConfigViewModel.IsInEditMode);
-                    foreach (SubEquipmentViewModel lSubEquipment in lAirCraftEquipmentConfigViewModel.mChildren)
-                    {
-                        System.Diagnostics.Debug.WriteLine("    " + lSubEquipment.mEquipmentID + "  " + lSubEquipment.IsInEditMode);
-                        foreach (HWPartViewModel lHWPartViewModel in lSubEquipment.mHWPartList) 
-                        {
-                            System.Diagnostics.Debug.WriteLine("    " +
-                                lHWPartViewModel.mHWPartIndex + "," + lHWPartViewModel.mHWPartNumber
-                                + lHWPartViewModel.mHWPartDescription + "," + lHWPartViewModel.mHWPartSerialNumber+","
-                                + lHWPartViewModel.mHWPartStatus);
-                        }
-
-                        foreach (SWConfigViewModel lSWConfigViewModel in lSubEquipment.mSWConfigList)
-                        {
-                            string display = string.Empty;
-                            display = "    " +
-                                lSWConfigViewModel.mSWConfigIndex + "," + lSWConfigViewModel.mSWLocationDescription
-                                + lSWConfigViewModel.mSWLocationID ;
-
-                            System.Diagnostics.Debug.WriteLine(display);
-                        }
-                    }
-                }
-
-                /*foreach (AirCraftEquipmentConfigViewModel lAirCraftEquipmentConfigViewModel in
-                ELBViewModel.getInstance().mAirCraftEquipmentConfigViewModelList)
-                {
-                    System.Diagnostics.Debug.WriteLine(lAirCraftEquipmentConfigViewModel.mConfigName);
-                    foreach (SubEquipmentViewModel lSubEquipment in lAirCraftEquipmentConfigViewModel.mChildren)
-                    {
-                        System.Diagnostics.Debug.WriteLine("    " + lSubEquipment.mEquipmentID);
-                        etb.Text = "neal is goodassss!";
-
-                    }
-                }
-
-                foreach (AirCraftEquipmentConfigViewModel lAirCraftEquipmentConfigViewModel in
-                    ELBViewModel.getInstance().mAirCraftEquipmentConfigViewModelList)
-                {
-                    foreach (SubEquipmentViewModel lSubEquipment in lAirCraftEquipmentConfigViewModel.mChildren)
-                    {
-                        lSubEquipment.mEquipmentID = "neal is bada!";
-                    }
-                }*/
-            }
         }
 
         private void Rename(object sender, RoutedEventArgs e)

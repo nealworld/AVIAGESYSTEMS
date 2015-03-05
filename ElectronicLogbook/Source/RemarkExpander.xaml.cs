@@ -26,38 +26,25 @@ namespace ElectronicLogbook
             InitializeComponent();
 
             addButton.Click += new RoutedEventHandler(
-                ELBViewModel.mSingleton.mDailyRemarkHandler.addNewRemark);
+                ELBViewModel.mSingleton.mDailyRemarkHandler.addNewRemarkExpander);
             deleteButton.Click += new RoutedEventHandler(
-                ELBViewModel.mSingleton.mDailyRemarkHandler.deleteRemark);
+                ELBViewModel.mSingleton.mDailyRemarkHandler.deleteRemarkExpander);
             saveButton.Click += new RoutedEventHandler(
-                ELBViewModel.mSingleton.mDailyRemarkHandler.saveRemark);
-
-            PrintLogicalTree(0, this);
+                ELBViewModel.mSingleton.mDailyRemarkHandler.saveRemarkExpander);
         }
 
         public String GetTime() {
             return TimeTextBox.Text;
         }
 
-        void PrintLogicalTree(int depth, object obj)
+        public String GetTestName()
         {
-            // Print the object with preceding spaces that represent its depth
-            Debug.WriteLine(new string(' ', depth) + obj);
-            // Sometimes leaf nodes aren’t DependencyObjects (e.g. strings)
-            if (!(obj is DependencyObject)) return;
-            // Recursive call for each logical child
-            foreach (object child in LogicalTreeHelper.GetChildren(
-            obj as DependencyObject))
-            PrintLogicalTree(depth + 1, child);
+            return TestNameBlock.Text;
         }
 
-        void PrintVisualTree(int depth, DependencyObject obj)
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            // Print the object with preceding spaces that represent its depth
-            Debug.WriteLine(new string(' ', depth) + obj);
-            // Recursive call for each visual child
-            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
-            PrintVisualTree(depth + 1, VisualTreeHelper.GetChild(obj, i));
+            ModifyStatus_TextBlock.Text = "*";
         }
 
 
