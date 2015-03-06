@@ -12,14 +12,24 @@ namespace ElectronicLogbook
     public class UserSeesionHandler
     {
         UserSessionViewModel mUser;
+
+
         public UserSeesionHandler() {}
 
-        public void StartSession() {
+        public bool StartSession() {
             Utility.MakeDateDir("ELBRemark");
             mUser = new UserSessionViewModel(GetUserName());
+
+            if (mUser.mName == String.Empty)
+                return false;
+
+            return true;
         }
 
         public void EndSession() {
+
+            if (mUser.mName == String.Empty) return;
+
             mUser.mEndTime = DateTime.UtcNow.ToLocalTime().ToString();
             FileStream lfs = new FileStream("ELBRemark\\User.txt", FileMode.Append);
             StreamWriter lsw = new StreamWriter(lfs);
@@ -28,11 +38,12 @@ namespace ElectronicLogbook
             lsw.Close();
             lfs.Close();
         }
-        public String GetUserName() 
+
+        private String GetUserName() 
         {
             String lName = "Your Name";
-            while(Utility.InputBox("User Session", "Name:", ref lName)== DialogResult.Cancel){
-                
+            while(Utility.InputBox("User Session", "Name:", ref lName) == DialogResult.Cancel){
+                lName = String.Empty;
             }
             return lName;
         }

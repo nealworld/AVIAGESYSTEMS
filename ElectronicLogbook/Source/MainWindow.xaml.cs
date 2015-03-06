@@ -28,7 +28,10 @@ namespace ElectronicLogbook
         public MainWindow()
         {
             mUsersession = new UserSeesionHandler();
-            mUsersession.StartSession();
+            if (!mUsersession.StartSession())
+            {
+                System.Windows.Forms.Application.Exit();
+            }
 
             InitializeComponent();
             base.DataContext = ELBViewModel.mSingleton;
