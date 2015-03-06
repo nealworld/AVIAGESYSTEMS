@@ -27,12 +27,6 @@ namespace ElectronicLogbook
 
         public MainWindow()
         {
-            mUsersession = new UserSeesionHandler();
-            if (!mUsersession.StartSession())
-            {
-                System.Windows.Forms.Application.Exit();
-            }
-
             InitializeComponent();
             base.DataContext = ELBViewModel.mSingleton;
             GetCurrentConfigration.Click += new RoutedEventHandler(ELBViewModel.mSingleton.GetCurrentConfigration_Click);
@@ -45,17 +39,27 @@ namespace ElectronicLogbook
             mRemarkPanel = new RemarkPanel();
             this.Closing +=MainWindow_Closing;
             this.ContentControl.Content = mConfigurationPanel;
+
+            mUsersession = new UserSeesionHandler();
+            if (!mUsersession.StartSession())
+            {
+                this.Close();
+                //System.Windows.Forms.Application.Exit();
+            }
         }
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (ELBViewModel.mSingleton.mDailyRemarkHandler.isAnyUnsavedReamrk())
+            if (ELBViewModel.mSingleton.mDailyRemarkHandler.isAnyUnsavedReamrk() &&
+                mUsersession.mIsStartSuccess
+                )
             {
                 if (System.Windows.Forms.MessageBox.Show("Are you sure to dump unsaved remark files?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.No)
                 {
                     e.Cancel = true;
                 }
             }
+
             if (!e.Cancel)
             {
                 mUsersession.EndSession();

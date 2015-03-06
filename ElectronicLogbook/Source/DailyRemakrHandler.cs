@@ -440,6 +440,10 @@ namespace ElectronicLogbook
                 {
                     if (lremarkExpander.GetTime() == ltemp.mTime)
                     {
+                        if (System.Windows.Forms.MessageBox.Show("Are you sure to dump unsaved remark files?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.No)
+                        {
+                            return;
+                        }
                         mDailyRemarks.Remove(ltemp);
                         deleteRemarkFile(ltemp);
                         deleteRemarkDate(ltemp);
@@ -465,7 +469,7 @@ namespace ElectronicLogbook
                         if (!isFileExist(ltemp))
                         {
                             String value = "New Remark";
-                            while (Utility.InputBox("New document", "New document name:", ref value) == DialogResult.OK)
+                            while(Utility.InputBox("New document", "New document name:", ref value) == DialogResult.OK)
                             {
                                 String[] lfiles = Directory.GetFiles(mDirName + "\\" + ltemp.mRemarkFileDir);
                                 bool lfound = false;

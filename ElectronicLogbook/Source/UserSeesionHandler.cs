@@ -12,23 +12,22 @@ namespace ElectronicLogbook
     public class UserSeesionHandler
     {
         UserSessionViewModel mUser;
+        public bool mIsStartSuccess;
 
-
-        public UserSeesionHandler() {}
+        public UserSeesionHandler() {
+            mIsStartSuccess = true;
+        }
 
         public bool StartSession() {
             Utility.MakeDateDir("ELBRemark");
             mUser = new UserSessionViewModel(GetUserName());
 
-            if (mUser.mName == String.Empty)
-                return false;
-
-            return true;
+            return mIsStartSuccess;
         }
 
         public void EndSession() {
 
-            if (mUser.mName == String.Empty) return;
+            if (!mIsStartSuccess) return;
 
             mUser.mEndTime = DateTime.UtcNow.ToLocalTime().ToString();
             FileStream lfs = new FileStream("ELBRemark\\User.txt", FileMode.Append);
@@ -42,8 +41,9 @@ namespace ElectronicLogbook
         private String GetUserName() 
         {
             String lName = "Your Name";
-            while(Utility.InputBox("User Session", "Name:", ref lName) == DialogResult.Cancel){
-                lName = String.Empty;
+            DialogResult lresult = Utility.InputBox("User Session", "Name:", ref lName);
+            if(Utility.InputBox("User Session", "Name:", ref lName) == DialogResult.Cancel){
+                mIsStartSuccess = false;
             }
             return lName;
         }
