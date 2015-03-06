@@ -15,6 +15,7 @@ namespace ElectronicLogbook
         public UserSeesionHandler() {}
 
         public void StartSession() {
+            Utility.MakeDateDir("ELBRemark");
             mUser = new UserSessionViewModel(GetUserName());
         }
 

@@ -114,16 +114,8 @@ namespace ElectronicLogbook
             lTodayRemark.mTime = DateTime.UtcNow.ToLocalTime().ToString();
             mDailyRemarks.Add(lTodayRemark);
 
-            MakeDateDir(mDirName+"\\"+lTodayRemark.mRemarkFileDir);
+            Utility.MakeDateDir(mDirName+"\\"+lTodayRemark.mRemarkFileDir);
 
-        }
-
-        private void MakeDateDir(String aDir)
-        {
-            if (!Directory.Exists(aDir))
-            {
-                Directory.CreateDirectory(aDir);
-            }
         }
 
         private bool isFileExist(DailyRemarkViewModel aRemak)

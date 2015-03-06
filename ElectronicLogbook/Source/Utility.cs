@@ -10,6 +10,14 @@ namespace ElectronicLogbook
 {
     public class Utility
     {
+        public static void MakeDateDir(String aDir)
+        {
+            if (!Directory.Exists(aDir))
+            {
+                Directory.CreateDirectory(aDir);
+            }
+        }
+
         public static DialogResult InputBox(string title, string promptText, ref string value)
         {
             Form form = new Form();
