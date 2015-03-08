@@ -28,7 +28,7 @@ namespace ElectronicLogbook
 
         private void TextBlock_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            ELBViewModel.mSingleton.mDailyRemarkHandler.ShowRemarksOfSelectedDay(mDateTreeView);
+            ELBViewModel.mSingleton.mDailyRemarkHandler.ShowRemarksOfSelectedDay(mDateTreeView.SelectedItem as DateViewModel);
         }
     }
 }

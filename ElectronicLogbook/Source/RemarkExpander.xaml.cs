@@ -24,22 +24,21 @@ namespace ElectronicLogbook
         public RemarkExpander()
         {
             InitializeComponent();
-
-            addButton.Click += new RoutedEventHandler(
-                ELBViewModel.mSingleton.mDailyRemarkHandler.addNewRemarkExpander);
-            deleteButton.Click += new RoutedEventHandler(
-                ELBViewModel.mSingleton.mDailyRemarkHandler.deleteRemarkExpander);
-            saveButton.Click += new RoutedEventHandler(
-                ELBViewModel.mSingleton.mDailyRemarkHandler.saveRemarkExpander);
         }
 
-        public String GetTime() {
-            return TimeTextBox.Text;
+        private void addNewRemarkExpander(object sender, System.Windows.RoutedEventArgs e) {
+            ELBViewModel.mSingleton.mDailyRemarkHandler.addNewRemark();
         }
 
-        private void TextBox_TextInput(object sender, TextCompositionEventArgs e)
+        private void deleteRemarkExpander(object sender, System.Windows.RoutedEventArgs e)
         {
-            ModifyStatus_TextBlock.Text = "*";
+            ELBViewModel.mSingleton.mDailyRemarkHandler.deleteRemark(TimeTextBox.Text);
         }
+
+        private void saveRemarkExpander(object sender, System.Windows.RoutedEventArgs e)
+        {
+            ELBViewModel.mSingleton.mDailyRemarkHandler.saveRemark(TimeTextBox.Text);
+        }
+
     }
 }

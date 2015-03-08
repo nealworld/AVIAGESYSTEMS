@@ -12,17 +12,20 @@
                            Margin="2,0,0,0" Text="{Binding mIsModified, Mode=TwoWay}" Foreground="Red"/>
                 <Button Name="saveButton" ToolTip="Save" Width="26" Background="White" 
                         BorderBrush="Transparent"
-                        DockPanel.Dock="Right" Margin="0,0,30,0">
+                        DockPanel.Dock="Right" Margin="0,0,30,0"
+                        Click="saveRemarkExpander">
                     <Image Source="resources/Expander_save.png"/>
                 </Button>
                 <Button Name="deleteButton" ToolTip="Delete" Width="26" Background="White" 
                         BorderBrush="Transparent"
-                        DockPanel.Dock="Right" Margin="0,0,5,0">
+                        DockPanel.Dock="Right" Margin="0,0,5,0"
+                        Click="deleteRemarkExpander">
                     <Image Source="resources/Expander_delete.png"/>
                 </Button>
                 <Button Name="addButton" ToolTip="Add New Remark" Width="26" 
                         Background="White" BorderBrush="Transparent"
-                        DockPanel.Dock="Right" Margin="0,0,5,0">
+                        DockPanel.Dock="Right" Margin="0,0,5,0"
+                        Click="addNewRemarkExpander">
                     <Image Source="resources/Expander_add.png"/>
                 </Button>
                 <TextBlock />
