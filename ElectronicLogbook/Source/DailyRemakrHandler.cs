@@ -9,6 +9,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Windows.Controls;
 using System.Windows;
+using System.Globalization;
 
 namespace ElectronicLogbook
 {
@@ -111,7 +112,8 @@ namespace ElectronicLogbook
         private void CreateTodayRemark()
         {
             DailyRemarkViewModel lTodayRemark = new DailyRemarkViewModel("New Remark");
-            lTodayRemark.mTime = DateTime.UtcNow.ToLocalTime().ToString();
+            lTodayRemark.mTime = DateTime.UtcNow.ToLocalTime().ToString("G", 
+                  CultureInfo.CreateSpecificCulture("en-us"));
             mDailyRemarks.Add(lTodayRemark);
 
             Utility.MakeDateDir(mDirName+"\\"+lTodayRemark.mRemarkFileDir);
